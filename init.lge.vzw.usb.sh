@@ -29,50 +29,30 @@
 #
 
 #
-# Allow unique persistent serial numbers for devices connected via usb
-# User needs to set unique usb serial number to persist.usb.serialno and
-# if persistent serial number is not set then Update USB serial number if
-# passed from command line
+# When boot is completed and persist.sys.usb.config is "boot",
+# set persist.sys.usb.config into default mode. Also, inform
+# it's mode to cdrom driver for autorun.
+# default of VZW is mtp only.
 #
-serialno=`getprop persist.usb.serialno`
-case "$serialno" in
-	"")
-		serialnum=`getprop ro.serialno`
-		case "$serialnum" in
-			"")
-			;; #Do nothing, use default serial number
-			*)
-				echo "$serialnum" > /sys/class/android_usb/android0/iSerial
-			;;
-		esac
+
+# VZW is mtp_only, always autorun enabled
+default_cdrom_mode=1
+
+usb_config=`getprop persist.sys.usb.config`
+case "$usb_config" in
+	"boot") #factory status, select default
+		# Inform default mode to cdrom driver.
+		echo $default_cdrom_mode > /sys/class/android_usb/android0/f_cdrom_storage/lun/cdrom_usbmode
+
+		# Now, set cdrom mode to enable autorun
+		setprop persist.sys.usb.config cdrom_storage
 	;;
-	*)
-		echo "$serialno" > /sys/class/android_usb/android0/iSerial
+	"boot,adb") #factory status, select default
+		# Inform default mode to cdrom driver.
+		echo $default_cdrom_mode > /sys/class/android_usb/android0/f_cdrom_storage/lun/cdrom_usbmode
+
+		# Now, set cdrom mode to enable autorun
+		setprop persist.sys.usb.config cdrom_storage,adb
 	;;
+	*) ;; #USB persist config exists, do nothing
 esac
-
-#chown root.system /sys/devices/platform/msm_hsusb/gadget/wakeup
-#chmod 220 /sys/devices/platform/msm_hsusb/gadget/wakeup
-
-#
-# Allow persistent usb charging disabling
-# User needs to set usb charging disabled in persist.usb.chgdisabled
-#
-target=`getprop ro.board.platform`
-usbchgdisabled=`getprop persist.usb.chgdisabled`
-case "$usbchgdisabled" in
-    "") ;; #Do nothing here
-    * )
-    case $target in
-        "msm8660")
-        echo "$usbchgdisabled" > /sys/module/pmic8058_charger/parameters/disabled
-        echo "$usbchgdisabled" > /sys/module/smb137b/parameters/disabled
-	;;
-        "msm8960")
-        echo "$usbchgdisabled" > /sys/module/pm8921_charger/parameters/disabled
-	;;
-    esac
-esac
-
-echo 1  > /sys/class/android_usb/f_mass_storage/lun/nofua
-echo 1  > /sys/class/android_usb/f_cdrom_storage/lun/nofua
