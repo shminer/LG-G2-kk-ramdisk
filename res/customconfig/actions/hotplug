@@ -50,7 +50,7 @@ if [ "a$2" != "a" ]; then
 			fi;
 		;;
 		*)
-			hotplug=default;
+			hotplug=msm_hotplug;
 		;;
 	esac;
 fi;

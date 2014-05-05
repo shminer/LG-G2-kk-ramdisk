@@ -31,7 +31,7 @@ start thermal-engine
 $BB chown system.sdcard_rw /storage;
 
 # Boot with ROW I/O Gov
-$BB echo "row" > /sys/block/mmcblk0/queue/scheduler;
+$BB echo "fiops" > /sys/block/mmcblk0/queue/scheduler;
 
 # clean old modules from /system and add new from ramdisk
 if [ ! -d /system/lib/modules ]; then
@@ -142,8 +142,8 @@ echo 20 > /proc/sys/vm/dirty_background_ratio
 echo 40 > /proc/sys/vm/dirty_ratio
 
 # set default readahead
-echo 1024 > /sys/block/mmcblk0/bdi/read_ahead_kb
-echo 1024 > /sys/block/mmcblk0/queue/read_ahead_kb
+echo 2048 > /sys/block/mmcblk0/bdi/read_ahead_kb
+echo 2048 > /sys/block/mmcblk0/queue/read_ahead_kb
 
 # make sure our max gpu clock is set via sysfs
 echo 533000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk
