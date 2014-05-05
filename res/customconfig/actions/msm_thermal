@@ -41,7 +41,7 @@ if [ "a$2" != "a" ]; then
 			fi;
 		;;
 		*)
-			msm_thermal=msm_temp;
+			msm_thermal=intelli_temp;
 		;;
 	esac;
 fi;
