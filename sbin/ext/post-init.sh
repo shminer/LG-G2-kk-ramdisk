@@ -22,11 +22,6 @@ OPEN_RW()
 }
 OPEN_RW;
 
-# updating thermal engine config
-$BB cp -a /sbin/thermal/* /system/etc/;
-stop thermal-engine
-start thermal-engine
-
 # fix storage folder owner
 $BB chown system.sdcard_rw /storage;
 
