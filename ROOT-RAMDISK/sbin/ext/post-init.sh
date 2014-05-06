@@ -141,7 +141,7 @@ echo 2048 > /sys/block/mmcblk0/bdi/read_ahead_kb
 echo 2048 > /sys/block/mmcblk0/queue/read_ahead_kb
 
 # make sure our max gpu clock is set via sysfs
-echo 533000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk
+echo 550000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk
 
 # set min max boot freq to default.
 echo "2265600" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
@@ -294,7 +294,7 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
    if [ "$(cat /sys/module/msm_thermal/parameters/enabled)" == "N" ]; then
 	echo "Y" > /sys/module/msm_thermal/parameters/enabled;
 	echo "85" > /sys/module/msm_thermal/parameters/limit_temp_degC;
-	echo "85" > /sys/module/msm_thermal/parameters/core_limit_temp_degC;
+	echo "95" > /sys/module/msm_thermal/parameters/core_limit_temp_degC;
    fi;
  # msm hotplug default
 	/system/bin/stop mpdecision
