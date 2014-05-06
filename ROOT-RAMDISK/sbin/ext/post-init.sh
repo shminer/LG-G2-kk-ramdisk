@@ -25,7 +25,7 @@ OPEN_RW;
 # fix storage folder owner
 $BB chown system.sdcard_rw /storage;
 
-# Boot with fiops I/O Gov
+# Boot with ROW I/O Gov
 $BB echo "fiops" > /sys/block/mmcblk0/queue/scheduler;
 
 # clean old modules from /system and add new from ramdisk
@@ -296,11 +296,11 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
 	echo "85" > /sys/module/msm_thermal/parameters/limit_temp_degC;
 	echo "85" > /sys/module/msm_thermal/parameters/core_limit_temp_degC;
    fi;
-   # msm hotplug default
-			/system/bin/stop mpdecision
-			echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
-			echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
-			echo "1" > /sys/module/msm_hotplug/msm_enabled;
-			if [ "$(ps | grep /system/bin/thermal-engine | wc -l)" -ge "1" ]; then
-				$BB renice -n -20 -p $(pgrep -f "/system/bin/thermal-engine");
-			fi;
+ # msm hotplug default
+	/system/bin/stop mpdecision
+	echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+	echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
+	echo "1" > /sys/module/msm_hotplug/msm_enabled;
+	if [ "$(ps | grep /system/bin/thermal-engine | wc -l)" -ge "1" ]; then
+		$BB renice -n -20 -p $(pgrep -f "/system/bin/thermal-engine");
+	fi;
