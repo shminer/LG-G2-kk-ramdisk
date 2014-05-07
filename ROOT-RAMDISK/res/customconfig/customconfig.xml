@@ -32,7 +32,7 @@
 			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/> 
 		</spinner>
 
-		<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard&Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
+		<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard和Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
 			<spinnerItem name="LG 默认" value="default"/> 
 			<spinnerItem name="高通热插拔" value="msm_hotplug"/> 
 			<spinnerItem name="Alucard 热插拔" value="alucard"/> 
@@ -127,11 +127,12 @@
 	<settingsPane description="这里你可以设置GPU的频率以及调度器" name="GPU管理">
 		
 		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
-			<spinnerItem name="200MZH" value="200"/> 
-			<spinnerItem name="320MZH" value="320"/> 
-			<spinnerItem name="389MZH" value="389"/> 
-			<spinnerItem name="450MZH" value="450"/> 
-			<spinnerItem name="550MZH" value="550"/> 
+			<spinnerItem name="200MZH" value="200000000"/> 
+			<spinnerItem name="320MZH" value="320000000"/> 
+			<spinnerItem name="389MZH" value="389000000"/> 
+			<spinnerItem name="450MZH" value="450000000"/> 
+			<spinnerItem name="550MZH" value="550000000"/> 
+		</spinner>
 		
 	</settingsPane>
 		
@@ -400,4 +401,3 @@
 </settingsTab>
 
 </settingsRoot>
-
