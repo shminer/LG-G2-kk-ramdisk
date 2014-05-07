@@ -1,59 +1,67 @@
 <settingsRoot>
 
-<settingsTab name="Master CORE">
+<settingsTab name="主设置页">
+	
+	<settingsPane description="感谢Dorimanx提供的工具以及ramdisk和源码，感谢dr87,savoca的内核源码。JZ汉化。" name="版本信息">
+		
+	</settingsPane>
+	
+	<settingsPane description="由于时间有限，仅汉化部分重要设置。如果你有能力帮我汉化以及完善内核，请加我QQ332574643。" name="特别声明">
+		
+	</settingsPane>
 
-	<settingsPane description="Here you can switch STweaks settings to be applyed on BOOT or not." name="Global BOOT Settings">
+	<settingsPane description="你可以设置ST工具是否在启动时加载设置" name="启动加载设置">
 
-		<spinner description="Master Switch, Load All settings from all TABS on boot or not! default is LOAD." name="Enable On Boot" action="generic_cortex /tmp/stweaks_boot_control">
-			<spinnerItem name="Load all Settings on boot" value="yes"/> 
-			<spinnerItem name="Don't load all Settings on boot" value="no"/> 
+		<spinner description="主设置开关，启动时加载所有设置。默认为“启动时加载所有设置”" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
+			<spinnerItem name="启动时加载所有设置" value="yes"/> 
+			<spinnerItem name="不再启动时加载设置" value="no"/> 
 		</spinner>
 
-		<button description="Push to load all tuned settings IF master switch is OFF or was OFF, if was ON when phone booted then no need to push!! wait till you see that settings are loaded" name="LOAD ALL" action="push-actions/reload_settings" label="LOAD ALL"/>
+		<button description="按下“加载所有”加载配置文件" name="加载所有" action="push-actions/reload_settings" label="加载所有"/>
 
 	</settingsPane>
 
-	<settingsPane description="Here you can tune CPU functions in kernel" name="CPU Tuning">
+	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
 
-		<spinner description="Control Over MAX allowed CPU frequency! here you can have normal 2.3GHz max or higher OC up to 2.8GHz! or you can limit to only 2.0GHz for battery save, when you set the value here all other apps or services can't set freq higher! so if you want more come here and change" name="OC Max Freq Control" action="oc_controller">
-			<spinnerItem name="Low freq 2.0GHz" value="battery"/> 
-			<spinnerItem name="Default 2.3GHz" value="stock"/> 
-			<spinnerItem name="Boost OC 2.4GHz" value="boost"/> 
-			<spinnerItem name="High OC 2.5GHz" value="high"/> 
-			<spinnerItem name="Mega OC 2.7GHz" value="mega"/> 
-			<spinnerItem name="Ultra OC 2.8GHz" value="ultra"/> 
+		<spinner description="限制超频频率的最高值（JZ内核中为了适应所有内核，我把它默认设置为2.8G），这个值代表除了系统CPU限制策略外，由faux123编写的另一种控制cpu最高频率的机制，相比系统的机制更有效，在这个值被设定后，其他CPU调节软件无法设置超过这个值的CPU频率，但是这个值也无法设置CPU最高频率，它只是一个限制的阈值。" name="频率最高值限制" action="oc_controller">
+			<spinnerItem name="低频 2.0GHz" value="battery"/> 
+			<spinnerItem name="LG默认 2.3GHz" value="stock"/> 
+			<spinnerItem name="超频1档 2.4GHz" value="boost"/> 
+			<spinnerItem name="超频2档 2.5GHz" value="high"/> 
+			<spinnerItem name="超频3档 2.7GHz" value="mega"/> 
+			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/> 
 		</spinner>
 
-		<spinner description="CPU HotPlug Control, you can switch from OLD LG Default HotPlug driver to MSM HotPlug, IntelliHotPlug or Alucard driver, note that using Intelli CPU Thermal control with Default LG HotPlug is not recommended! low performance" name="HotPlug Driver" action="hotplug">
-			<spinnerItem name="Default LG" value="default"/> 
-			<spinnerItem name="MSM HotPlug" value="msm_hotplug"/> 
-			<spinnerItem name="Alucard HotPlug" value="alucard"/> 
-			<spinnerItem name="Intelli HotPlug" value="intelli"/> 
+		<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard&Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
+			<spinnerItem name="LG 默认" value="default"/> 
+			<spinnerItem name="高通热插拔" value="msm_hotplug"/> 
+			<spinnerItem name="Alucard 热插拔" value="alucard"/> 
+			<spinnerItem name="Intelli 热插拔" value="intelli"/> 
 		</spinner>
 
-		<spinner description="MSM HotPlug additional CPU control, here you can tune how much cores will be active on high short load, default is 2 cores for 4sec, if you wish to save more power when using MSM HotPlug then best to use 1 core. or if performance is what you prefer then use 2 cores boost. Depend on MSM HotPlug selected!" name="MSM HotPlug Booster" action="generic /sys/module/msm_hotplug/cpus_boosted">
-			<spinnerItem name="One Core Boosted" value="1"/> 
-			<spinnerItem name="Two Cores Boosted" value="2"/> 
+		<spinner description="高通热插拔增加了处理器控制机制，你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒（也就是说4秒后4个核心会全部打开），你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在高通热插拔驱动启动时这个设置才会生效！" name="高通睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
+			<spinnerItem name="单核心" value="1"/> 
+			<spinnerItem name="双核心" value="2"/> 
 		</spinner>
 
-		<spinner description="CPU ECO Mode, if ECO set, then only 2 cores can be ON, if STRICT set, then only 1 core can be ON, this will reduce performance but will save battery, depend on one of the custom HOTPLUGS, default not support this" name="Intelli ECO Mode" action="eco_mode">
-			<spinnerItem name="All Cores Used" value="all"/> 
-			<spinnerItem name="ECO Mode(2 cores max)" value="eco"/> 
-			<spinnerItem name="Strict Mode(1 core max)" value="strict"/> 
+		<spinner description="ECO省电模式，设置为仅双核心的时候，那么只有两个核心被开启，另外两个会强行关闭，设置为一个核心的时候，那么另外三个都会被强行关闭，根据CPU被关闭的核心数会损失同样的性能，但是会更省电。" name="Intelli 省电模式" action="eco_mode">
+			<spinnerItem name="所有核心都启用（性能）" value="all"/> 
+			<spinnerItem name="只启用两个核心（省电）" value="eco"/> 
+			<spinnerItem name="只启用一个核心（极限省电）" value="strict"/> 
 		</spinner>
 
-		<spinner description="CPU Thermal control, Can be Default driver without controls, or Intelli thermal driver with controls below, its will limit CPU frequency when CPU reach the max limit heat, till cooled and restore full power, this can help with too hot phone playing games! intelli driver is more aggressive and drop freq to 1.4 then to 1.2 then to 1.1GHz that will reduce performance in all bench apps! Default will lock on 1.9GHz most of the time, and burn the fingers but give you more SCORE to show off." name="CPU Temp Control" action="msm_thermal">
-			<spinnerItem name="Default Temp Control" value="msm_temp"/> 
-			<spinnerItem name="Intelli Temp Control" value="intelli_temp"/> 
+		<spinner description="温度控制，默认温度控制依赖系统的thermal和etc下的配置文件，intelli温度控制可以自由设置频率限制和关闭核心阈值，不恰当的设置会让机器过热重启" name="CPU温度控制" action="msm_thermal">
+			<spinnerItem name="默认温度控制" value="msm_temp"/> 
+			<spinnerItem name="Intelli 温度控制（JZ内核默认）" value="intelli_temp"/> 
 		</spinner>
 
-		<checkbox description="Enable or Disable CPU Cores ON and OFF based on Cores HEAT set below, if OFF! then all cores work but get low freq on high temp! if ON! then cores turned off to help with CPU cooling, but loose performance! very bad for bench show off apps! but good for heat stability" name="CPU Core Controls" action="generic01 /sys/module/msm_thermal/core_control/enabled" label="CPU Cores Control"/>
+		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/enabled" label="处理器温度控制"/>
 
-		<seekBar description="Here you can change CORES max HEAT before turning OFF cores from 3 to 1 and keep normal phone heat, if you tune above CPU max TEMP below, then all cores will stay ON when over heatted! This will work only with Intelli Temp Control ON!!!" name="CORE Max Heat" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="78"/>
+		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在intelli温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="105"/>
 
-		<seekBar description="Here you can change CPU max HEAT before throttled down to cool and keep normal phone heat, depend on CPU Thermal control ON!" name="CPU Max Heat" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="75"/>
+		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="85"/>
 
-		<spinner description="This will set the CPU governor. Default CPU governor will only be set during early stages of booting (before init.d execution), and can be overridden by any other scripts or applications." name="Default CPU Governor" action="default_cpu_gov">
+		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
 			<spinnerItem name="conservative" value="conservative"/> 
 			<spinnerItem name="HYPER" value="HYPER"/> 
 			<spinnerItem name="pegasusq" value="pegasusq"/> 
@@ -67,9 +75,9 @@
 			<spinnerItem name="powersave" value="powersave"/> 
 		</spinner>
 
-		<checkbox description="Enable or Disable CPU-Tweaks below! if ON then kernel will obey only STweaks and set the below freqs on screen OFF and ON" name="CPU-Tweaks" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU-Tweaks"/>
+		<checkbox description="设置处理器的最高和最低频率。和超频控制相比，这项为CPU策略的最高和最低频率，这个值将不会超过超频控制的最高频率" name="处理器策略频率设置" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU频率控制"/>
 
-		<spinner description="Maximum CPU-Speed. You can tune the MAX CPU frequency, DEPEND ON CPU-Tweaks ON ABOVE! (Default: 2265600 kHz)" name="Max CPU Frequency" action="cpu_max_freq">
+		<spinner description="处理器最高频率，依赖内核支持的最高值，默认为内核频率最高值" name="处理器最高频率" action="cpu_max_freq">
 
 			<spinnerItem name="2803200" value="2803200"/> 
 			<spinnerItem name="2726400" value="2726400"/> 
@@ -91,7 +99,7 @@
 			<spinnerItem name="300000" value="300000"/> 
 		</spinner>
 
-		<spinner description="Minimum CPU-Speed. You can tune the MIN CPU frequency, MIN frequency can't be higher than MAX frequency!, DEPEND ON CPU-Tweaks ON ABOVE! (Default: 300000 kHz)" name="Min CPU Frequency" action="cpu_min_freq">
+		<spinner description="处理器最低频率，依赖内核支持的最低值，默认300MHZ" name="处理器最低频率" action="cpu_min_freq">
 			<spinnerItem name="2496000" value="2496000"/> 
 			<spinnerItem name="2419200" value="2419200"/> 
 			<spinnerItem name="2265600" value="2265600"/> 
@@ -114,11 +122,26 @@
 
 </settingsTab>
 
-<settingsTab name="IO">
+<settingsTab name="GPU设置">
+	
+	<settingsPane description="这里你可以设置GPU的频率以及调度器" name="GPU管理">
+		
+		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
+			<spinnerItem name="200MZH" value="200"/> 
+			<spinnerItem name="320MZH" value="320"/> 
+			<spinnerItem name="389MZH" value="389"/> 
+			<spinnerItem name="450MZH" value="450"/> 
+			<spinnerItem name="550MZH" value="550"/> 
+		
+	</settingsPane>
+		
+</settingsTab>
 
-	<settingsPane description="Here you can tune IO settings managed by Kernel" name="IO Tuning">
+<settingsTab name="IO部分">
 
-		<spinner description="Maximum number of kilobytes to read-ahead for SDCARD! Best to leave it 1024KB, default is 1024kB" name="kilobytes to read-ahead" action="generic /sys/block/mmcblk0/bdi/read_ahead_kb">
+	<settingsPane description="这里你可以设置IO的参数" name="IO设置">
+
+		<spinner description="这会给存储器一个缓存，用来暂时存储较多的IO操作的数据，可以提升性能" name="最大预读缓存值" action="generic /sys/block/mmcblk0/bdi/read_ahead_kb">
 			<spinnerItem name="128 kB" value="128"/> 
 			<spinnerItem name="256 kB" value="256"/> 
 			<spinnerItem name="512 kB" value="512"/> 
@@ -127,7 +150,7 @@
 			<spinnerItem name="2560 kB" value="2560"/> 
 		</spinner>
 
-		<spinner description="This will set the default AWAKE IO scheduler for internal storage. (Default: ROW)" name="Default Awake IO Scheduler" action="scheduler">
+		<spinner description="IO调度策略（推荐fiops）" name="默认IO调度" action="scheduler">
 			<spinnerItem name="CFQ" value="cfq"/> 
 			<spinnerItem name="BFQ" value="bfq"/> 
 			<spinnerItem name="DEADLINE" value="deadline"/> 
@@ -137,7 +160,7 @@
 			<spinnerItem name="FIOPS" value="fiops"/> 
 		</spinner>
 
-		<spinner description="This will set the DEEPSLEEP IO scheduler for internal storage. (Default: ROW) Depends on CortexBrain-Background-Process !!!" name="DEEPSLEEP IO Scheduler" action="generic_cortex /tmp/sleep_scheduler">
+		<spinner description="在深度睡眠时，内核将采用的io调度机制" name="深度睡眠io调度机制" action="generic_cortex /tmp/sleep_scheduler">
 			<spinnerItem name="CFQ" value="cfq"/> 
 			<spinnerItem name="BFQ" value="bfq"/> 
 			<spinnerItem name="DEADLINE" value="deadline"/> 
@@ -151,13 +174,14 @@
 
 </settingsTab>
 
-<settingsTab name="Memory">
 
-	<settingsPane description="Here you can tune memory and OOM (low mem management) settings managed by Kernel." name="Memory Tuning">
+<settingsTab name="内存管理">
 
-		<checkbox description="Enable AUTO OOM control using below profiles, disable if you want to set your own OOM tuning via APP or Script." name="Auto OOM" action="generic_cortex /tmp/auto_oom" label="Auto OOM Control"/>
+	<settingsPane description="这里你可以设置OOMkill机制" name="内存管理">
 
-		<spinner description="Here you can set the level of low mem management by kernel lowmemkiller function. More aggressive, equals more free RAM but more killed apps." name="OOM Level Screen ON" action="oom_config_screen_on">
+		<checkbox description="自动启用OOM机制" name="Auto OOM" action="generic_cortex /tmp/auto_oom" label="自动内存控制"/>
+
+		<spinner description="这里你可以设置屏幕开启时的内存管理" name="亮屏OOM等级" action="oom_config_screen_on">
 			<spinnerItem name="low" value="low"/> 
 			<spinnerItem name="medium" value="medium"/> 
 			<spinnerItem name="default" value="default"/> 
@@ -165,7 +189,7 @@
 			<spinnerItem name="exterminate" value="exterminate"/> 
 		</spinner>
 
-		<spinner description="Here you can set the level of low mem management by kernel lowmemkiller function. More aggressive equals more free RAM but more killed apps." name="OOM Level Screen OFF" action="oom_config_screen_off">
+		<spinner description="这里你可以设置屏幕关闭时的内存管理." name="关屏OOM等级" action="oom_config_screen_off">
 			<spinnerItem name="low" value="low"/> 
 			<spinnerItem name="medium" value="medium"/> 
 			<spinnerItem name="default" value="default"/> 

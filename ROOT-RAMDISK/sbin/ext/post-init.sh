@@ -286,7 +286,7 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
 	echo "$TIME_NOW" > /data/boot_log_dm
 )&
 
-   #intell temp default
+   #intelli temp default
    if [ "$(ps | grep "/system/bin/thermal-engine" | wc -l)" -ge "1" ]; then
 				/system/bin/stop thermal-engine;
    fi;
@@ -296,11 +296,11 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
 	echo "85" > /sys/module/msm_thermal/parameters/limit_temp_degC;
 	echo "95" > /sys/module/msm_thermal/parameters/core_limit_temp_degC;
    fi;
- # msm hotplug default
-	/system/bin/stop mpdecision
-	echo "0" > /sys/kernel/intelli_plug/intelli_plug_active;
+ # intelli hotplug default
+ /system/bin/stop mpdecision
 	echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
-	echo "1" > /sys/module/msm_hotplug/msm_enabled;
+	echo "0" > /sys/module/msm_hotplug/msm_enabled;
+	echo "1" > /sys/kernel/intelli_plug/intelli_plug_active;
 	if [ "$(ps | grep /system/bin/thermal-engine | wc -l)" -ge "1" ]; then
 		$BB renice -n -20 -p $(pgrep -f "/system/bin/thermal-engine");
 	fi;
