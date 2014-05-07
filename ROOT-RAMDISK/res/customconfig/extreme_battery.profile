@@ -11,6 +11,7 @@ default_cpu_gov=ondemand
 cortexbrain_cpu=off
 cpu_max_freq=1728000
 cpu_min_freq=300000
+max_gpuclk=550000000
 read_ahead_kb=512
 scheduler=row
 sleep_scheduler=row

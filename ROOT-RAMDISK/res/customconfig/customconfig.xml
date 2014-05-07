@@ -12,18 +12,18 @@
 
 	<settingsPane description="你可以设置ST工具是否在启动时加载设置" name="启动加载设置">
 
-		<spinner description="主设置开关，启动时加载所有设置。默认为“启动时加载所有设置”" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
+		<spinner description="主设置开关，启动时加载所有设置。默认为启动时加载所有设置" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
 			<spinnerItem name="启动时加载所有设置" value="yes"/> 
 			<spinnerItem name="不再启动时加载设置" value="no"/> 
 		</spinner>
 
-		<button description="按下“加载所有”加载配置文件" name="加载所有" action="push-actions/reload_settings" label="加载所有"/>
+		<button description="按下加载所有加载配置文件" name="加载所有" action="push-actions/reload_settings" label="加载所有"/>
 
 	</settingsPane>
 
 	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
 
-		<spinner description="限制超频频率的最高值（JZ内核中为了适应所有内核，我把它默认设置为2.8G），这个值代表除了系统CPU限制策略外，由faux123编写的另一种控制cpu最高频率的机制，相比系统的机制更有效，在这个值被设定后，其他CPU调节软件无法设置超过这个值的CPU频率，但是这个值也无法设置CPU最高频率，它只是一个限制的阈值。" name="频率最高值限制" action="oc_controller">
+		<spinner description="限制超频频率的最高值（JZ内核中为了适应所有内核，我把它默认设置为2.8G），这个值代表除了系统CPU限制策略外，由faux123编写的另一种控制cpu最高频率的机制，相比系统的机制更有效，在这个值被设定后，其他CPU调节软件无法设置超过这个值的CPU频率，但是这个值也无法设置CPU最高频率，它只是一个限制的阈值." name="频率最高值限制" action="oc_controller">
 			<spinnerItem name="低频 2.0GHz" value="battery"/> 
 			<spinnerItem name="LG默认 2.3GHz" value="stock"/> 
 			<spinnerItem name="超频1档 2.4GHz" value="boost"/> 
@@ -32,14 +32,14 @@
 			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/> 
 		</spinner>
 
-		<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard&Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
+		<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard&Intelli两个热插拔，JZ内核默认为Intelli 推荐" name="热插拔驱动" action="hotplug">
 			<spinnerItem name="LG 默认" value="default"/> 
 			<spinnerItem name="高通热插拔" value="msm_hotplug"/> 
 			<spinnerItem name="Alucard 热插拔" value="alucard"/> 
 			<spinnerItem name="Intelli 热插拔" value="intelli"/> 
 		</spinner>
 
-		<spinner description="高通热插拔增加了处理器控制机制，你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒（也就是说4秒后4个核心会全部打开），你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在高通热插拔驱动启动时这个设置才会生效！" name="高通睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
+		<spinner description="高通热插拔增加了处理器控制机制，你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒,也就是说4秒后4个核心会全部打开，你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在高通热插拔驱动启动时这个设置才会生效！" name="高通睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
 			<spinnerItem name="单核心" value="1"/> 
 			<spinnerItem name="双核心" value="2"/> 
 		</spinner>
@@ -127,11 +127,12 @@
 	<settingsPane description="这里你可以设置GPU的频率以及调度器" name="GPU管理">
 		
 		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
-			<spinnerItem name="200MZH" value="200"/> 
-			<spinnerItem name="320MZH" value="320"/> 
-			<spinnerItem name="389MZH" value="389"/> 
-			<spinnerItem name="450MZH" value="450"/> 
-			<spinnerItem name="550MZH" value="550"/> 
+			<spinnerItem name="200MZH" value="200000000"/> 
+			<spinnerItem name="320MZH" value="320000000"/> 
+			<spinnerItem name="389MZH" value="389000000"/> 
+			<spinnerItem name="450MZH" value="450000000"/> 
+			<spinnerItem name="550MZH" value="550000000"/> 
+		</spinner>
 		
 	</settingsPane>
 		

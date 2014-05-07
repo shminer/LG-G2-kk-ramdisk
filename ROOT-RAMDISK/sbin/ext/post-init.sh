@@ -25,7 +25,7 @@ OPEN_RW;
 # fix storage folder owner
 $BB chown system.sdcard_rw /storage;
 
-# Boot with ROW I/O Gov
+# Boot with fiops I/O Gov
 $BB echo "fiops" > /sys/block/mmcblk0/queue/scheduler;
 
 # clean old modules from /system and add new from ramdisk
@@ -164,7 +164,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=14;
+RESET_MAGIC=15;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
