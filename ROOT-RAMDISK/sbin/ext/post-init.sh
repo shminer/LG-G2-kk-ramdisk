@@ -28,18 +28,6 @@ $BB chown system.sdcard_rw /storage;
 # Boot with fiops I/O Gov
 $BB echo "fiops" > /sys/block/mmcblk0/queue/scheduler;
 
-# clean old modules from /system and add new from ramdisk
-if [ ! -d /system/lib/modules ]; then
-        $BB mkdir /system/lib/modules;
-fi;
-cd /lib/modules/;
-for i in *.ko; do
-        $BB rm -f /system/lib/modules/"$i";
-done;
-cd /;
-
-$BB chmod 755 /lib/modules/*.ko;
-$BB cp -a /lib/modules/*.ko /system/lib/modules/;
 
 # create init.d folder if missing
 if [ ! -d /system/etc/init.d ]; then
@@ -144,7 +132,7 @@ echo 2048 > /sys/block/mmcblk0/queue/read_ahead_kb
 echo 550000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk
 
 # set min max boot freq to default.
-echo "2265600" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "2803200" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
 echo "300000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 
 # Fix ROM dev wrong sets.
@@ -164,7 +152,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=15;
+RESET_MAGIC=1;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
@@ -191,9 +179,6 @@ read_config;
 	# Apps Install
 	$BB sh /sbin/ext/install.sh;
 )&
-
-# enable force fast charge on USB to charge faster
-echo "$force_fast_charge" > /sys/kernel/fast_charge/force_fast_charge;
 
 ######################################
 # Loading Modules
@@ -285,22 +270,3 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
 	TIME_NOW=$(date)
 	echo "$TIME_NOW" > /data/boot_log_dm
 )&
-
-   #intelli temp default
-   if [ "$(ps | grep "/system/bin/thermal-engine" | wc -l)" -ge "1" ]; then
-				/system/bin/stop thermal-engine;
-   fi;
-   echo "1" > /sys/module/msm_thermal/core_control/enabled;
-   if [ "$(cat /sys/module/msm_thermal/parameters/enabled)" == "N" ]; then
-	echo "Y" > /sys/module/msm_thermal/parameters/enabled;
-	echo "85" > /sys/module/msm_thermal/parameters/limit_temp_degC;
-	echo "95" > /sys/module/msm_thermal/parameters/core_limit_temp_degC;
-   fi;
- # intelli hotplug default
- /system/bin/stop mpdecision
-	echo "0" > /sys/kernel/alucard_hotplug/hotplug_enable;
-	echo "0" > /sys/module/msm_hotplug/msm_enabled;
-	echo "1" > /sys/kernel/intelli_plug/intelli_plug_active;
-	if [ "$(ps | grep /system/bin/thermal-engine | wc -l)" -ge "1" ]; then
-		$BB renice -n -20 -p $(pgrep -f "/system/bin/thermal-engine");
-	fi;
