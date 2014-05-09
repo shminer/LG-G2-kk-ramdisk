@@ -129,7 +129,7 @@ echo 2048 > /sys/block/mmcblk0/bdi/read_ahead_kb
 echo 2048 > /sys/block/mmcblk0/queue/read_ahead_kb
 
 # make sure our max gpu clock is set via sysfs
-echo 550000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk
+echo 578000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk
 
 # set min max boot freq to default.
 echo "2803200" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
