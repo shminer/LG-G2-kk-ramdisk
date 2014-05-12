@@ -35,6 +35,7 @@ if [ "a$2" != "a" ]; then
 				echo "1" > /sys/module/msm_thermal/core_control/enabled;
 			fi;
 			if [ "$(cat /sys/module/msm_thermal/parameters/enabled)" == "N" ]; then
+			    /system/bin/start thermal-engine;
 				echo "Y" > /sys/module/msm_thermal/parameters/enabled;
 				echo "$limit_temp_degC" > /sys/module/msm_thermal/parameters/limit_temp_degC;
 				echo "$core_limit_temp_degC" > /sys/module/msm_thermal/parameters/core_limit_temp_degC;
