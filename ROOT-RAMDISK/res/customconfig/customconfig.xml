@@ -130,9 +130,9 @@
 		
 		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
 			<spinnerItem name="200Mhz" value="200000000"/> 
-			<spinnerItem name="320Mhz" value="320000000"/> 
-			<spinnerItem name="389Mhz" value="389000000"/> 
-			<spinnerItem name="450Mhz" value="450000000"/> 
+			<spinnerItem name="533Mhz" value="533000000"/> 
+			<spinnerItem name="540Mhz" value="540000000"/> 
+			<spinnerItem name="550Mhz" value="550000000"/> 
 			<spinnerItem name="578Mhz" value="578000000"/> 
 		</spinner>
 	
