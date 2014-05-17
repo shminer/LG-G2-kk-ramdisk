@@ -62,6 +62,7 @@
 		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="95"/>
 
 		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
+
 			<spinnerItem name="conservative" value="conservative"/> 
 			<spinnerItem name="HYPER" value="HYPER"/> 
 			<spinnerItem name="pegasusq" value="pegasusq"/> 
@@ -73,6 +74,26 @@
 			<spinnerItem name="ondemandplus" value="ondemandplus"/> 
 			<spinnerItem name="interactive" value="interactive"/> 
 			<spinnerItem name="powersave" value="powersave"/> 
+		</spinner>
+
+
+		<spinner description="Touch booster Control, when you touch the screen and scroll, CPU will boost freq to tuned one to help reducing LAG and allow fast and smooth device. too high freq will use more power. default is 1.574Ghz" name="Touch Boost Freq" action="cpu_boost_freq">
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="DISABLED" value="300000"/> 
+		</spinner>
+
+		<spinner description="当你使用Ondemand调速器时，有两种模式选择，省电模式和性能模式，省电模式频率提升缓慢，最大频率限制到2.3Ghz，选择性能模式时即可达到最大频率，延迟较低。" name="Ondemand Power Save Switch" action="ondemand_slowup">
+			<spinnerItem name="省电模式" value="1"/> 
+			<spinnerItem name="性能模式" value="0"/> 
 		</spinner>
 
 		<checkbox description="设置处理器的最高和最低频率。和超频控制相比，这项为CPU策略的最高和最低频率，这个值将不会超过超频控制的最高频率" name="处理器策略频率设置" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU频率控制"/>
@@ -119,8 +140,6 @@
 		</spinner>
 
 	</settingsPane>
-
-</settingsTab>
 
 <settingsTab name="GPU设置">
 	
@@ -316,6 +335,8 @@
 		</spinner>
 
 		<checkbox description="Enable one more Force Fast Charge HACK to mask any charger including USB as AC power. so we always get fast charge mode! no more SLOW CHARGE Icon! The side effect is that you get 2 connections sound and vibrate! one for USB connected and second for AC connected!" name="Fake AC Charger" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="Fake AC Charger Hack"/>
+
+		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="Support Apple Chargers"/>
 
 	</settingsPane>
 
