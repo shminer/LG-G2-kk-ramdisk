@@ -1,9 +1,9 @@
 stweaks_boot_control=yes
 oc_controller=ultra
-hotplug=alucard
+hotplug=intelli
 cpus_boosted=2
 eco_mode=all
-msm_thermal=intelli_temp
+msm_thermal=msm_temp
 enabled=on
 core_limit_temp_degC=90
 limit_temp_degC=80
