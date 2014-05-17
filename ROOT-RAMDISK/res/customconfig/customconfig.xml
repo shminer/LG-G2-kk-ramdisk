@@ -63,17 +63,12 @@
 
 		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
 
-			<spinnerItem name="conservative" value="conservative"/> 
-			<spinnerItem name="HYPER" value="HYPER"/> 
-			<spinnerItem name="pegasusq" value="pegasusq"/> 
-			<spinnerItem name="nightmare" value="nightmare"/> 
 			<spinnerItem name="darkness" value="darkness"/> 
 			<spinnerItem name="intellidemand" value="intellidemand"/> 
 			<spinnerItem name="intelliactive" value="intelliactive"/> 
 			<spinnerItem name="ondemand" value="ondemand"/> 
 			<spinnerItem name="ondemandplus" value="ondemandplus"/> 
 			<spinnerItem name="interactive" value="interactive"/> 
-			<spinnerItem name="powersave" value="powersave"/> 
 		</spinner>
 
 
