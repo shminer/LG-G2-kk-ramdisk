@@ -77,7 +77,7 @@
 		</spinner>
 
 
-		<spinner description="Touch booster Control, when you touch the screen and scroll, CPU will boost freq to tuned one to help reducing LAG and allow fast and smooth device. too high freq will use more power. default is 1.574Ghz" name="Touch Boost Freq" action="cpu_boost_freq">
+		<spinner description="当你触摸屏幕的时候，直接提升CPU频率的数值，可关闭。" name="触摸提速" action="cpu_boost_freq">
 			<spinnerItem name="2419200" value="2419200"/> 
 			<spinnerItem name="2265600" value="2265600"/> 
 			<spinnerItem name="1958400" value="1958400"/> 
@@ -88,10 +88,10 @@
 			<spinnerItem name="1190400" value="1190400"/> 
 			<spinnerItem name="1036800" value="1036800"/> 
 			<spinnerItem name="960000" value="960000"/> 
-			<spinnerItem name="DISABLED" value="300000"/> 
+			<spinnerItem name="关闭" value="300000"/> 
 		</spinner>
 
-		<spinner description="当你使用Ondemand调速器时，有两种模式选择，省电模式和性能模式，省电模式频率提升缓慢，最大频率限制到2.3Ghz，选择性能模式时即可达到最大频率，延迟较低。" name="Ondemand Power Save Switch" action="ondemand_slowup">
+		<spinner description="当你使用Ondemand调速器时，有两种模式选择，省电模式和性能模式，省电模式频率提升缓慢，最大频率限制到2.3Ghz，选择性能模式时即可达到最大频率，延迟较低。" name="Ondemand 节能开关" action="ondemand_slowup">
 			<spinnerItem name="省电模式" value="1"/> 
 			<spinnerItem name="性能模式" value="0"/> 
 		</spinner>
@@ -140,6 +140,8 @@
 		</spinner>
 
 	</settingsPane>
+
+</settingsTab>
 
 <settingsTab name="GPU设置">
 	
