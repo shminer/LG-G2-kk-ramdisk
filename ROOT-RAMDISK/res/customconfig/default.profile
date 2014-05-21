@@ -14,6 +14,7 @@ cortexbrain_cpu=on
 cpu_max_freq=2803200
 cpu_min_freq=300000
 min_pwrlevel=4
+max_pwrlevel=0
 max_gpuclk=578000000
 read_ahead_kb=2048
 scheduler=fiops

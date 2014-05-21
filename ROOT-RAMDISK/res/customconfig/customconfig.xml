@@ -140,9 +140,15 @@
 
 <settingsTab name="GPU设置">
 	
-	<settingsPane description="这里你可以设置GPU的频率以及性能等级" name="GPU管理">
+	<settingsPane description="这里你可以设置GPU的性能等级" name="GPU性能等级管理">
 		
 		<seekBar description="GPU的性能等级可以限制GPU最低的性能等级来限制GPU的最低频率，这样不需要调速器来选择频率以提高性能，最低频率越高，使用时越耗电，但性能越强，待机不影响。默认不限制lv4（200Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/min_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
+		
+		<seekBar description="GPU的性能等级可以限制GPU最高的性能等级来限制GPU的最高频率（防止thermal写入最高频率使得调整失效），这样不需要thermal来选择频率以节约电能，最高频率越低，使用时越省电，但性能越差，待机不影响。默认不限制lv0（578Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
+	
+	</settingsPane>
+	
+	<settingsPane description="这里你可以设置GPU的频率" name="GPU频率管理">
 		
 		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
 			<spinnerItem name="200Mhz" value="200000000"/> 
