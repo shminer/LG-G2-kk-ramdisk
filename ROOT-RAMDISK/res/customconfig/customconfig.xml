@@ -271,6 +271,12 @@
 
 	</settingsPane>
 
+	<settingsPane description="相机驱动复位" name="相机复位">
+
+		<button description="如果相机启动黑屏，点这个来复位相机。" name="复位驱动" action="push-actions/camera_restart" label="立即复位"/>
+
+	</settingsPane>
+
 	<settingsPane description="WIFI Settings" name="WIFI">
 
 		<button description="Clean WIFI DHCP IP Lease. Push the button to activate!" name="Clean WIFI Lease" action="push-actions/fix_wifi" label="Clean WIFI Lease"/>
@@ -340,6 +346,15 @@
 		<checkbox description="Enable one more Force Fast Charge HACK to mask any charger including USB as AC power. so we always get fast charge mode! no more SLOW CHARGE Icon! The side effect is that you get 2 connections sound and vibrate! one for USB connected and second for AC connected!" name="Fake AC Charger" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="Fake AC Charger Hack"/>
 
 		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="Support Apple Chargers"/>
+
+	</settingsPane>
+
+	<settingsPane description="Enable using Android phone as USB and Keyboard for your PC!, lets say you dont have keyboard and you really need one! connect your phone via usb get app named USB KEYBOARD, enable the tweak here, and have fun!" name="Android USB HID Device">
+
+		<spinner description="Enable or Disable USB HID Device driver to control PC keyboard and mouse from phone!" name="USB HID Device" action="usb_keyboard">
+			<spinnerItem name="Enable USB HID" value="enable"/> 
+			<spinnerItem name="Disable USB HID" value="disable"/> 
+		</spinner>
 
 	</settingsPane>
 
