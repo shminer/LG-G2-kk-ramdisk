@@ -119,8 +119,8 @@ $BB chmod 666 /sys/devices/system/cpu/cpu3/online
 $BB chmod 666 /sys/module/msm_thermal/parameters/*
 $BB chmod 666 /sys/module/msm_thermal/core_control/enabled
 $BB chmod 666 /sys/kernel/intelli_plug/*
-$BB chmod 666 /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk
-$BB chmod 666 /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/pwrscale/trustzone/governor
+$BB chmod 666 /sys/class/kgsl/kgsl-3d0/max_gpuclk
+$BB chmod 666 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor
 
 # Tweak some VM settings for system smoothness
 echo "15" > /proc/sys/vm/dirty_background_ratio
@@ -131,7 +131,7 @@ echo "2048" > /sys/block/mmcblk0/bdi/read_ahead_kb
 echo "2048" > /sys/block/mmcblk0/queue/read_ahead_kb
 
 # make sure our max gpu clock is set via sysfs
-echo "578000000" > /sys/class/kgsl/kgsl-3d0/max_gpuclk
+echo "450000000" > /sys/class/kgsl/kgsl-3d0/max_gpuclk
 
 # set min max boot freq to default.
 echo "2803200" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
@@ -272,3 +272,4 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
 	TIME_NOW=$(date)
 	echo "$TIME_NOW" > /data/boot_log_dm
 )&
+
