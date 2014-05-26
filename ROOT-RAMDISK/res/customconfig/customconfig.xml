@@ -32,17 +32,6 @@
 			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/> 
 		</spinner>
 
-		<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard和Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
-			<spinnerItem name="LG 默认" value="default"/> 
-			<spinnerItem name="高通热插拔" value="msm_hotplug"/> 
-			<spinnerItem name="Alucard 热插拔" value="alucard"/> 
-			<spinnerItem name="Intelli 热插拔" value="intelli"/> 
-		</spinner>
-
-		<spinner description="高通热插拔增加了处理器控制机制，你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒,也就是说4秒后4个核心会全部打开，你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在高通热插拔驱动启动时这个设置才会生效！" name="高通睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
-			<spinnerItem name="单核心" value="1"/> 
-			<spinnerItem name="双核心" value="2"/> 
-		</spinner>
 
 		<spinner description="ECO省电模式，设置为仅双核心的时候，那么只有两个核心被开启，另外两个会强行关闭，设置为一个核心的时候，那么另外三个都会被强行关闭，根据CPU被关闭的核心数会损失同样的性能，但是会更省电。" name="Intelli 省电模式" action="eco_mode">
 			<spinnerItem name="所有核心都启用（性能）" value="all"/> 
@@ -162,6 +151,31 @@
 		
 </settingsTab>
 
+<settingsTab name="热插拔调整">
+	
+	<settingsPane description="选择热插拔驱动" name="热插拔设置">
+		
+			<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard和Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
+			<spinnerItem name="LG 默认" value="default"/> 
+			<spinnerItem name="高通热插拔" value="msm_hotplug"/> 
+			<spinnerItem name="Alucard 热插拔" value="alucard"/> 
+			<spinnerItem name="Intelli 热插拔" value="intelli"/> 
+		</spinner>
+		
+	</settingsPane>
+	
+	<settingsPane description="msm热插拔调整" name="热插拔设置">
+		
+		<spinner description="高通热插拔增加了处理器控制机制，你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒,也就是说4秒后4个核心会全部打开，你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在高通热插拔驱动启动时这个设置才会生效！" name="高通睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
+			<spinnerItem name="单核心" value="1"/> 
+			<spinnerItem name="双核心" value="2"/> 
+		</spinner>
+		
+	</settingsPane>
+	
+	
+</settingsTab>
+	
 <settingsTab name="IO部分">
 
 	<settingsPane description="这里你可以设置IO的参数" name="IO设置">
@@ -345,7 +359,9 @@
 
 		<checkbox description="Enable one more Force Fast Charge HACK to mask any charger including USB as AC power. so we always get fast charge mode! no more SLOW CHARGE Icon! The side effect is that you get 2 connections sound and vibrate! one for USB connected and second for AC connected!" name="Fake AC Charger" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="Fake AC Charger Hack"/>
 
-		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="Support Apple Chargers"/>
+		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="苹果充电支持"/>
+
+		<checkbox description="使得任何数据线都被识别为LG原装数据线，可以更快地传输文件以及充电。" name="任意数据线支持" action="generic01 /sys/kernel/fast_charge/fake_original_cable" label="任意数据线支持"/>
 
 	</settingsPane>
 
