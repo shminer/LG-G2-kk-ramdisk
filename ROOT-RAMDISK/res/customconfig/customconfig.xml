@@ -156,7 +156,7 @@
 			<spinnerItem name="conservative" value="conservative"/> 
 		</spinner>
 		
-		<spinner description="这里可以设置algorithm的提升阈值。" name="algorithm参数设置" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold">
+		<spinner description="如果你使用“msm-adreno-tz”，这里可以设置algorithm的提升阈值。" name="algorithm参数设置" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold">
 			<spinnerItem name="3000" value="3000"/> 
 			<spinnerItem name="5000" value="5000"/> 
 			<spinnerItem name="6000" value="6000"/> 
