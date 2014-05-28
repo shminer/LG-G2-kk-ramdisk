@@ -341,6 +341,16 @@
 </settingsTab>
 
 <settingsTab name="Tweaks">
+	
+	<settingsPane description="TCP拥塞控制" name="TCP拥塞">
+	
+	<spinner description="通过下面的选项来切换tcp拥塞驱动" name="TCP拥塞控制" action="generic /proc/sys/net/ipv4/tcp_congestion_control">
+			<spinnerItem name="westwood" value="westwood"/> 
+			<spinnerItem name="cubic" value="cubic"/> 
+			<spinnerItem name="reno" value="reno"/> 
+	</spinner>
+	
+	</settingsPane>
 
 	<settingsPane description="Fast charge control menu, here you can set the force FAST charge option when MTP is used as USB connection!" name="Fast Charge Control">
 
