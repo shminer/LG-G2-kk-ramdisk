@@ -207,7 +207,7 @@
 			<spinnerItem name="4096 kB" value="4096"/>
 		</spinner>
 
-		<spinner description="IO调度策略（推荐fiops）" name="默认IO调度" action="scheduler">
+		<spinner description="IO调度策略" name="默认IO调度" action="scheduler">
 			<spinnerItem name="CFQ" value="cfq"/> 
 			<spinnerItem name="BFQ" value="bfq"/> 
 			<spinnerItem name="DEADLINE" value="deadline"/> 
