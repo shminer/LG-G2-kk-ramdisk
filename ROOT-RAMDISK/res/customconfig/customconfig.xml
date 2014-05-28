@@ -149,6 +149,22 @@
 	
 		</settingsPane>
 		
+	<settingsPane description="这里你可以设置一些调度器和调度器参数" name="GPU调度管理">
+		
+		<spinner description="这里可以设置GPU的调度器推荐“msm-adreno-tz”，它已经被我优化并加入faux的新gpu调速器algorithm。" name="GPU调度器" action="generic /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor">
+			<spinnerItem name="msm-adreno-tz" value="msm-adreno-tz"/> 
+			<spinnerItem name="conservative" value="conservative"/> 
+		</spinner>
+		
+		<spinner description="这里可以设置algorithm的提升阈值。" name="algorithm参数设置" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold">
+			<spinnerItem name="3000" value="3000"/> 
+			<spinnerItem name="5000" value="5000"/> 
+			<spinnerItem name="6000" value="6000"/> 
+			<spinnerItem name="8000" value="8000"/> 
+		</spinner>
+	
+		</settingsPane>
+	
 </settingsTab>
 
 <settingsTab name="热插拔调整">
