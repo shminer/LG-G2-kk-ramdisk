@@ -34,6 +34,7 @@ cron_zipalign=off
 gpsregion=No_GPS_Zone_changes
 init_d=on
 logger=off
+tcp_congestion_control=westwood
 force_fast_charge=0
 fast_charge_level=1800
 fake_charge_ac=off
