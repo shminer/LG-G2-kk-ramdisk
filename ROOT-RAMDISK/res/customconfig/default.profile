@@ -40,7 +40,6 @@ tcp_congestion_control=westwood
 force_fast_charge=0
 fast_charge_level=1800
 fake_charge_ac=off
-fake_original_cable=on
 prop_chg_detect=off
 usb_keyboard=disable
 sweep2sleep=off

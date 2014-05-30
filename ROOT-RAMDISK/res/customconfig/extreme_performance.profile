@@ -13,6 +13,7 @@ ondemand_slowup=0
 cortexbrain_cpu=on
 cpu_max_freq=2803200
 cpu_min_freq=300000
+<<<<<<< HEAD
 min_pwrlevel=4
 max_pwrlevel=1
 max_gpuclk=450000000
@@ -20,6 +21,18 @@ read_ahead_kb=2048
 scheduler=fiops
 sleep_scheduler=fiops
 cortexbrain_cpu=off
+=======
+msm_thermal=msm_temp
+enabled=off
+core_limit_temp_degC=75
+limit_temp_degC=75
+hotplug=msm_hotplug
+cpus_boosted=2
+eco_mode=all
+read_ahead_kb=1024
+scheduler=row
+sleep_scheduler=row
+>>>>>>> origin/kitkat-ramdisk
 auto_oom=on
 oom_config_screen_on=medium
 oom_config_screen_off=aggressive
@@ -37,7 +50,6 @@ logger=off
 force_fast_charge=0
 fast_charge_level=1800
 fake_charge_ac=off
-fake_original_cable=on
 prop_chg_detect=off
 usb_keyboard=disable
 sweep2sleep=off
