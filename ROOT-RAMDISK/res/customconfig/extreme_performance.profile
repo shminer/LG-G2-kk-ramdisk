@@ -24,7 +24,7 @@ cortexbrain_cpu=off
 =======
 msm_thermal=msm_temp
 enabled=off
-core_limit_temp_degC=75
+core_limit_temp_degC=80
 limit_temp_degC=75
 hotplug=msm_hotplug
 cpus_boosted=2

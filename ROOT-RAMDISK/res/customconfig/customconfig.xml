@@ -33,6 +33,7 @@
 		</spinner>
 
 
+
 		<spinner description="ECO省电模式，设置为仅双核心的时候，那么只有两个核心被开启，另外两个会强行关闭，设置为一个核心的时候，那么另外三个都会被强行关闭，根据CPU被关闭的核心数会损失同样的性能，但是会更省电。" name="Intelli 省电模式" action="eco_mode">
 			<spinnerItem name="所有核心都启用（性能）" value="all"/> 
 			<spinnerItem name="只启用两个核心（省电）" value="eco"/> 
@@ -58,6 +59,7 @@
 			<spinnerItem name="ondemand" value="ondemand"/> 
 			<spinnerItem name="ondemandplus" value="ondemandplus"/> 
 			<spinnerItem name="interactive" value="interactive"/> 
+			<spinnerItem name="Alucard" value="alucard"/> 
 		</spinner>
 
 
@@ -124,6 +126,7 @@
 		</spinner>
 
 	</settingsPane>
+
 
 </settingsTab>
 
@@ -254,9 +257,9 @@
 			<spinnerItem name="exterminate" value="exterminate"/> 
 		</spinner>
 
-		<seekBar description="Dirty background memory buffer, more you set, more memory will be used for write buffer for background operations. Buffer is released on need to free RAM (Default: 20%)" name="Dirty Background ratio" action="generic /proc/sys/vm/dirty_background_ratio" unit="%" min="5" reversed="false" step="5" max="80"/>
+		<seekBar description="Dirty background memory buffer, more you set, more memory will be used for write buffer for background operations. Buffer is released on need to free RAM" name="Dirty Background ratio" action="generic /proc/sys/vm/dirty_background_ratio" unit="%" min="5" reversed="false" step="5" max="80"/>
 
-		<seekBar description="Dirty real time memory buffer, more you set, more memory will be used for write buffer for real time operations. Buffer is released on need to free RAM (Default: 40%)" name="Dirty ratio" action="generic /proc/sys/vm/dirty_ratio" unit="%" min="5" reversed="false" step="5" max="90"/>
+		<seekBar description="Dirty real time memory buffer, more you set, more memory will be used for write buffer for real time operations. Buffer is released on need to free RAM" name="Dirty ratio" action="generic /proc/sys/vm/dirty_ratio" unit="%" min="5" reversed="false" step="5" max="90"/>
 
 		<button description="Clean RAM Cache. This will release all cached and buffered RAM, please WAIT 3sec to get cleanup report" name="CLEAN RAM CACHE" action="push-actions/clean_ram_cache" label="CLEAN RAM CACHE NOW"/>
 
@@ -344,7 +347,7 @@
 
 	<settingsPane description="INIT.D" name="INIT.D">
 
-		<checkbox description="Enable or Disable INIT.D scripts RUN on boot. Many new ROMS are running the init.d scripts automatically. You can also force running the scripts, but if you run them and ROM runs them too, we have a problem: all scripts are running X2 times! To avoid conflicts, STweaks RUN-control is disabled by default. If you know that your ROM is NOT supporting init.d script running, then turn it ON here and reboot." name="INIT.D Scripts RUN control" action="generic_cortex /tmp/init_d" label="Enable INIT.D scripts RUN-control"/>
+		<checkbox description="Enable or Disable INIT.D scripts RUN on boot. if you put scripts to INIT.D then enable the switch. default SuperSu script will run on boot by kernel from init.d" name="INIT.D Scripts RUN control" action="generic_cortex /tmp/init_d" label="Enable INIT.D scripts RUN-control"/>
 
 	</settingsPane>
 

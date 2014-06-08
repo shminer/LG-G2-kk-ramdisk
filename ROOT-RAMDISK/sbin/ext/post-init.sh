@@ -87,14 +87,19 @@ ONDEMAND_TUNING()
 {
 	echo "10" > /cpugov/ondemand/down_differential;
 	echo "3" > /cpugov/ondemand/down_differential_multi_core;
-	echo "85" > /cpugov/ondemand/micro_freq_up_threshold;
+	echo "80" > /cpugov/ondemand/micro_freq_up_threshold;
 	echo "1" > /cpugov/ondemand/sampling_down_factor;
 	echo "50000" > /cpugov/ondemand/sampling_rate;
-	echo "80" > /cpugov/ondemand/up_threshold;
-	echo "80" > /cpugov/ondemand/up_threshold_any_cpu_load;
-	echo "80" > /cpugov/ondemand/up_threshold_multi_core;
+	echo "75" > /cpugov/ondemand/up_threshold;
+	echo "75" > /cpugov/ondemand/up_threshold_any_cpu_load;
+	echo "75" > /cpugov/ondemand/up_threshold_multi_core;
 	echo "1497600" > /cpugov/ondemand/sync_freq;
 	echo "1497600" > /cpugov/ondemand/optimal_freq;
+	echo "2265600" > /cpugov/ondemand/optimal_max_freq;
+	echo "10" > /cpugov/ondemand/middle_grid_step;
+	echo "15" > /cpugov/ondemand/high_grid_step;
+	echo "30" > /cpugov/ondemand/middle_grid_load;
+	echo "40" > /cpugov/ondemand/high_grid_load;
 	echo "300000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 }
 
@@ -147,7 +152,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=28;
+RESET_MAGIC=s19;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
@@ -256,6 +261,13 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
 	if [ "$init_d" == "on" ]; then
 		$BB chmod 755 /system/etc/init.d/*;
 		$BB run-parts /system/etc/init.d/;
+	else
+		if [ -e /system/etc/init.d/99SuperSUDaemon ]; then
+			$BB chmod 755 /system/etc/init.d/*;
+			$BB sh /system/etc/init.d/99SuperSUDaemon;
+		else
+			echo "no root script in init.d";
+		fi;
 	fi;
 
 	# Fix critical perms again after init.d mess

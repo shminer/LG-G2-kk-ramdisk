@@ -1,4 +1,5 @@
 stweaks_boot_control=yes
+<<<<<<< HEAD
 oc_controller=ultra
 hotplug=intelli
 cpus_boosted=2
@@ -7,6 +8,9 @@ msm_thermal=msm_temp
 enabled=on
 core_limit_temp_degC=85
 limit_temp_degC=70
+=======
+oc_controller=battery
+>>>>>>> origin/kitkat-ramdisk
 default_cpu_gov=ondemand
 cpu_boost_freq=1728000
 ondemand_slowup=0
@@ -24,7 +28,7 @@ cortexbrain_cpu=off
 =======
 msm_thermal=msm_temp
 enabled=off
-core_limit_temp_degC=75
+core_limit_temp_degC=80
 limit_temp_degC=75
 hotplug=msm_hotplug
 cpus_boosted=1
@@ -41,7 +45,7 @@ downdifferential=20
 upthreshold=60
 downthreshold=20
 upthreshold_cons=50
-read_ahead_kb=512
+read_ahead_kb=1024
 scheduler=row
 sleep_scheduler=row
 >>>>>>> origin/kitkat-ramdisk
