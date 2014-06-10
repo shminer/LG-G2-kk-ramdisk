@@ -142,7 +142,7 @@
 	
 	<settingsPane description="这里你可以设置GPU的频率" name="GPU频率管理">
 		
-		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk1">
+		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
 			<spinnerItem name="200Mhz" value="200000000"/> 
 			<spinnerItem name="320Mhz" value="320000000"/> 
 			<spinnerItem name="389Mhz" value="389000000"/> 
