@@ -152,7 +152,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=19;
+RESET_MAGIC=10;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
@@ -202,7 +202,7 @@ MODULES_LOAD()
 echo "0" > /proc/sys/kernel/kptr_restrict;
 
 # disable debugging on some modules
-if [ "$logger" == "off" ]; then
+if [ "$logger" -ge "1" ]; then
 	echo "N" > /sys/module/kernel/parameters/initcall_debug;
 #	echo "0" > /sys/module/alarm/parameters/debug_mask;
 #	echo "0" > /sys/module/alarm_dev/parameters/debug_mask;

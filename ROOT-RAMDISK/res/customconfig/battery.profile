@@ -33,6 +33,7 @@ limit_temp_degC=75
 hotplug=msm_hotplug
 cpus_boosted=2
 eco_mode=eco
+min_online_cpus=1
 governor=msm-adreno-tz
 max_freq=389000000
 min_freq=200000000
@@ -61,9 +62,15 @@ cron_db_optimizing=off
 cron_clear_app_cache=off
 cron_zipalign=off
 gpsregion=No_GPS_Zone_changes
+<<<<<<< HEAD
 init_d=on
 logger=off
 force_fast_charge=0
+=======
+init_d=off
+logger=2
+force_fast_charge=2
+>>>>>>> origin/kitkat-ramdisk
 fast_charge_level=1800
 fake_charge_ac=off
 prop_chg_detect=off

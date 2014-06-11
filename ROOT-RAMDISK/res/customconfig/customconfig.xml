@@ -39,6 +39,13 @@
 			<spinnerItem name="只启用两个核心（省电）" value="eco"/> 
 			<spinnerItem name="只启用一个核心（极限省电）" value="strict"/> 
 		</spinner>
+		
+		<spinner description="这里你可以设置最小在线的核心数" name="最小在线核心" action="min_online_cpus">
+			<spinnerItem name="正常（一个核心）" value="1"/> 
+			<spinnerItem name="加速（两个核心）" value="2"/> 
+			<spinnerItem name="再加速（三个核心）" value="3"/> 
+			<spinnerItem name="最快(四个核心 耗电！)" value="4"/> 
+		</spinner>
 
 		<spinner description="intelli具有更好地温度控制机制，但是由于停止了thermal进程，导致LG自带相机退出缓慢！！如果选择默认温度控制，相机正常，但是GPU频率受到thermal影响，最高为450Mhz，56度时就会被限制为320Mhz！" name="CPU温度控制" action="msm_thermal">
 			<spinnerItem name="默认温度控制" value="msm_temp"/> 
@@ -74,7 +81,7 @@
 			<spinnerItem name="1190400" value="1190400"/> 
 			<spinnerItem name="1036800" value="1036800"/> 
 			<spinnerItem name="960000" value="960000"/> 
-			<spinnerItem name="关闭" value="300000"/> 
+			<spinnerItem name="关闭" value="0"/> 
 		</spinner>
 
 		<spinner description="当你使用Ondemand调速器时，有两种模式选择，省电模式和性能模式，省电模式频率提升缓慢，最大频率限制到2.3Ghz，选择性能模式时即可达到最大频率，延迟较低。" name="Ondemand 节能开关" action="ondemand_slowup">
@@ -130,6 +137,7 @@
 
 </settingsTab>
 
+
 <settingsTab name="GPU设置">
 	
 	<settingsPane description="这里你可以设置GPU的性能等级" name="GPU性能等级管理">
@@ -137,7 +145,7 @@
 		<seekBar description="GPU的性能等级可以限制GPU最低的性能等级来限制GPU的最低频率，这样不需要调速器来选择频率以提高性能，最低频率越高，使用时越耗电，但性能越强，待机不影响。默认不限制lv4（200Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU最低性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/min_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
 		
 		<seekBar description="GPU的性能等级可以限制GPU最高的性能等级来限制GPU的最高频率（防止thermal写入最高频率使得调整失效），这样不需要thermal来选择频率以节约电能，最高频率越低，使用时越省电，但性能越差，待机不影响。默认不限制lv0（578Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU最高性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
-	
+
 	</settingsPane>
 	
 	<settingsPane description="这里你可以设置GPU的频率" name="GPU频率管理">
@@ -351,9 +359,13 @@
 
 	</settingsPane>
 
-	<settingsPane description="Android Additional Logs" name="Logger">
+	<settingsPane description="Android Additional Logs and logcat" name="Logcat Logger">
 
-		<checkbox description="Enable or Disable Android Additional Logs (needs reboot)" name="Android Logger" action="generic_cortex /tmp/logger" label="Android Logger"/>
+		<spinner description="Enable or Disable Android Additional Logs and LOGCAT. you can DISABLE always to save Power! or leave default, ON when screen ON, and OFF when screen OFF" name="Android Logcat Logger" action="logger">
+			<spinnerItem name="Always Enabled" value="0"/>
+			<spinnerItem name="OFF when screen is OFF" value="1"/>
+			<spinnerItem name="Always Disabled" value="2"/>
+		</spinner>
 
 	</settingsPane>
 
