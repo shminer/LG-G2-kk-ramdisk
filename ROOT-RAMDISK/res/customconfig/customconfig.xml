@@ -10,6 +10,7 @@
 		
 	</settingsPane>
 
+<<<<<<< HEAD
 	<settingsPane description="你可以设置ST工具是否在启动时加载设置" name="启动加载设置">
 
 		<spinner description="主设置开关，启动时加载所有设置。默认为启动时加载所有设置" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
@@ -45,6 +46,7 @@
 			<spinnerItem name="加速（两个核心）" value="2"/> 
 			<spinnerItem name="再加速（三个核心）" value="3"/> 
 			<spinnerItem name="最快(四个核心 耗电！)" value="4"/> 
+
 		</spinner>
 
 		<spinner description="intelli具有更好地温度控制机制，但是由于停止了thermal进程，导致LG自带相机退出缓慢！！如果选择默认温度控制，相机正常，但是GPU频率受到thermal影响，最高为450Mhz，56度时就会被限制为320Mhz！" name="CPU温度控制" action="msm_thermal">
@@ -71,6 +73,7 @@
 
 
 		<spinner description="当你触摸屏幕的时候，直接提升CPU频率的数值，可关闭。" name="触摸提速" action="cpu_boost_freq">
+
 			<spinnerItem name="2419200" value="2419200"/> 
 			<spinnerItem name="2265600" value="2265600"/> 
 			<spinnerItem name="1958400" value="1958400"/> 
@@ -130,6 +133,18 @@
 			<spinnerItem name="652800" value="652800"/> 
 			<spinnerItem name="422400" value="422400"/> 
 			<spinnerItem name="300000" value="300000"/> 
+		</spinner>
+
+		<spinner description="屏幕关闭时的最高频率，选择后在关闭屏幕时不会超过这个频率"  name="关屏最高频率" action="suspend_max_freq">
+			<spinnerItem name="最大" value="4294967295"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
 		</spinner>
 
 	</settingsPane>
@@ -408,7 +423,7 @@
 
 	</settingsPane>
 
-	<settingsPane description="Enable using Android phone as USB and Keyboard for your PC!, lets say you dont have keyboard and you really need one! connect your phone via usb get app named USB KEYBOARD, enable the tweak here, and have fun!" name="Android USB HID Device">
+	<settingsPane description="Enable using Android phone as USB and Keyboard for your PC!, lets say you dont have keyboard and you really need one! connect your phone via USB get app named USB KEYBOARD, enable the tweak here, and have fun!" name="Android USB HID Device">
 
 		<spinner description="Enable or Disable USB HID Device driver to control PC keyboard and mouse from phone!" name="USB HID Device" action="usb_keyboard">
 			<spinnerItem name="Enable USB HID" value="enable"/> 

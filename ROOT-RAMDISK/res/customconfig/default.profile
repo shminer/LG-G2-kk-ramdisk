@@ -12,6 +12,7 @@ ondemand_slowup=0
 cortexbrain_cpu=on
 cpu_max_freq=2803200
 cpu_min_freq=300000
+suspend_max_freq=4294967295
 min_pwrlevel=4
 max_pwrlevel=1
 max_gpuclk=450000000
