@@ -83,16 +83,6 @@ CRITICAL_PERM_FIX()
 }
 CRITICAL_PERM_FIX;
 
-SOUND_FIX()
-{
-		# fix mic and speaker low sound on boot.
-		sleep 60;
-		echo "24" > /sys/kernel/sound_control_3/lge_cam_mic_gain;
-		echo "30" > /sys/kernel/sound_control_3/lge_mic_gain;
-		echo "2 2" > /sys/kernel/sound_control_3/lge_speaker_gain;
-		echo "sound fixed" > /data/.dori/sound_fix_on_boot;
-}
-
 ONDEMAND_TUNING()
 {
 	echo "10" > /cpugov/ondemand/down_differential;
@@ -162,7 +152,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=10;
+RESET_MAGIC=12;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
@@ -282,9 +272,6 @@ $BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
 
 	# Fix critical perms again after init.d mess
 	CRITICAL_PERM_FIX;
-
-	# fix sound gain
-	SOUND_FIX;
 
 	# script finish here, so let me know when
 	TIME_NOW=$(date)

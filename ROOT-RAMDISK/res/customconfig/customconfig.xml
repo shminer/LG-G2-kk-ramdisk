@@ -86,6 +86,7 @@
 			<spinnerItem name="关闭" value="0"/> 
 		</spinner>
 
+
 		<spinner description="当你使用Ondemand调速器时，有两种模式选择，省电模式和性能模式，省电模式频率提升缓慢，最大频率限制到2.3Ghz，选择性能模式时即可达到最大频率，延迟较低。" name="Ondemand 节能开关" action="ondemand_slowup">
 			<spinnerItem name="省电模式" value="1"/> 
 			<spinnerItem name="性能模式" value="0"/> 
@@ -192,6 +193,20 @@
 	
 </settingsTab>
 
+<settingsTab name="声音控制">
+
+	<settingsPane description="你可以通过修改这个选项来控制MIC和外放的音量" name="声音控制">
+
+		<seekBar description="这个可以控制录像时的mic增益" name="录像mic增益" action="generic_mic_sound /sys/kernel/sound_control_3/lge_cam_mic_gain" unit="vol" min="-10" reversed="false" step="1" max="24"/>
+
+		<seekBar description="这里可以控制电话耳麦的增益" name="耳麦增益控制" action="generic_mic_sound /sys/kernel/sound_control_3/lge_mic_gain" unit="vol" min="-10" reversed="false" step="1" max="24"/>
+
+		<seekBar description="这里你可以控制外放音量" name="外放增益" action="generic_speaker_sound /sys/kernel/sound_control_3/lge_speaker_gain" unit="vol" min="-10" reversed="false" step="1" max="10"/>
+
+	</settingsPane>
+
+</settingsTab>
+
 <settingsTab name="热插拔调整">
 	
 	<settingsPane description="选择热插拔驱动" name="热插拔设置">
@@ -218,6 +233,7 @@
 </settingsTab>
 	
 <settingsTab name="IO部分">
+
 
 	<settingsPane description="这里你可以设置IO的参数" name="IO设置">
 
@@ -261,6 +277,7 @@
 
 	<settingsPane description="这里你可以设置OOMkill机制" name="内存管理">
 
+
 		<checkbox description="自动启用OOM机制" name="Auto OOM" action="generic_cortex /tmp/auto_oom" label="自动内存控制"/>
 
 		<spinner description="这里你可以设置屏幕开启时的内存管理" name="亮屏OOM等级" action="oom_config_screen_on">
@@ -303,8 +320,6 @@
 		<button description="Use this button to RESET the scripts and jobs from kernel, to refresh the configuration. This will clear all your custom changes!" name="CRON RESET" action="push-actions/crontab_reset" label="RESET CRON"/>
 
 		<checkbox description="Cron to clear file-cache every hour, but only if CPU is resting (IDLE) and more than 50% of your memory is used! This will free RAM from unused buffers and cache." name="Clean file-cache" action="generic_cortex /tmp/cron_drop_cache" label="RAM cache clean every Hour"/>
-
-		<checkbox description="Cron to update AD-BLOCKER every week at SAT 6:00AM UTC time, from official site. The script will check, if you are connected with the internet, otherwise it will try to use WIFI! Script will turn wifi, wait for connection and update, then when it is finished it will turn WIFI off. If there is no connection, an error will be written in the log." name="Update AD-Block" action="generic_cortex /tmp/ad_block_update" label="Update AD-BLOCKER every week"/>
 
 		<checkbox description="Cron to DB Optimize every day at 3:00AM, only if CPU is resting (IDLE)!" name="DB Optimization" action="generic_cortex /tmp/cron_db_optimizing" label="DB Optimization task every day at 3:00AM"/>
 
@@ -355,17 +370,7 @@
 
 		<button description="Click to see your current GPS ZONE" name="GPS ZONE" action="push-actions/gpszonecheck" label="GPS ZONE CHECK"/>
 
-		<!--button description="Update time via NTP server" name="UPDATE TIME" action="push-actions/time_update" label="UPDATE TIME"/-->
-
 	</settingsPane>
-
-	<!--settingsPane description="Here you can Add, Update or Remove AD Blocker! You need ROOT to do the tweak! If you want to update the blocker, you can push the UPDATE AD NOW button, to get the new one installed! If you install a new ROM, and you want to use AD BLOCKER, then push UPDATE AD NOW and REBOOT. If you need to REMOVE AD-BLOCKER use the REMOVE button and REBOOT" name="AD Blocker">
-
-		<button description="ADD or UPDATE AD BLOCKER" name="AD-B UPDATE or ADD" action="push-actions/ad_update" label="UPDATE AD-B NOW"/>
-
-		<button description="REMOVE AD Blocker" name="AD-B REMOVE" action="push-actions/ad_restore" label="REMOVE AD-B NOW"/>
-
-	</settingsPane-->
 
 	<settingsPane description="INIT.D" name="INIT.D">
 
@@ -497,12 +502,6 @@
 		<checkbox description="Enable or Disable CIFS Module. This will allow to use apps that can mount internal storage and publish over network. User can access data and system over network. No support, effect only after reboot!" name="CIFS Module" action="generic_cortex /tmp/cifs_module" label="CIFS Module"/>
 
 	</settingsPane>
-
-	<!--settingsPane description="Check if there is a new kernel-update available." name="Kernel-Update">
-
-		<button description="Check for Update" name="Kernel-Update" action="push-actions/kernel_check" label="KERNEL-CHECK"/>
-
-	</settingsPane-->
 
 </settingsTab>
 
