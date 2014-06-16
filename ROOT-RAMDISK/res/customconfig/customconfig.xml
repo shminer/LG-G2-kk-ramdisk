@@ -10,7 +10,6 @@
 		
 	</settingsPane>
 
-<<<<<<< HEAD
 	<settingsPane description="你可以设置ST工具是否在启动时加载设置" name="启动加载设置">
 
 		<spinner description="主设置开关，启动时加载所有设置。默认为启动时加载所有设置" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
