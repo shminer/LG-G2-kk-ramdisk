@@ -73,6 +73,7 @@ cron_db_optimizing=on
 cron_clear_app_cache=on
 >>>>>>> origin/kitkat-ramdisk
 cron_zipalign=off
+tcp_congestion_control=cubic
 gpsregion=No_GPS_Zone_changes
 <<<<<<< HEAD
 init_d=on

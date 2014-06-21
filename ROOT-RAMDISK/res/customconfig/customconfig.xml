@@ -207,6 +207,7 @@
 
 </settingsTab>
 
+
 <settingsTab name="热插拔调整">
 	
 	<settingsPane description="选择热插拔驱动" name="热插拔设置">
@@ -218,6 +219,7 @@
 			<spinnerItem name="Intelli 热插拔" value="intelli"/> 
 		</spinner>
 		
+
 	</settingsPane>
 	
 	<settingsPane description="msm热插拔调整" name="热插拔设置">
