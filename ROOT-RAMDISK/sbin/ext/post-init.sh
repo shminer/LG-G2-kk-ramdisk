@@ -12,9 +12,6 @@ for i in $PIDOFINIT; do
 	echo "-600" > /proc/"$i"/oom_score_adj;
 done;
 
-# set high priority to temp controller
-$BB renice -n -20 -p $(pgrep -f "/system/bin/thermal-engine");
-
 OPEN_RW()
 {
         $BB mount -o remount,rw /;
