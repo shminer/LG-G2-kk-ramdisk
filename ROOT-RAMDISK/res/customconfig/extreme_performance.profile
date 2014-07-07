@@ -29,11 +29,14 @@ suspend_max_freq=4294967295
 >>>>>>> origin/kitkat-ramdisk
 =======
 suspend_max_freq=2803200
+<<<<<<< HEAD
 >>>>>>> origin/kitkat-ramdisk
 msm_thermal=msm_temp
+=======
+>>>>>>> origin/kitkat-ramdisk
 enabled=off
 core_limit_temp_degC=80
-limit_temp_degC=75
+limit_temp_degC=80
 hotplug=msm_hotplug
 cpus_boosted=2
 eco_mode=all

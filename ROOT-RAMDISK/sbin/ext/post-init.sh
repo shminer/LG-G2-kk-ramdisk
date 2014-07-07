@@ -151,7 +151,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=12;
+RESET_MAGIC=13;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
@@ -220,9 +220,10 @@ fi;
 OPEN_RW;
 
 # for ntfs automounting
-$BB mkdir /mnt/ntfs
-$BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
-
+if [ ! -d /mnt/ntfs ]; then
+	$BB mkdir /mnt/ntfs
+	$BB mount -t tmpfs -o mode=0777,gid=1000 tmpfs /mnt/ntfs
+fi;
 
 # set ondemand as default gov
 echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
@@ -274,6 +275,7 @@ CRITICAL_PERM_FIX;
 
 sleep 30;
 echo "300000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+echo "0" > /cputemp/freq_limit_debug;
 
 # script finish here, so let me know when
 TIME_NOW=$(date)
