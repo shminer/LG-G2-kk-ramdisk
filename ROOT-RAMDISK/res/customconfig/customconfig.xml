@@ -21,6 +21,16 @@
 
 	</settingsPane>
 
+	<settingsPane description="这里你可以设置设备的温度保护，现在intelli和系统thermal协同工作。来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
+
+		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/enabled" label="处理器温度控制"/>
+
+		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
+
+		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
+		
+	</settingsPane>
+	
 	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
 
 		<spinner description="限制超频频率的最高值（JZ内核中为了适应所有内核，我把它默认设置为2.8G），这个值代表除了系统CPU限制策略外，由faux123编写的另一种控制cpu最高频率的机制，相比系统的机制更有效，在这个值被设定后，其他CPU调节软件无法设置超过这个值的CPU频率，但是这个值也无法设置CPU最高频率，它只是一个限制的阈值." name="频率最高值限制" action="oc_controller">
@@ -48,15 +58,6 @@
 
 		</spinner>
 
-		<settingsPane description="这里你可以设置设备的温度保护，这会导致相机退出缓慢，充电速度缓慢的问题（你可以在微调界面手动设置充电电流），他将关闭系统的thermal-engine，由内核来完全接管温度控制，来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
-
-		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/enabled" label="处理器温度控制"/>
-
-		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-
-		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-		
-		</settingsPane>
 		
 		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
 		
