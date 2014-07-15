@@ -1,47 +1,12 @@
 stweaks_boot_control=yes
-<<<<<<< HEAD
-oc_controller=ultra
-hotplug=intelli
-cpus_boosted=2
-eco_mode=all
-msm_thermal=msm_temp
-enabled=on
-core_limit_temp_degC=85
-limit_temp_degC=70
-=======
 oc_controller=battery
->>>>>>> origin/kitkat-ramdisk
 default_cpu_gov=ondemand
 cpu_boost_freq=1728000
-<<<<<<< HEAD
-ondemand_slowup=0
-=======
 power_mode=0
->>>>>>> origin/kitkat-ramdisk
 cortexbrain_cpu=on
-cpu_max_freq=2803200
+cpu_max_freq=1728000
 cpu_min_freq=300000
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-min_pwrlevel=4
-max_pwrlevel=1
-max_gpuclk=450000000
-read_ahead_kb=2048
-scheduler=fiops
-sleep_scheduler=fiops
-cortexbrain_cpu=off
-=======
-=======
-suspend_max_freq=4294967295
->>>>>>> origin/kitkat-ramdisk
-=======
 suspend_max_freq=2803200
-<<<<<<< HEAD
->>>>>>> origin/kitkat-ramdisk
-msm_thermal=msm_temp
-=======
->>>>>>> origin/kitkat-ramdisk
 enabled=off
 core_limit_temp_degC=80
 limit_temp_degC=80
@@ -67,10 +32,9 @@ lge_speaker_gain=1
 read_ahead_kb=1024
 scheduler=row
 sleep_scheduler=row
->>>>>>> origin/kitkat-ramdisk
 auto_oom=on
-oom_config_screen_on=medium
-oom_config_screen_off=aggressive
+oom_config_screen_on=default
+oom_config_screen_off=default
 dirty_background_ratio=20
 dirty_ratio=25
 crontab=off
@@ -80,20 +44,14 @@ cron_clear_app_cache=off
 cron_zipalign=off
 tcp_congestion_control=cubic
 gpsregion=No_GPS_Zone_changes
-<<<<<<< HEAD
-init_d=on
-logger=off
-force_fast_charge=0
-=======
 init_d=off
 logger=2
 force_fast_charge=2
->>>>>>> origin/kitkat-ramdisk
 fast_charge_level=1800
 fake_charge_ac=off
 prop_chg_detect=off
 usb_keyboard=disable
-sweep2sleep=off
+sweep2sleep=on
 cortexbrain_background_process=1
 cortexbrain_memory=on
 cortexbrain_system=on

@@ -10,7 +10,7 @@ else
         echo "$scheduler";
 fi;
 
-BLOCK_GOV=fiops;
+BLOCK_GOV=row;
 
 SCHED_SET()
 {
@@ -40,8 +40,8 @@ case "${scheduler}" in
 		BLOCK_GOV=fiops;
 	;;
 	*)
-		scheduler=fiops;
-		BLOCK_GOV=fiops;
+		scheduler=row;
+		BLOCK_GOV=row;
 	;;
 esac;
 SCHED_SET;

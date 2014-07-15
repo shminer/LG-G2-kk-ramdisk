@@ -27,7 +27,7 @@ if [ "a$2" != "a" ]; then
 			echo "1958400" > /sys/kernel/msm_cpufreq_limit/cpufreq_limit;
 		;;
 		*)
-			oc_controller=ultra;
+			oc_controller=stock;
 		;;
 	esac;
 fi;
