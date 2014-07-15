@@ -431,8 +431,6 @@
 
 		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="苹果充电支持"/>
 
-		<checkbox description="使得任何数据线都被识别为LG原装数据线，可以更快地传输文件以及充电。" name="任意数据线支持" action="generic01 /sys/kernel/fast_charge/fake_original_cable" label="任意数据线支持"/>
-
 	</settingsPane>
 
 	<settingsPane description="Enable using Android phone as USB and Keyboard for your PC!, lets say you dont have keyboard and you really need one! connect your phone via USB get app named USB KEYBOARD, enable the tweak here, and have fun!" name="Android USB HID Device">
