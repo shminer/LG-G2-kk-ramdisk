@@ -87,16 +87,10 @@
 			<spinnerItem name="关闭" value="0"/> 
 		</spinner>
 
-<<<<<<< HEAD
 
-		<spinner description="当你使用Ondemand调速器时，有两种模式选择，省电模式和性能模式，省电模式频率提升缓慢，最大频率限制到2.3Ghz，选择性能模式时即可达到最大频率，延迟较低。" name="Ondemand 节能开关" action="ondemand_slowup">
-			<spinnerItem name="省电模式" value="1"/> 
-			<spinnerItem name="性能模式" value="0"/> 
-=======
-		<spinner description="Here you can select 2 modes! one for power save! and one for performance!, on power save responce will be normal! when performance mode selected, high presure responce allowed with max power." name="Power Save Switch" action="power_mode">
-			<spinnerItem name="Power Save mode" value="0"/> 
-			<spinnerItem name="Performance mode" value="1"/> 
->>>>>>> origin/kitkat-ramdisk
+		<spinner description="这里你可以选择两个模式，性能模式和省电模式，省电模式响应比较慢，而性能模式回赠加一些耗电。" name="省电模式开关" action="power_mode">
+			<spinnerItem name="省电模式" value="0"/> 
+			<spinnerItem name="性能模式" value="1"/> 
 		</spinner>
 
 		<checkbox description="设置处理器的最高和最低频率。和超频控制相比，这项为CPU策略的最高和最低频率，这个值将不会超过超频控制的最高频率" name="处理器策略频率设置" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU频率控制"/>
