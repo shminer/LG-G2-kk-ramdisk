@@ -7,9 +7,15 @@ core_limit_temp_degC=80
 limit_temp_degC=80
 default_cpu_gov=ondemand
 cpu_boost_freq=1728000
+<<<<<<< HEAD
 ondemand_slowup=0
 cortexbrain_cpu=on
 cpu_max_freq=2803200
+=======
+power_mode=0
+cortexbrain_cpu=off
+cpu_max_freq=2265600
+>>>>>>> origin/kitkat-ramdisk
 cpu_min_freq=300000
 suspend_max_freq=4294967295
 min_pwrlevel=4

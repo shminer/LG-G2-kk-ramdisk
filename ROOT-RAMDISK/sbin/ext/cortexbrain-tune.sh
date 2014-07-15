@@ -198,24 +198,41 @@ IO_SCHEDULER()
 	fi;
 }
 
+GOV_TUNING()
+{
+	GOV_NAME=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor);
+
+	if [ -e /cpugov/$GOV_NAME/sync_freq ]; then
+		echo "1574400" > /cpugov/$GOV_NAME/sync_freq;
+	fi;
+	if [ -e /cpugov/$GOV_NAME/optimal_freq ]; then
+		echo "1574400" > /cpugov/$GOV_NAME/optimal_freq;
+	fi;
+	if [ -e /cpugov/$GOV_NAME/optimal_max_freq ]; then
+		echo "1574400" > /cpugov/$GOV_NAME/optimal_max_freq;
+	fi;
+}
+
 CPU_CENTRAL_CONTROL()
 {
 	if [ "$cortexbrain_cpu" == "on" ]; then
 
 		local state="$1";
+		GOV_NAME=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor);
 
 		if [ "$state" == "awake" ]; then
 			echo "$cpu_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 			echo "$cpu_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+			/res/uci.sh power_mode $power_mode;
+			GOV_TUNING;
 		elif [ "$state" == "sleep" ]; then
 			echo "$cpu_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 			if [ "$suspend_max_freq" -lt "2803200" ]; then
 				echo "$suspend_max_freq" > /sys/kernel/msm_cpufreq_limit/suspend_max_freq;
 			fi;
-		fi;
-		return 1;
-		if [ -e /sys/devices/system/cpu/cpufreq/ondemand/smart_up ]; then
-			echo "$ondemand_slowup" > /sys/devices/system/cpu/cpufreq/ondemand/smart_up;
+			if [ -e /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate ]; then
+				echo "60000" > /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate;
+			fi;
 		fi;
 		log -p i -t "$FILE_NAME" "*** CPU_CENTRAL_CONTROL max_freq:${cpu_max_freq} min_freq:${cpu_min_freq}***: done";
 	else

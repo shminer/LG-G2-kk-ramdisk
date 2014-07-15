@@ -42,10 +42,9 @@ if [ "a$2" != "a" ]; then
 			if [ "$(ps | grep "/system/bin/thermal-engine" | wc -l)" -ge "1" ]; then
 				/system/bin/stop thermal-engine;
 			fi;
-			echo "578000000" > /sys/class/kgsl/kgsl-3d0/max_gpuclk;
 		;;
 		*)
-			msm_thermal=intelli_temp;
+			msm_thermal=msm_temp;
 		;;
 	esac;
 fi;
