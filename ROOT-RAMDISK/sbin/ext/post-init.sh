@@ -19,6 +19,12 @@ OPEN_RW()
 }
 OPEN_RW;
 
+# Boost CPU GOV sampling_rate on boot.
+GOV_NAME=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor);
+if [ -e /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate ]; then
+	echo "10000" > /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate;
+fi;
+
 # fix storage folder owner
 $BB chown system.sdcard_rw /storage;
 
@@ -150,7 +156,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=15;
+RESET_MAGIC=16;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
@@ -249,6 +255,9 @@ if [ "$stweaks_boot_control" == "yes" ]; then
 	$BB sh /res/uci.sh oom_config_screen_on "$oom_config_screen_on";
 	$BB sh /res/uci.sh oom_config_screen_off "$oom_config_screen_off";
 
+	# Reduce heat limit during boot.
+	$BB sh /res/uci.sh generic /sys/module/msm_thermal/parameters/limit_temp_degC 77;
+
 	# Load Custom Modules
 	MODULES_LOAD;
 	if [ -e /cpugov/ondemand ]; then
@@ -275,6 +284,9 @@ CRITICAL_PERM_FIX;
 sleep 30;
 echo "300000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 echo "0" > /cputemp/freq_limit_debug;
+
+# restore USER cpu heat temp from STweaks.
+$BB sh /res/uci.sh generic /sys/module/msm_thermal/parameters/limit_temp_degC $limit_temp_degC;
 
 # script finish here, so let me know when
 TIME_NOW=$(date)

@@ -7,6 +7,7 @@ eco_mode=all
 min_online_cpus=1
 default_cpu_gov=ondemand
 cpu_boost_freq=1728000
+sample_rate=50000
 power_mode=0
 cortexbrain_cpu=on
 cpu_max_freq=2803200

@@ -88,9 +88,11 @@
 		</spinner>
 
 
-		<spinner description="这里你可以选择两个模式，性能模式和省电模式，省电模式响应比较慢，而性能模式回赠加一些耗电。" name="省电模式开关" action="power_mode">
+		<seekBar description="这里你可以设置cpu的调速采样率，采样率越高，响应越快，但是更耗电，仅在以下选项选择省电模式时启用。 默认为50000。" name="CPU 调速采样率" action="sample_rate" unit="rate" min="10000" reversed="false" step="5000" max="80000"/>
+
+		<spinner description="这里你可以选择两个模式，性能模式和省电模式，省电模式响应比较慢，而性能模式回赠加一些耗电。选择性能模式的情况下cpu调速采样率无效！" name="模式切换器" action="power_mode">
 			<spinnerItem name="省电模式" value="0"/> 
-			<spinnerItem name="性能模式" value="1"/> 
+			<spinnerItem name="性能模式" value="1"/>
 		</spinner>
 
 		<checkbox description="设置处理器的最高和最低频率。和超频控制相比，这项为CPU策略的最高和最低频率，这个值将不会超过超频控制的最高频率" name="处理器策略频率设置" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU频率控制"/>
