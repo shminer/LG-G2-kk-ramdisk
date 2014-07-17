@@ -90,7 +90,7 @@
 
 		<seekBar description="这里你可以设置cpu的调速采样率，采样率越高，响应越快，但是更耗电，仅在以下选项选择省电模式时启用。 默认为50000。" name="CPU 调速采样率" action="sample_rate" unit="rate" min="10000" reversed="false" step="5000" max="80000"/>
 
-		<spinner description="这里你可以选择两个模式，性能模式和省电模式，省电模式响应比较慢，而性能模式回赠加一些耗电。选择性能模式的情况下cpu调速采样率无效！" name="模式切换器" action="power_mode">
+		<spinner description="这里你可以选择两个模式，性能模式和省电模式，省电模式响应比较慢，而性能模式会赠加一些耗电。选择性能模式的情况下cpu调速采样率无效！性能模式采样率为10000." name="模式切换器" action="power_mode">
 			<spinnerItem name="省电模式" value="0"/> 
 			<spinnerItem name="性能模式" value="1"/>
 		</spinner>
