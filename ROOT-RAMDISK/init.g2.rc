@@ -30,7 +30,8 @@ import /init.g2_product.rc
 
 on fs
     mount_all fstab.g2
-    
+
+    # save rtc time offsets
     mkdir /data/system/time/ 0774 system system
 
     # LGE_UPDATE_START
