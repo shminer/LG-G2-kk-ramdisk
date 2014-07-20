@@ -91,18 +91,18 @@ ONDEMAND_TUNING()
 {
 	echo "10" > /cpugov/ondemand/down_differential;
 	echo "3" > /cpugov/ondemand/down_differential_multi_core;
-	echo "80" > /cpugov/ondemand/micro_freq_up_threshold;
+	echo "90" > /cpugov/ondemand/micro_freq_up_threshold;
 	echo "1" > /cpugov/ondemand/sampling_down_factor;
 	echo "75" > /cpugov/ondemand/up_threshold;
 	echo "75" > /cpugov/ondemand/up_threshold_any_cpu_load;
 	echo "75" > /cpugov/ondemand/up_threshold_multi_core;
-	echo "1574400" > /cpugov/ondemand/sync_freq;
-	echo "1574400" > /cpugov/ondemand/optimal_freq;
+	echo "1267200" > /cpugov/ondemand/sync_freq;
+	echo "1267200" > /cpugov/ondemand/optimal_freq;
 	echo "1574400" > /cpugov/ondemand/optimal_max_freq;
-	echo "10" > /cpugov/ondemand/middle_grid_step;
-	echo "15" > /cpugov/ondemand/high_grid_step;
-	echo "30" > /cpugov/ondemand/middle_grid_load;
-	echo "40" > /cpugov/ondemand/high_grid_load;
+	echo "14" > /cpugov/ondemand/middle_grid_step;
+	echo "20" > /cpugov/ondemand/high_grid_step;
+	echo "65" > /cpugov/ondemand/middle_grid_load;
+	echo "89" > /cpugov/ondemand/high_grid_load;
 }
 
 # oom and mem perm fix
@@ -156,7 +156,7 @@ fi;
 
 # reset profiles auto trigger to be used by kernel ADMIN, in case of need, if new value added in default profiles
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
-RESET_MAGIC=16;
+RESET_MAGIC=17;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
@@ -237,19 +237,10 @@ ONDEMAND_TUNING;
 if [ "$stweaks_boot_control" == "yes" ]; then
 	# stop uci.sh from running all the PUSH Buttons in stweaks on boot
 	OPEN_RW;
-	$BB chown -R root:system /res/customconfig/actions/;
-	$BB chmod -R 06755 /res/customconfig/actions/;
-	$BB mv /res/customconfig/actions/push-actions/* /res/no-push-on-boot/;
-	$BB chmod 06755 /res/no-push-on-boot/*;
 
 	# apply STweaks settings
 	$BB pkill -f "com.gokhanmoral.stweaks.app";
-	$BB nohup $BB sh /res/uci.sh restore;
-
-	OPEN_RW;
-	# restore all the PUSH Button Actions back to there location
-	$BB mv /res/no-push-on-boot/* /res/customconfig/actions/push-actions/;
-	$BB pkill -f "com.gokhanmoral.stweaks.app";
+	$BB nohup $BB sh /res/uci.sh apply;
 
 	# correct oom tuning, if changed by apps/rom
 	$BB sh /res/uci.sh oom_config_screen_on "$oom_config_screen_on";
