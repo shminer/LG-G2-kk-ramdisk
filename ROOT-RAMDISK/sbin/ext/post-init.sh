@@ -98,9 +98,9 @@ ONDEMAND_TUNING()
 	echo "75" > /cpugov/ondemand/up_threshold_multi_core;
 	echo "1574400" > /cpugov/ondemand/sync_freq;
 	echo "1574400" > /cpugov/ondemand/optimal_freq;
-	echo "1958400" > /cpugov/ondemand/optimal_max_freq;
-	echo "14" > /cpugov/ondemand/middle_grid_step;
-	echo "20" > /cpugov/ondemand/high_grid_step;
+	echo "1574400" > /cpugov/ondemand/optimal_max_freq;
+	echo "20" > /cpugov/ondemand/middle_grid_step;
+	echo "30" > /cpugov/ondemand/high_grid_step;
 	echo "60" > /cpugov/ondemand/middle_grid_load;
 	echo "85" > /cpugov/ondemand/high_grid_load;
 }
@@ -240,7 +240,7 @@ if [ "$stweaks_boot_control" == "yes" ]; then
 
 	# apply STweaks settings
 	$BB pkill -f "com.gokhanmoral.stweaks.app";
-	$BB nohup $BB sh /res/uci.sh apply;
+	$BB sh /res/uci.sh apply;
 
 	# correct oom tuning, if changed by apps/rom
 	$BB sh /res/uci.sh oom_config_screen_on "$oom_config_screen_on";
