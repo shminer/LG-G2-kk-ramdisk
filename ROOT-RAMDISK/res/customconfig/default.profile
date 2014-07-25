@@ -1,4 +1,5 @@
 stweaks_boot_control=yes
+work_mode=normal
 enabled=on
 core_limit_temp_degC=80
 limit_temp_degC=78

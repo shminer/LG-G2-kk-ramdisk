@@ -1,23 +1,33 @@
 <settingsRoot>
 
 <settingsTab name="主设置页">
-	
+
 	<settingsPane description="感谢Dorimanx提供的工具以及ramdisk和源码，感谢dr87,savoca的内核源码。JZ汉化。" name="版本信息">
-		
+
 	</settingsPane>
-	
+
 	<settingsPane description="由于时间有限，仅汉化部分重要设置。如果你有能力帮我汉化以及完善内核，请加我QQ332574643。" name="特别声明">
-		
+
 	</settingsPane>
 
 	<settingsPane description="你可以设置ST工具是否在启动时加载设置" name="启动加载设置">
 
 		<spinner description="主设置开关，启动时加载所有设置。默认为启动时加载所有设置" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
-			<spinnerItem name="启动时加载所有设置" value="yes"/> 
-			<spinnerItem name="不再启动时加载设置" value="no"/> 
+			<spinnerItem name="启动时加载所有设置" value="yes"/>
+			<spinnerItem name="不再启动时加载设置" value="no"/>
 		</spinner>
 
 		<button description="按下加载所有加载配置文件" name="加载所有" action="push-actions/reload_settings" label="加载所有"/>
+
+	</settingsPane>
+
+	<settingsPane description="这里你可以设置性能模式" name="工作模式">
+
+		<spinner description="有三个模式可供选择，性能模式将关闭系统的温控，将所有频率都设置为最高，省电模式将启用极度省电模式，在不影响设备使用的情况下尽量降低频率。正常模式将和默认配置相同。" name="模式选择" action="work_mode">
+			<spinnerItem name="性能游戏模式" value="performance_mode"/>
+			<spinnerItem name="正常使用模式" value="normal_mode"/>
+			<spinnerItem name="极度省电模式" value="battery_mode"/>
+		</spinner>
 
 	</settingsPane>
 
@@ -28,70 +38,73 @@
 		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
 
 		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-		
+
+		<button description="关闭系统thermal温控，将完全由intelli来接管温控，不限制gpu最高频率，不受thermal控制，但是会导致相机退出缓慢。" name="thermal-engine" action="push-actions/disable_thermal" label="关闭thermal"/>
+		<button description="打开系统thermal温控，各种频率将受到thermal控制，配置文件在system/etc下，相机退出正常，但是gpu会在高负载时被限制到320Mhz。" name="thermal-engine" action="push-actions/enable_thermal" label="启用thermal"/>
+
 	</settingsPane>
-	
+
 	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
 
 		<spinner description="限制超频频率的最高值（JZ内核中为了适应所有内核，我把它默认设置为2.8G），这个值代表除了系统CPU限制策略外，由faux123编写的另一种控制cpu最高频率的机制，相比系统的机制更有效，在这个值被设定后，其他CPU调节软件无法设置超过这个值的CPU频率，但是这个值也无法设置CPU最高频率，它只是一个限制的阈值." name="频率最高值限制" action="oc_controller">
-			<spinnerItem name="低频 2.0GHz" value="battery"/> 
-			<spinnerItem name="LG默认 2.3GHz" value="stock"/> 
-			<spinnerItem name="超频1档 2.4GHz" value="boost"/> 
-			<spinnerItem name="超频2档 2.5GHz" value="high"/> 
-			<spinnerItem name="超频3档 2.7GHz" value="mega"/> 
-			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/> 
+			<spinnerItem name="低频 2.0GHz" value="battery"/>
+			<spinnerItem name="LG默认 2.3GHz" value="stock"/>
+			<spinnerItem name="超频1档 2.4GHz" value="boost"/>
+			<spinnerItem name="超频2档 2.5GHz" value="high"/>
+			<spinnerItem name="超频3档 2.7GHz" value="mega"/>
+			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/>
 		</spinner>
 
 
 
 		<spinner description="ECO省电模式，设置为仅双核心的时候，那么只有两个核心被开启，另外两个会强行关闭，设置为一个核心的时候，那么另外三个都会被强行关闭，根据CPU被关闭的核心数会损失同样的性能，但是会更省电。" name="省电模式" action="eco_mode">
-			<spinnerItem name="所有核心都启用（性能）" value="all"/> 
-			<spinnerItem name="只启用两个核心（省电）" value="eco"/> 
-			<spinnerItem name="只启用一个核心（极限省电）" value="strict"/> 
+			<spinnerItem name="所有核心都启用（性能）" value="all"/>
+			<spinnerItem name="只启用两个核心（省电）" value="eco"/>
+			<spinnerItem name="只启用一个核心（极限省电）" value="strict"/>
 		</spinner>
-		
+
 		<spinner description="这里你可以设置最小在线的核心数" name="最小在线核心" action="min_online_cpus">
-			<spinnerItem name="正常（一个核心）" value="1"/> 
-			<spinnerItem name="加速（两个核心）" value="2"/> 
-			<spinnerItem name="再加速（三个核心）" value="3"/> 
-			<spinnerItem name="最快(四个核心 耗电！)" value="4"/> 
+			<spinnerItem name="正常（一个核心）" value="1"/>
+			<spinnerItem name="加速（两个核心）" value="2"/>
+			<spinnerItem name="再加速（三个核心）" value="3"/>
+			<spinnerItem name="最快(四个核心 耗电！)" value="4"/>
 
 		</spinner>
 
-		
+
 		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
-		
-		
-			<spinnerItem name="darkness" value="darkness"/> 
-			<spinnerItem name="intellidemand" value="intellidemand"/> 
-			<spinnerItem name="intelliactive" value="intelliactive"/> 
-			<spinnerItem name="ondemand" value="ondemand"/> 
-			<spinnerItem name="ondemandplus" value="ondemandplus"/> 
-			<spinnerItem name="interactive" value="interactive"/> 
-			<spinnerItem name="Alucard" value="alucard"/> 
+
+
+			<spinnerItem name="darkness" value="darkness"/>
+			<spinnerItem name="intellidemand" value="intellidemand"/>
+			<spinnerItem name="intelliactive" value="intelliactive"/>
+			<spinnerItem name="ondemand" value="ondemand"/>
+			<spinnerItem name="ondemandplus" value="ondemandplus"/>
+			<spinnerItem name="interactive" value="interactive"/>
+			<spinnerItem name="Alucard" value="alucard"/>
 		</spinner>
 
 
 		<spinner description="当你触摸屏幕的时候，直接提升CPU频率的数值，可关闭。" name="触摸提速" action="cpu_boost_freq">
 
-			<spinnerItem name="2419200" value="2419200"/> 
-			<spinnerItem name="2265600" value="2265600"/> 
-			<spinnerItem name="1958400" value="1958400"/> 
-			<spinnerItem name="1728000" value="1728000"/> 
-			<spinnerItem name="1574400" value="1574400"/> 
-			<spinnerItem name="1497600" value="1497600"/> 
-			<spinnerItem name="1267200" value="1267200"/> 
-			<spinnerItem name="1190400" value="1190400"/> 
-			<spinnerItem name="1036800" value="1036800"/> 
-			<spinnerItem name="960000" value="960000"/> 
-			<spinnerItem name="关闭" value="0"/> 
+			<spinnerItem name="2419200" value="2419200"/>
+			<spinnerItem name="2265600" value="2265600"/>
+			<spinnerItem name="1958400" value="1958400"/>
+			<spinnerItem name="1728000" value="1728000"/>
+			<spinnerItem name="1574400" value="1574400"/>
+			<spinnerItem name="1497600" value="1497600"/>
+			<spinnerItem name="1267200" value="1267200"/>
+			<spinnerItem name="1190400" value="1190400"/>
+			<spinnerItem name="1036800" value="1036800"/>
+			<spinnerItem name="960000" value="960000"/>
+			<spinnerItem name="关闭" value="0"/>
 		</spinner>
 
 
 		<seekBar description="这里你可以设置cpu的调速采样率，采样率越高，响应越快，但是更耗电，仅在以下选项选择省电模式时启用。 默认为50000。" name="CPU 调速采样率" action="sample_rate" unit="rate" min="10000" reversed="false" step="5000" max="80000"/>
 
 		<spinner description="这里你可以选择两个模式，性能模式和省电模式，省电模式响应比较慢，而性能模式会赠加一些耗电。选择性能模式的情况下cpu调速采样率无效！性能模式采样率为10000." name="模式切换器" action="power_mode">
-			<spinnerItem name="省电模式" value="0"/> 
+			<spinnerItem name="省电模式" value="0"/>
 			<spinnerItem name="性能模式" value="1"/>
 		</spinner>
 
@@ -99,56 +112,56 @@
 
 		<spinner description="处理器最高频率，依赖内核支持的最高值，默认为内核频率最高值" name="处理器最高频率" action="cpu_max_freq">
 
-			<spinnerItem name="2803200" value="2803200"/> 
-			<spinnerItem name="2726400" value="2726400"/> 
-			<spinnerItem name="2572800" value="2572800"/> 
-			<spinnerItem name="2419200" value="2419200"/> 
-			<spinnerItem name="2265600" value="2265600"/> 
-			<spinnerItem name="1958400" value="1958400"/> 
-			<spinnerItem name="1728000" value="1728000"/> 
-			<spinnerItem name="1574400" value="1574400"/> 
-			<spinnerItem name="1497600" value="1497600"/> 
-			<spinnerItem name="1267200" value="1267200"/> 
-			<spinnerItem name="1190400" value="1190400"/> 
-			<spinnerItem name="1036800" value="1036800"/> 
-			<spinnerItem name="960000" value="960000"/> 
-			<spinnerItem name="883200" value="883200"/> 
-			<spinnerItem name="729600" value="729600"/> 
-			<spinnerItem name="652800" value="652800"/> 
-			<spinnerItem name="422400" value="422400"/> 
-			<spinnerItem name="300000" value="300000"/> 
+			<spinnerItem name="2803200" value="2803200"/>
+			<spinnerItem name="2726400" value="2726400"/>
+			<spinnerItem name="2572800" value="2572800"/>
+			<spinnerItem name="2419200" value="2419200"/>
+			<spinnerItem name="2265600" value="2265600"/>
+			<spinnerItem name="1958400" value="1958400"/>
+			<spinnerItem name="1728000" value="1728000"/>
+			<spinnerItem name="1574400" value="1574400"/>
+			<spinnerItem name="1497600" value="1497600"/>
+			<spinnerItem name="1267200" value="1267200"/>
+			<spinnerItem name="1190400" value="1190400"/>
+			<spinnerItem name="1036800" value="1036800"/>
+			<spinnerItem name="960000" value="960000"/>
+			<spinnerItem name="883200" value="883200"/>
+			<spinnerItem name="729600" value="729600"/>
+			<spinnerItem name="652800" value="652800"/>
+			<spinnerItem name="422400" value="422400"/>
+			<spinnerItem name="300000" value="300000"/>
 		</spinner>
 
 		<spinner description="处理器最低频率，依赖内核支持的最低值，默认300MHZ" name="处理器最低频率" action="cpu_min_freq">
 
-			<spinnerItem name="2496000" value="2496000"/> 
-			<spinnerItem name="2419200" value="2419200"/> 
-			<spinnerItem name="2265600" value="2265600"/> 
-			<spinnerItem name="1958400" value="1958400"/> 
-			<spinnerItem name="1728000" value="1728000"/> 
-			<spinnerItem name="1574400" value="1574400"/> 
-			<spinnerItem name="1497600" value="1497600"/> 
-			<spinnerItem name="1267200" value="1267200"/> 
-			<spinnerItem name="1190400" value="1190400"/> 
-			<spinnerItem name="1036800" value="1036800"/> 
-			<spinnerItem name="960000" value="960000"/> 
-			<spinnerItem name="883200" value="883200"/> 
-			<spinnerItem name="729600" value="729600"/> 
-			<spinnerItem name="652800" value="652800"/> 
-			<spinnerItem name="422400" value="422400"/> 
-			<spinnerItem name="300000" value="300000"/> 
+			<spinnerItem name="2496000" value="2496000"/>
+			<spinnerItem name="2419200" value="2419200"/>
+			<spinnerItem name="2265600" value="2265600"/>
+			<spinnerItem name="1958400" value="1958400"/>
+			<spinnerItem name="1728000" value="1728000"/>
+			<spinnerItem name="1574400" value="1574400"/>
+			<spinnerItem name="1497600" value="1497600"/>
+			<spinnerItem name="1267200" value="1267200"/>
+			<spinnerItem name="1190400" value="1190400"/>
+			<spinnerItem name="1036800" value="1036800"/>
+			<spinnerItem name="960000" value="960000"/>
+			<spinnerItem name="883200" value="883200"/>
+			<spinnerItem name="729600" value="729600"/>
+			<spinnerItem name="652800" value="652800"/>
+			<spinnerItem name="422400" value="422400"/>
+			<spinnerItem name="300000" value="300000"/>
 		</spinner>
 
 		<spinner description="屏幕关闭时的最高频率，选择后在关闭屏幕时不会超过这个频率"  name="关屏最高频率" action="suspend_max_freq">
-			<spinnerItem name="最大" value="4294967295"/> 
-			<spinnerItem name="2265600" value="2265600"/> 
-			<spinnerItem name="1958400" value="1958400"/> 
-			<spinnerItem name="1728000" value="1728000"/> 
-			<spinnerItem name="1574400" value="1574400"/> 
-			<spinnerItem name="1497600" value="1497600"/> 
-			<spinnerItem name="1267200" value="1267200"/> 
-			<spinnerItem name="1190400" value="1190400"/> 
-			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="最大" value="4294967295"/>
+			<spinnerItem name="2265600" value="2265600"/>
+			<spinnerItem name="1958400" value="1958400"/>
+			<spinnerItem name="1728000" value="1728000"/>
+			<spinnerItem name="1574400" value="1574400"/>
+			<spinnerItem name="1497600" value="1497600"/>
+			<spinnerItem name="1267200" value="1267200"/>
+			<spinnerItem name="1190400" value="1190400"/>
+			<spinnerItem name="1036800" value="1036800"/>
 		</spinner>
 
 	</settingsPane>
@@ -159,44 +172,44 @@
 
 
 <settingsTab name="GPU设置">
-	
+
 	<settingsPane description="这里你可以设置GPU的性能等级" name="GPU性能等级管理">
-		
+
 		<seekBar description="GPU的性能等级可以限制GPU最低的性能等级来限制GPU的最低频率，这样不需要调速器来选择频率以提高性能，最低频率越高，使用时越耗电，但性能越强，待机不影响。默认不限制lv4（200Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU最低性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/min_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
-		
+
 		<seekBar description="GPU的性能等级可以限制GPU最高的性能等级来限制GPU的最高频率（防止thermal写入最高频率使得调整失效），这样不需要thermal来选择频率以节约电能，最高频率越低，使用时越省电，但性能越差，待机不影响。默认不限制lv0（578Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU最高性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
 
 
 	</settingsPane>
-	
+
 	<settingsPane description="这里你可以设置GPU的频率" name="GPU频率管理">
-		
+
 		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
-			<spinnerItem name="200Mhz" value="200000000"/> 
-			<spinnerItem name="320Mhz" value="320000000"/> 
-			<spinnerItem name="389Mhz" value="389000000"/> 
-			<spinnerItem name="450Mhz" value="450000000"/> 
-			<spinnerItem name="578Mhz" value="578000000"/> 
+			<spinnerItem name="200Mhz" value="200000000"/>
+			<spinnerItem name="320Mhz" value="320000000"/>
+			<spinnerItem name="389Mhz" value="389000000"/>
+			<spinnerItem name="450Mhz" value="450000000"/>
+			<spinnerItem name="578Mhz" value="578000000"/>
 		</spinner>
-	
+
 		</settingsPane>
-		
+
 	<settingsPane description="这里你可以设置一些调度器和调度器参数" name="GPU调度管理">
-		
+
 		<spinner description="这里可以设置GPU的调度器推荐“msm-adreno-tz”，它已经被我优化并加入faux的新gpu调速器algorithm。" name="GPU调度器" action="generic /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor">
-			<spinnerItem name="msm-adreno-tz" value="msm-adreno-tz"/> 
-			<spinnerItem name="conservative" value="conservative"/> 
+			<spinnerItem name="msm-adreno-tz" value="msm-adreno-tz"/>
+			<spinnerItem name="conservative" value="conservative"/>
 		</spinner>
-		
+
 		<spinner description="如果你使用“msm-adreno-tz”，这里可以设置algorithm的提升阈值。" name="algorithm参数设置" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold">
-			<spinnerItem name="3000" value="3000"/> 
-			<spinnerItem name="5000" value="5000"/> 
-			<spinnerItem name="6000" value="6000"/> 
-			<spinnerItem name="8000" value="8000"/> 
+			<spinnerItem name="3000" value="3000"/>
+			<spinnerItem name="5000" value="5000"/>
+			<spinnerItem name="6000" value="6000"/>
+			<spinnerItem name="8000" value="8000"/>
 		</spinner>
-	
+
 		</settingsPane>
-	
+
 </settingsTab>
 
 <settingsTab name="声音控制">
@@ -214,66 +227,66 @@
 </settingsTab>
 
 <settingsTab name="热插拔调整">
-	
+
 	<settingsPane description="选择热插拔驱动" name="热插拔设置">
-		
+
 			<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard和Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
-			<spinnerItem name="LG 默认" value="default"/> 
-			<spinnerItem name="高通热插拔" value="msm_hotplug"/> 
-			<spinnerItem name="Alucard 热插拔" value="alucard"/> 
-			<spinnerItem name="Intelli 热插拔" value="intelli"/> 
+			<spinnerItem name="LG 默认" value="default"/>
+			<spinnerItem name="高通热插拔" value="msm_hotplug"/>
+			<spinnerItem name="Alucard 热插拔" value="alucard"/>
+			<spinnerItem name="Intelli 热插拔" value="intelli"/>
 		</spinner>
 
 	</settingsPane>
-	
+
 	<settingsPane description="热插拔调整" name="热插拔设置">
-		
+
 		<spinner description="你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒,也就是说4秒后4个核心会全部打开，你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在仅选择intell热插拔或者高通热插拔才生效！" name="睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
-			<spinnerItem name="单核心" value="1"/> 
-			<spinnerItem name="双核心" value="2"/> 
-			<spinnerItem name="三核心" value="3"/> 
-			<spinnerItem name="四核心" value="4"/> 			
+			<spinnerItem name="单核心" value="1"/>
+			<spinnerItem name="双核心" value="2"/>
+			<spinnerItem name="三核心" value="3"/>
+			<spinnerItem name="四核心" value="4"/>
 		</spinner>
-		
+
 	</settingsPane>
-	
-	
+
+
 </settingsTab>
-	
+
 <settingsTab name="IO部分">
 
 
 	<settingsPane description="这里你可以设置IO的参数" name="IO设置">
 
 		<spinner description="这会给存储器一个缓存，用来暂时存储较多的IO操作的数据，可以提升性能" name="最大预读缓存值" action="generic /sys/block/mmcblk0/bdi/read_ahead_kb">
-			<spinnerItem name="128 kB" value="128"/> 
-			<spinnerItem name="256 kB" value="256"/> 
-			<spinnerItem name="512 kB" value="512"/> 
-			<spinnerItem name="1024 kB" value="1024"/> 
-			<spinnerItem name="2048 kB" value="2048"/> 
-			<spinnerItem name="2560 kB" value="2560"/> 
+			<spinnerItem name="128 kB" value="128"/>
+			<spinnerItem name="256 kB" value="256"/>
+			<spinnerItem name="512 kB" value="512"/>
+			<spinnerItem name="1024 kB" value="1024"/>
+			<spinnerItem name="2048 kB" value="2048"/>
+			<spinnerItem name="2560 kB" value="2560"/>
 			<spinnerItem name="3072 kB" value="3072"/>
 			<spinnerItem name="4096 kB" value="4096"/>
 		</spinner>
 
 		<spinner description="IO调度策略" name="默认IO调度" action="scheduler">
-			<spinnerItem name="CFQ" value="cfq"/> 
-			<spinnerItem name="BFQ" value="bfq"/> 
-			<spinnerItem name="DEADLINE" value="deadline"/> 
-			<spinnerItem name="NOOP" value="noop"/> 
-			<spinnerItem name="ROW" value="row"/> 
-			<spinnerItem name="SIO" value="sio"/> 
-			<spinnerItem name="FIOPS" value="fiops"/> 
+			<spinnerItem name="CFQ" value="cfq"/>
+			<spinnerItem name="BFQ" value="bfq"/>
+			<spinnerItem name="DEADLINE" value="deadline"/>
+			<spinnerItem name="NOOP" value="noop"/>
+			<spinnerItem name="ROW" value="row"/>
+			<spinnerItem name="SIO" value="sio"/>
+			<spinnerItem name="FIOPS" value="fiops"/>
 		</spinner>
 
 		<spinner description="在深度睡眠时，内核将采用的io调度机制" name="深度睡眠io调度机制" action="generic_cortex /tmp/sleep_scheduler">
-			<spinnerItem name="CFQ" value="cfq"/> 
-			<spinnerItem name="BFQ" value="bfq"/> 
-			<spinnerItem name="DEADLINE" value="deadline"/> 
-			<spinnerItem name="NOOP" value="noop"/> 
-			<spinnerItem name="ROW" value="row"/> 
-			<spinnerItem name="SIO" value="sio"/> 
-			<spinnerItem name="FIOPS" value="fiops"/> 
+			<spinnerItem name="CFQ" value="cfq"/>
+			<spinnerItem name="BFQ" value="bfq"/>
+			<spinnerItem name="DEADLINE" value="deadline"/>
+			<spinnerItem name="NOOP" value="noop"/>
+			<spinnerItem name="ROW" value="row"/>
+			<spinnerItem name="SIO" value="sio"/>
+			<spinnerItem name="FIOPS" value="fiops"/>
 		</spinner>
 
 	</settingsPane>
@@ -289,19 +302,19 @@
 		<checkbox description="自动启用OOM机制" name="Auto OOM" action="generic_cortex /tmp/auto_oom" label="自动内存控制"/>
 
 		<spinner description="这里你可以设置屏幕开启时的内存管理" name="亮屏OOM等级" action="oom_config_screen_on">
-			<spinnerItem name="low" value="low"/> 
-			<spinnerItem name="medium" value="medium"/> 
-			<spinnerItem name="default" value="default"/> 
-			<spinnerItem name="aggressive" value="aggressive"/> 
-			<spinnerItem name="exterminate" value="exterminate"/> 
+			<spinnerItem name="low" value="low"/>
+			<spinnerItem name="medium" value="medium"/>
+			<spinnerItem name="default" value="default"/>
+			<spinnerItem name="aggressive" value="aggressive"/>
+			<spinnerItem name="exterminate" value="exterminate"/>
 		</spinner>
 
 		<spinner description="这里你可以设置屏幕关闭时的内存管理." name="关屏OOM等级" action="oom_config_screen_off">
-			<spinnerItem name="low" value="low"/> 
-			<spinnerItem name="medium" value="medium"/> 
-			<spinnerItem name="default" value="default"/> 
-			<spinnerItem name="aggressive" value="aggressive"/> 
-			<spinnerItem name="exterminate" value="exterminate"/> 
+			<spinnerItem name="low" value="low"/>
+			<spinnerItem name="medium" value="medium"/>
+			<spinnerItem name="default" value="default"/>
+			<spinnerItem name="aggressive" value="aggressive"/>
+			<spinnerItem name="exterminate" value="exterminate"/>
 		</spinner>
 
 		<seekBar description="Dirty background memory buffer, more you set, more memory will be used for write buffer for background operations. Buffer is released on need to free RAM" name="Dirty Background ratio" action="generic /proc/sys/vm/dirty_background_ratio" unit="%" min="5" reversed="false" step="5" max="80"/>
@@ -319,8 +332,8 @@
 	<settingsPane description="Here you can activate some scripts, which will automatically run in the background, at a specified time." name="cron">
 
 		<spinner description="Main switch for Cron Tasker. If you set this to OFF, then all tasks below have no effect!" name="CRON TASK MAIN SWITCH" action="crontab">
-			<spinnerItem name="Cron ON" value="on"/> 
-			<spinnerItem name="Cron OFF" value="off"/> 
+			<spinnerItem name="Cron ON" value="on"/>
+			<spinnerItem name="Cron OFF" value="off"/>
 		</spinner>
 
 		<button description="Use this button to test if this Cron Task service is ONLINE and supported! If main switch is ON, and service is OFFLINE, then ROM Busybox is not supporting Cron. Update Busybox or ROM for this to work." name="Test Cron Task Service" action="push-actions/crontab_test" label="Test Cron Task Service"/>
@@ -366,14 +379,14 @@
 	<settingsPane description="Here you can find GPS and NTP settings and options." name="GPS - NTP">
 
 		<spinner description="GPS-Time-Zone for faster GPS lock! Use your region!" name="GPS Region" action="gpsregion">
-			<spinnerItem name="No GPS Zone changes (default)" value="No_GPS_Zone_changes"/> 
-			<spinnerItem name="Set Asia" value="Asia"/> 
-			<spinnerItem name="Set Europe" value="Europe"/> 
-			<spinnerItem name="Set Oceania" value="Oceania"/> 
-			<spinnerItem name="Set North America" value="North-America"/> 
-			<spinnerItem name="Set South America" value="South-America"/> 
-			<spinnerItem name="Set Africa" value="Africa"/> 
-			<spinnerItem name="Restore original ROM gps.conf" value="Original_ROM_GPS_Restored"/> 
+			<spinnerItem name="No GPS Zone changes (default)" value="No_GPS_Zone_changes"/>
+			<spinnerItem name="Set Asia" value="Asia"/>
+			<spinnerItem name="Set Europe" value="Europe"/>
+			<spinnerItem name="Set Oceania" value="Oceania"/>
+			<spinnerItem name="Set North America" value="North-America"/>
+			<spinnerItem name="Set South America" value="South-America"/>
+			<spinnerItem name="Set Africa" value="Africa"/>
+			<spinnerItem name="Restore original ROM gps.conf" value="Original_ROM_GPS_Restored"/>
 		</spinner>
 
 		<button description="Click to see your current GPS ZONE" name="GPS ZONE" action="push-actions/gpszonecheck" label="GPS ZONE CHECK"/>
@@ -399,47 +412,47 @@
 </settingsTab>
 
 <settingsTab name="Tweaks">
-	
+
 	<settingsPane description="TCP拥塞控制" name="TCP拥塞">
-	
+
 	<spinner description="通过下面的选项来切换tcp拥塞驱动" name="TCP拥塞控制" action="generic /proc/sys/net/ipv4/tcp_congestion_control">
-			<spinnerItem name="westwood" value="westwood"/> 
-			<spinnerItem name="cubic" value="cubic"/> 
-			<spinnerItem name="reno" value="reno"/> 
+			<spinnerItem name="westwood" value="westwood"/>
+			<spinnerItem name="cubic" value="cubic"/>
+			<spinnerItem name="reno" value="reno"/>
 	</spinner>
-	
+
 	</settingsPane>
 
 	<settingsPane description="Fast charge control menu, here you can set the force FAST charge option when MTP is used as USB connection!" name="Fast Charge Control">
 
 		<spinner description="Fast Charge ON or OFF, also you can force charge mA limit! for this select manual and set below the requested limit, if set here ON then default limit is 1200mA, if your charger can't give you that, don't expect to see 1200mA charge, no magic here." name="Force Fast Charge Switch" action="generic /sys/kernel/fast_charge/force_fast_charge">
-			<spinnerItem name="Fast Charge OFF" value="0"/> 
-			<spinnerItem name="Fast Charge ON" value="1"/> 
-			<spinnerItem name="Fast Charge Manual" value="2"/> 
+			<spinnerItem name="Fast Charge OFF" value="0"/>
+			<spinnerItem name="Fast Charge ON" value="1"/>
+			<spinnerItem name="Fast Charge Manual" value="2"/>
 		</spinner>
 
 		<spinner description="Fast Charge Manual mA limit! here you can set the max allowed mA when using charger. Take effect ONLY if Fast Charge Manual is set above!" name="Fast Charge mA Limits" action="generic /sys/kernel/fast_charge/fast_charge_level">
-			<spinnerItem name="MAX 500mA" value="500"/> 
-			<spinnerItem name="MAX 900mA" value="900"/> 
-			<spinnerItem name="MAX 1200mA" value="1200"/> 
-			<spinnerItem name="MAX 1500mA" value="1500"/> 
-			<spinnerItem name="MAX 1800mA" value="1800"/> 
-			<spinnerItem name="MAX 2000mA" value="2000"/> 
+			<spinnerItem name="MAX 500mA" value="500"/>
+			<spinnerItem name="MAX 900mA" value="900"/>
+			<spinnerItem name="MAX 1200mA" value="1200"/>
+			<spinnerItem name="MAX 1500mA" value="1500"/>
+			<spinnerItem name="MAX 1800mA" value="1800"/>
+			<spinnerItem name="MAX 2000mA" value="2000"/>
 		</spinner>
 
 		<checkbox description="Enable one more Force Fast Charge HACK to mask any charger including USB as AC power. so we always get fast charge mode! no more SLOW CHARGE Icon! The side effect is that you get 2 connections sound and vibrate! one for USB connected and second for AC connected!" name="Fake AC Charger" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="Fake AC Charger Hack"/>
-		
+
 		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="苹果充电支持"/>
-		
-		<button description="Here you can RESET battery fuel counter, if you see that battery present counter is not showing correct state, you can ask kernel to recalibrate battery state." name="Reset Battery Counter" action="push-actions/reset_battery" label="Reset Battery Counter"/>				
+
+		<button description="Here you can RESET battery fuel counter, if you see that battery present counter is not showing correct state, you can ask kernel to recalibrate battery state." name="Reset Battery Counter" action="push-actions/reset_battery" label="Reset Battery Counter"/>
 
 	</settingsPane>
 
 	<settingsPane description="Enable using Android phone as USB and Keyboard for your PC!, lets say you dont have keyboard and you really need one! connect your phone via USB get app named USB KEYBOARD, enable the tweak here, and have fun!" name="Android USB HID Device">
 
 		<spinner description="Enable or Disable USB HID Device driver to control PC keyboard and mouse from phone!" name="USB HID Device" action="usb_keyboard">
-			<spinnerItem name="Enable USB HID" value="enable"/> 
-			<spinnerItem name="Disable USB HID" value="disable"/> 
+			<spinnerItem name="Enable USB HID" value="enable"/>
+			<spinnerItem name="Disable USB HID" value="disable"/>
 		</spinner>
 
 	</settingsPane>
@@ -453,8 +466,8 @@
 	<settingsPane description="This script will manipulate many kernel settings, based on chosen STweaks profile + settings and on screen state (ON or OFF) and we call it CortexBrain. To reset the kernel-settings, after you disable a tweak, you must reboot!" name="CortexBrain Tweaks">
 
 		<spinner description="Enable or Disable the background-process from CortexBrain. If you disable it, you will lose the function that set different settings for screen state (ON or OFF)." name="Cortexbrain-Background-Process" action="cortexbrain_background_process">
-			<spinnerItem name="Enable" value="1"/> 
-			<spinnerItem name="Disable" value="0"/> 
+			<spinnerItem name="Enable" value="1"/>
+			<spinnerItem name="Disable" value="0"/>
 		</spinner>
 
 		<button description="Click to see if the CortexBrain-Background-Process is running or not." name="Check Background-Process" action="push-actions/cortexbrain_background_process_check" label="CHECK SERVICE"/>
