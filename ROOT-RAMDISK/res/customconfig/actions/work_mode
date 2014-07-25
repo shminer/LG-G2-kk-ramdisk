@@ -1,0 +1,89 @@
+#!/sbin/busybox sh
+
+# $1 - "work_mode"
+# $2 - value=
+# Created By JZ
+BB=/sbin/busybox
+
+if [ "a$2" != "a" ]; then
+	work_mode=$2;
+
+	case "${work_mode}" in
+		performance_mode)
+			# stop thermal
+			/system/bin/stop thermal-engine;
+
+			# max cpu online
+			echo "4" > /sys/kernel/intelli_plug/max_cpus_online;
+			echo "4" > /sys/module/msm_hotplug/max_cpus_online;
+			echo "4" > /sys/kernel/alucard_hotplug/maxcoreslimit;
+
+			# max cpu freq & cpu limit
+			echo "2803200" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+			echo "2803200" > /sys/kernel/msm_cpufreq_limit/cpufreq_limit;
+
+			# performance mode
+			if [ -e /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate ]; then
+				echo "10000" > /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate;
+			fi;
+
+			# max gpu freq & pwr level
+			echo "0" > /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_pwrlevel;
+			echo "578000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq;
+			echo "578000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk;
+		;;
+		normal_mode)
+			# start thermal
+			/system/bin/start thermal-engine;
+			$BB renice -n -17 -p $(pgrep -f "/system/bin/thermal-engine");
+
+			# max cpu online
+			echo "4" > /sys/kernel/intelli_plug/max_cpus_online;
+			echo "4" > /sys/module/msm_hotplug/max_cpus_online;
+			echo "4" > /sys/kernel/alucard_hotplug/maxcoreslimit;
+
+			# max cpu freq & cpu limit
+			echo "2572800" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+			echo "2572800" > /sys/kernel/msm_cpufreq_limit/cpufreq_limit;
+
+			# performance mode
+			if [ -e /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate ]; then
+				echo "30000" > /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate;
+			fi;
+
+			# max gpu freq & pwr level
+			echo "1" > /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_pwrlevel;
+			echo "450000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq;
+			echo "450000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk;
+		;;
+		battery_mode)
+			# start thermal
+			/system/bin/start thermal-engine;
+			$BB renice -n -17 -p $(pgrep -f "/system/bin/thermal-engine");
+
+			# max cpu online
+			echo "2" > /sys/kernel/intelli_plug/max_cpus_online;
+			echo "2" > /sys/module/msm_hotplug/max_cpus_online;
+			echo "2" > /sys/kernel/alucard_hotplug/maxcoreslimit;
+
+			# max cpu freq & cpu limit
+			echo "1574400" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+			echo "1574400" > /sys/kernel/msm_cpufreq_limit/cpufreq_limit;
+
+			# performance mode
+			if [ -e /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate ]; then
+				echo "50000" > /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate;
+			fi;
+
+			# max gpu freq & pwr level
+			echo "4" > /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_pwrlevel;
+			echo "200000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq;
+			echo "200000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk;
+		;;
+		*)
+			work_mode=normal;
+		;;
+	esac;
+fi;
+echo ${work_mode};
+
