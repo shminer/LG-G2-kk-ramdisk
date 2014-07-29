@@ -1,5 +1,5 @@
 stweaks_boot_control=yes
-work_mode=normal
+msm_thermal=intelli_temp
 enabled=on
 core_limit_temp_degC=80
 limit_temp_degC=78

@@ -22,6 +22,11 @@
 	</settingsPane>
 
 	<settingsPane description="这里你可以设置设备的温度保护，现在intelli和系统thermal协同工作。来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
+		
+		<spinner description="处理器温度控制，以下为两个温控驱动，他会保证温度不会太高，也可以保护你的屏幕，第二个温控是由msm温控和intelli温控协同工作。" name="处理器温度控制" action="msm_thermal">
+			<spinnerItem name="默认温控" value="msm_temp"/>
+			<spinnerItem name="intelli+msm温控" value="intelli_temp"/>
+		</spinner>
 
 		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/enabled" label="处理器温度控制"/>
 
@@ -60,8 +65,6 @@
 
 
 		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
-
-
 			<spinnerItem name="darkness" value="darkness"/>
 			<spinnerItem name="intellidemand" value="intellidemand"/>
 			<spinnerItem name="intelliactive" value="intelliactive"/>
