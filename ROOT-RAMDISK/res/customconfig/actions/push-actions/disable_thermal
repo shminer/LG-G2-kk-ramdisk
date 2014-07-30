@@ -1,9 +1,0 @@
-#!/sbin/busybox sh
-
-# stop thermal
-if [ "$(ps | grep "/system/bin/thermal-engine" | wc -l)" -ge "1" ]; then
-	/system/bin/stop thermal-engine;
-fi;
-
-echo "thermal disable"
-
