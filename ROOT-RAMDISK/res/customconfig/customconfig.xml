@@ -33,7 +33,10 @@
 		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
 
 		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-
+		
+		<button description="关闭系统thermal温控，将完全由intelli来接管温控，不限制gpu最高频率，不受thermal控制，但是会导致相机退出缓慢。" name="thermal-engine" action="push-actions/disable_thermal" label="关闭thermal"/>
+		<button description="打开系统thermal温控，各种频率将受到thermal控制，配置文件在system/etc下，相机退出正常，但是gpu会在高负载时被限制到320Mhz。" name="thermal-engine" action="push-actions/enable_thermal" label="启用thermal"/>
+		
 	</settingsPane>
 
 	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
