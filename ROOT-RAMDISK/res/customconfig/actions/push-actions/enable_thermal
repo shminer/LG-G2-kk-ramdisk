@@ -1,0 +1,9 @@
+#!/sbin/busybox sh
+
+# strat thermal
+if [ "$(ps | grep "/system/bin/thermal-engine" | wc -l)" -le "1" ]; then
+	/system/bin/start thermal-engine;
+fi;
+
+echo "thermal enable"
+
