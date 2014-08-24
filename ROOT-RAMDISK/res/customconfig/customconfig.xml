@@ -67,7 +67,11 @@
 
 		</spinner>
 
-
+		<spinner description="这个选项可以让热插拔驱动休眠，可以让待机更省电，但是会影响屏幕唤醒。" name="热插拔挂起模式" action="hotplug_suspend">
+			<spinnerItem name="总是活动的" value="always_active"/> 
+			<spinnerItem name="挂起模式" value="suspend_when_off"/> 
+		</spinner>
+		
 		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
 			<spinnerItem name="darkness" value="darkness"/>
 			<spinnerItem name="intellidemand" value="intellidemand"/>
@@ -214,7 +218,7 @@
 
 		<seekBar description="这里可以控制电话耳麦的增益" name="耳麦增益控制" action="generic_mic_sound /sys/kernel/sound_control_3/lge_mic_gain" unit="vol" min="-10" reversed="false" step="1" max="24"/>
 
-		<seekBar description="这里你可以控制外放音量" name="外放增益" action="generic_speaker_sound /sys/kernel/sound_control_3/lge_speaker_gain" unit="vol" min="-10" reversed="false" step="1" max="10"/>
+		<seekBar description="这里你可以控制外放音量" name="外放增益" action="generic_speaker_sound /sys/kernel/sound_control_3/lge_speaker_gain" unit="vol" min="-10" reversed="false" step="1" max="24"/>
 
 	</settingsPane>
 

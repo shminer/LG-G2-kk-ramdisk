@@ -6,6 +6,7 @@ limit_temp_degC=78
 oc_controller=ultra
 eco_mode=all
 min_online_cpus=1
+hotplug_suspend=always_active
 default_cpu_gov=ondemand
 cpu_boost_freq=1728000
 sample_rate=50000
