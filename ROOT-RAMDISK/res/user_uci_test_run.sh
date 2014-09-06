@@ -25,5 +25,6 @@ write_config;
 
 # restore all the PUSH Button Actions back to there location
 mv /res/no-push-on-boot/* /res/customconfig/actions/push-actions/;
+$BB mkdir /res/uci-user.sh
 pkill -f "com.gokhanmoral.stweaks.app";
 

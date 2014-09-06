@@ -54,6 +54,7 @@ case "${1}" in
 
 		# restore all the PUSH Button Actions back to there location
 		$BB mv /res/no-push-on-boot/* /res/customconfig/actions/push-actions/;
+		$BB mkdir /res/uci.sh
 		chmod 06755 /res/customconfig/actions/push-actions/*
 	;;
 	restore)

@@ -311,4 +311,3 @@ $BB sh /res/uci.sh hotplug "$hotplug";
 # script finish here, so let me know when
 TIME_NOW=$(date)
 echo "$TIME_NOW" > /data/boot_log_dm
-
