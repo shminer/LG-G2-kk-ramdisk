@@ -22,7 +22,7 @@
 	</settingsPane>
 
 	<settingsPane description="这里你可以设置设备的温度保护，现在intelli和系统thermal协同工作。来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
-		
+
 		<spinner description="处理器温度控制，以下为两个温控驱动，他会保证温度不会太高，也可以保护你的屏幕，第二个温控是由msm温控和intelli温控协同工作。" name="处理器温度控制" action="msm_thermal">
 			<spinnerItem name="默认温控" value="msm_temp"/>
 			<spinnerItem name="intelli+msm温控" value="intelli_temp"/>
@@ -33,10 +33,10 @@
 		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
 
 		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-		
+
 		<button description="关闭系统thermal温控，将完全由intelli来接管温控，不限制gpu最高频率，不受thermal控制，但是会导致相机退出缓慢。" name="thermal-engine" action="push-actions/disable_thermal" label="关闭thermal"/>
 		<button description="打开系统thermal温控，各种频率将受到thermal控制，配置文件在system/etc下，相机退出正常，但是gpu会在高负载时被限制到320Mhz。" name="thermal-engine" action="push-actions/enable_thermal" label="启用thermal"/>
-		
+
 	</settingsPane>
 
 	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
@@ -49,8 +49,6 @@
 			<spinnerItem name="超频3档 2.7GHz" value="mega"/>
 			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/>
 		</spinner>
-
-
 
 		<spinner description="ECO省电模式，设置为仅双核心的时候，那么只有两个核心被开启，另外两个会强行关闭，设置为一个核心的时候，那么另外三个都会被强行关闭，根据CPU被关闭的核心数会损失同样的性能，但是会更省电。" name="省电模式" action="eco_mode">
 			<spinnerItem name="所有核心都启用（性能）" value="all"/>
@@ -68,10 +66,10 @@
 		</spinner>
 
 		<spinner description="这个选项可以让热插拔驱动休眠，可以让待机更省电，但是会影响屏幕唤醒。" name="热插拔挂起模式" action="hotplug_suspend">
-			<spinnerItem name="总是活动的" value="always_active"/> 
-			<spinnerItem name="挂起模式" value="suspend_when_off"/> 
+			<spinnerItem name="总是活动的" value="always_active"/>
+			<spinnerItem name="挂起模式" value="suspend_when_off"/>
 		</spinner>
-		
+
 		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
 			<spinnerItem name="darkness" value="darkness"/>
 			<spinnerItem name="intellidemand" value="intellidemand"/>
@@ -326,6 +324,14 @@
 </settingsTab>
 
 <settingsTab name="Cron Tab">
+
+	<settingsPane description="你精确可以设定自己的最低背光亮度。" name="最低量度控制">
+
+		<checkbox description="开启或者关闭最低量度控制，可以覆盖背光本身的最低量度来保护视力。" name="最低量度覆盖开关" action="generic01 /sys/devices/f9967000.i2c/i2c-0/0-0038/lm3630_min_backlight_reducer" label="最低量度控制开关"/>
+
+		<seekBar description="你可以设置最低量度值，在黑暗的地方，如果你觉得太亮了，这个功能有助于降低到更低的亮度，而不是像某些软件通过增加屏幕滤镜来实现，完全基于硬件控制。" name="最低亮度值" action="generic /sys/devices/f9967000.i2c/i2c-0/0-0038/lm3630_min_backlight_set" unit="Lux" min="10" reversed="false" step="10" max="100"/>
+
+	</settingsPane>
 
 	<settingsPane description="Here you can activate some scripts, which will automatically run in the background, at a specified time." name="cron">
 
