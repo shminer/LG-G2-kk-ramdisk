@@ -233,10 +233,10 @@
 			<spinnerItem name="Intelli 热插拔" value="intelli"/>
 		</spinner>
 
+
 	</settingsPane>
 
 	<settingsPane description="热插拔调整" name="热插拔设置">
-
 		<spinner description="你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒,也就是说4秒后4个核心会全部打开，你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在仅选择intell热插拔或者高通热插拔才生效！" name="睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
 			<spinnerItem name="单核心" value="1"/>
 			<spinnerItem name="双核心" value="2"/>
