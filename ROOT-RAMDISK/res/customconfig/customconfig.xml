@@ -28,7 +28,7 @@
 			<spinnerItem name="intelli+msm温控" value="intelli_temp"/>
 		</spinner>
 
-		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/enabled" label="处理器温度控制"/>
+		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/core_control_enabled" label="处理器温度控制"/>
 
 		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
 

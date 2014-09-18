@@ -31,6 +31,9 @@ if [ -e /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate ]; then
 	echo "10000" > /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate;
 fi;
 
+# Turn off CORE CONTROL, to boot on all cores!
+echo "0" > /sys/module/msm_thermal/core_control/core_control_enabled;
+
 # fix storage folder owner
 $BB chown system.sdcard_rw /storage;
 
@@ -128,7 +131,7 @@ $BB chmod 666 /sys/devices/system/cpu/cpu1/online
 $BB chmod 666 /sys/devices/system/cpu/cpu2/online
 $BB chmod 666 /sys/devices/system/cpu/cpu3/online
 $BB chmod 666 /sys/module/msm_thermal/parameters/*
-$BB chmod 666 /sys/module/msm_thermal/core_control/enabled
+$BB chmod 666 /sys/module/msm_thermal/core_control/core_control_enabled
 $BB chmod 666 /sys/kernel/intelli_plug/*
 $BB chmod 666 /sys/class/kgsl/kgsl-3d0/max_gpuclk
 $BB chmod 666 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor
@@ -161,8 +164,8 @@ fi;
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
 # incase that ADMIN feel that something wrong with global STweaks config and profiles, then ADMIN can add +1 to CLEAN_DORI_DIR
 # to clean all files on first boot from /data/.dori/ folder.
-RESET_MAGIC=30;
-CLEAN_DORI_DIR=1;
+RESET_MAGIC=31;
+CLEAN_DORI_DIR=2;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "0" > /data/.dori/reset_profiles;
 fi;
