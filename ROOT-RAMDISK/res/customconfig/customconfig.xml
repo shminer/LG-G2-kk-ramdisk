@@ -1,15 +1,35 @@
 <settingsRoot>
 
-<settingsTab name="主设置页">
+<settingsTab name="内核详情">
 
-	<settingsPane description="感谢Dorimanx提供的工具以及ramdisk和源码，感谢dr87,savoca的内核源码。JZ汉化。" name="版本信息">
-
-	</settingsPane>
-
-	<settingsPane description="由于时间有限，仅汉化部分重要设置。如果你有能力帮我汉化以及完善内核，请加我QQ332574643。" name="特别声明">
+	<settingsPane description="安卓基于LINUX内核开发，而安卓不是LINUX，在所有LINUX发行版本中，LINUX都充当了内核的角色。LINUX内核的每次更新都会带来很多的性能提升和特性。内核是运行在硬件底层的软件，关乎系统性能，功耗。所以一个系统是否优化的好，最重要的还是优化内核。" name="什么是内核">
 
 	</settingsPane>
 
+	<settingsPane description="JZ-KERNEL for LG G2 ver 1.0   LINUX version 3.4.103"  name="版本信息">
+
+	</settingsPane>
+	
+	<settingsPane description="内核基于LG官方源码编译，整合了所有机型，已经测试过可以在所有G2版本上运行，但由于手头只有D801，只做D801、D802、F320三个版本，适用于LG官方ROM。内核加入多重IO调度模式、CPU调速器、CPU热插拔驱动、更多的控制SYSfs，实现了ST工具高度集成的功能，超频、省电、优化由你所想。内核本身深度优化，默认配置即可带来丝滑的享受。在dorimanx优化的基础上，合并CM、simple内核以及更多CAF的更新，重新调配内核参数，使得内核运行更快。" name="特性说明">
+
+	</settingsPane>
+
+	<settingsPane description="感谢Dorimanx提供的工具以及ramdisk和源码，感谢dr87,savoca的内核源码。JZ汉化。" name="特别鸣谢">
+
+	</settingsPane>
+	
+	<settingsPane description="如果你也喜欢linux内核，可以给我提交commit，我也可以提供完整的内核编译脚本以及编译工具来帮助你编译内核。" name="宣传推广">
+
+	</settingsPane>
+	
+	<settingsPane description="这里只是纯文字性宣传，没有任何推广链接以及后台执行代码。如果没兴趣，可以直接略过。现在上班了，制作这些也需要很多的时间和精力，如果你是土豪，就请我吃牛排吧~看到很多人刷内核或者recovery会无法启动机器，出现boot无效或者加密启动错误，这是由于G2有BL锁造成的，只要能连上电脑，所有/'砖头/'都可以搞定。你可以进入淘宝搜索我的店铺名-aumor misc，找到G2砖头修复。可以远程、邮寄。" name="请我吃牛排">
+
+	</settingsPane>
+
+
+</settingsTab>
+
+<settingsTab name="CPU设置">
 	<settingsPane description="你可以设置ST工具是否在启动时加载设置" name="启动加载设置">
 
 		<spinner description="主设置开关，启动时加载所有设置。默认为启动时加载所有设置" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
@@ -20,6 +40,11 @@
 		<button description="按下加载所有加载配置文件" name="加载所有" action="push-actions/reload_settings" label="加载所有"/>
 
 	</settingsPane>
+	
+</settingsTab>
+
+<settingsTab name="CPU设置">
+
 
 	<settingsPane description="这里你可以设置设备的温度保护，现在intelli和系统thermal协同工作。来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
 
@@ -524,21 +549,6 @@
 </settingsTab>
 
 <settingsTab name="KERNEL STUFF">
-
-	<settingsPane description="Debug to SD-Card sdcard" name="Bug-Report">
-
-		<button description="Bug-Report for Kernel" name="Kernel-Bug" action="push-actions/debug_to_sd 1" label="KERNEL-BUG"/>
-
-		<button description="Bug-Report for Apps" name="App-Bug" action="push-actions/debug_to_sd 2" label="APP-BUG"/>
-
-	</settingsPane>
-
-
-	<settingsPane description="Check if there is a new kernel-update available." name="Kernel-Update">
-
-		<button description="Check for Update" name="Kernel-Update" action="push-actions/kernel_check" label="KERNEL-CHECK"/>
-
-	</settingsPane>
 
 	<settingsPane description="Here you can load (on boot) some kernel modules that will allow some extra functions." name="Kernel Modules">
 
