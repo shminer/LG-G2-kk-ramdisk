@@ -2,7 +2,7 @@
 
 <settingsTab name="内核详情">
 
-	<settingsPane description="安卓基于LINUX内核开发，而安卓不是LINUX，在所有LINUX发行版本中，LINUX都充当了内核的角色。LINUX内核的每次更新都会带来很多的性能提升和特性。内核是运行在硬件底层的软件，关乎系统性能，功耗。所以一个系统是否优化的好，最重要的还是优化内核。" name="什么是内核">
+	<settingsPane description="安卓基于LINUX内核开发，而安卓不是LINUX，在所有LINUX发行版本中，LINUX都充当了内核的角色。LINUX内核的每次更新都会带来很多的性能提升和特性。内核是运行在硬件底层的软件，关乎系统性能，功耗。所以一个系统是否优化的好，最重要的还是内核。" name="什么是内核">
 
 	</settingsPane>
 
@@ -18,18 +18,18 @@
 
 	</settingsPane>
 	
-	<settingsPane description="如果你也喜欢linux内核，可以给我提交commit，我也可以提供完整的内核编译脚本以及编译工具来帮助你编译内核。" name="宣传推广">
+	<settingsPane description="如果你也喜欢linux内核，可以给我提交commit，我也可以提供完整的内核编译脚本以及编译工具来帮助你编译内核。我的QQ:332574643" name="宣传推广">
 
 	</settingsPane>
 	
-	<settingsPane description="这里只是纯文字性宣传，没有任何推广链接以及后台执行代码。如果没兴趣，可以直接略过。现在上班了，制作这些也需要很多的时间和精力，如果你是土豪，就请我吃牛排吧~看到很多人刷内核或者recovery会无法启动机器，出现boot无效或者加密启动错误，这是由于G2有BL锁造成的，只要能连上电脑，所有/'砖头/'都可以搞定。你可以进入淘宝搜索我的店铺名-aumor misc，找到G2砖头修复。可以远程、邮寄。" name="请我吃牛排">
+	<settingsPane description="这里只是纯文字性宣传，没有任何推广链接以及后台执行代码。如果没兴趣，可以直接略过。现在上班了，制作这些也需要很多的时间和精力，如果你是土豪，就请我吃牛排吧~看到很多人刷内核或者recovery会无法启动机器，出现boot无效或者加密启动错误，这是由于G2有BL锁造成的，只要能连上电脑，所有砖头都可以搞定。你可以进入淘宝搜索我的店铺名：aumor misc，找到“G2砖头修复”。可以远程、邮寄。" name="请我吃牛排">
 
 	</settingsPane>
 
 
 </settingsTab>
 
-<settingsTab name="CPU设置">
+<settingsTab name="配置管理">
 	<settingsPane description="你可以设置ST工具是否在启动时加载设置" name="启动加载设置">
 
 		<spinner description="主设置开关，启动时加载所有设置。默认为启动时加载所有设置" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
@@ -41,28 +41,56 @@
 
 	</settingsPane>
 	
+	<settingsPane description="查看正在使用的配置文件名称" name="配置查看">
+
+		<button description="点击下面的按钮查看配置文件名" name="配置检查" action="push-actions/profile" label="点我查看"/>
+
+	</settingsPane>
+
+	<settingsPane description="这里你可以选择配置文件" name="STweaks 配置">
+
+		<button description="优化过的默认配置，性能和耗电均衡配置" name="平衡模式" action="push-actions/config_backup_restore 4" label="平衡模式"/>
+
+	</settingsPane>
+
+	<settingsPane description="你可以备份自己的当前配置，恢复需要30秒来重新写入参数" name="配置的备份与恢复">
+
+		<button description="备份配置" name="Settings Backup" action="push-actions/config_backup_restore 1" label="点我备份"/>
+
+		<button description="恢复配置" name="Settings Restore" action="push-actions/config_backup_restore 2" label="点我恢复"/>
+
+	</settingsPane>
+	
+	<settingsPane name="稍后加入更多选项">
+
+	</settingsPane>
+	
 </settingsTab>
 
 <settingsTab name="CPU设置">
 
+	<settingsPane description="选择热插拔驱动" name="热插拔设置">
 
-	<settingsPane description="这里你可以设置设备的温度保护，现在intelli和系统thermal协同工作。来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
-
-		<spinner description="处理器温度控制，以下为两个温控驱动，他会保证温度不会太高，也可以保护你的屏幕，第二个温控是由msm温控和intelli温控协同工作。" name="处理器温度控制" action="msm_thermal">
-			<spinnerItem name="默认温控" value="msm_temp"/>
-			<spinnerItem name="intelli+msm温控" value="intelli_temp"/>
+			<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard和Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
+			<spinnerItem name="LG 默认" value="default"/>
+			<spinnerItem name="高通热插拔" value="msm_hotplug"/>
+			<spinnerItem name="Alucard 热插拔" value="alucard"/>
+			<spinnerItem name="Intelli 热插拔" value="intelli"/>
 		</spinner>
 
-		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/core_control_enabled" label="处理器温度控制"/>
-
-		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-
-		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-
-		<button description="关闭系统thermal温控，将完全由intelli来接管温控，不限制gpu最高频率，不受thermal控制，但是会导致相机退出缓慢。" name="thermal-engine" action="push-actions/disable_thermal" label="关闭thermal"/>
-		<button description="打开系统thermal温控，各种频率将受到thermal控制，配置文件在system/etc下，相机退出正常，但是gpu会在高负载时被限制到320Mhz。" name="thermal-engine" action="push-actions/enable_thermal" label="启用thermal"/>
 
 	</settingsPane>
+
+	<settingsPane description="热插拔调整" name="热插拔设置">
+		<spinner description="你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒,也就是说4秒后4个核心会全部打开，你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在仅选择intell热插拔或者高通热插拔才生效！" name="睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
+			<spinnerItem name="单核心" value="1"/>
+			<spinnerItem name="双核心" value="2"/>
+			<spinnerItem name="三核心" value="3"/>
+			<spinnerItem name="四核心" value="4"/>
+		</spinner>
+
+	</settingsPane>
+
 
 	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
 
@@ -191,7 +219,6 @@
 </settingsTab>
 
 
-
 <settingsTab name="GPU设置">
 
 	<settingsPane description="这里你可以设置GPU的性能等级" name="GPU性能等级管理">
@@ -247,31 +274,26 @@
 
 </settingsTab>
 
-<settingsTab name="热插拔调整">
+<settingsTab name="温控管理">
 
-	<settingsPane description="选择热插拔驱动" name="热插拔设置">
+	<settingsPane description="这里你可以设置设备的温度保护，现在intelli和系统thermal协同工作。来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
 
-			<spinner description="处理器热插拔设置，你可以设置LG默认（高通的MD必须打开才能生效），另外还有Alucard和Intelli两个热插拔，JZ内核默认为Intelli（推荐）" name="热插拔驱动" action="hotplug">
-			<spinnerItem name="LG 默认" value="default"/>
-			<spinnerItem name="高通热插拔" value="msm_hotplug"/>
-			<spinnerItem name="Alucard 热插拔" value="alucard"/>
-			<spinnerItem name="Intelli 热插拔" value="intelli"/>
+		<spinner description="处理器温度控制，以下为两个温控驱动，他会保证温度不会太高，也可以保护你的屏幕，第二个温控是由msm温控和intelli温控协同工作。" name="处理器温度控制" action="msm_thermal">
+			<spinnerItem name="默认温控" value="msm_temp"/>
+			<spinnerItem name="intelli+msm温控" value="intelli_temp"/>
 		</spinner>
 
+		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/core_control_enabled" label="处理器温度控制"/>
+
+		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
+
+		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
+
+		<button description="关闭系统thermal温控，将完全由intelli来接管温控，不限制gpu最高频率，不受thermal控制，但是会导致相机退出缓慢。" name="thermal-engine" action="push-actions/disable_thermal" label="关闭thermal"/>
+		<button description="打开系统thermal温控，各种频率将受到thermal控制，配置文件在system/etc下，相机退出正常，但是gpu会在高负载时被限制到320Mhz。" name="thermal-engine" action="push-actions/enable_thermal" label="启用thermal"/>
 
 	</settingsPane>
-
-	<settingsPane description="热插拔调整" name="热插拔设置">
-		<spinner description="你可以设置在短暂高负载时启动两个核心，默认为双核心持续4秒,也就是说4秒后4个核心会全部打开，你也可以设置一个核心，这样更省电，但是会牺牲4秒左右的性能，在仅选择intell热插拔或者高通热插拔才生效！" name="睿频加速" action="generic /sys/module/msm_hotplug/cpus_boosted">
-			<spinnerItem name="单核心" value="1"/>
-			<spinnerItem name="双核心" value="2"/>
-			<spinnerItem name="三核心" value="3"/>
-			<spinnerItem name="四核心" value="4"/>
-		</spinner>
-
-	</settingsPane>
-
-
+	
 </settingsTab>
 
 <settingsTab name="IO部分">
@@ -338,61 +360,49 @@
 			<spinnerItem name="exterminate" value="exterminate"/>
 		</spinner>
 
-		<seekBar description="Dirty background memory buffer, more you set, more memory will be used for write buffer for background operations. Buffer is released on need to free RAM" name="Dirty Background ratio" action="generic /proc/sys/vm/dirty_background_ratio" unit="%" min="5" reversed="false" step="5" max="80"/>
+		<seekBar description="被使用的后台内存缓冲区（直译为脏的背景缓冲区），这个值越高，更多的内存将会被用于后台缓冲操作，缓冲区会被释放如果需要使用更多的内存。" name="后台缓冲区比例" action="generic /proc/sys/vm/dirty_background_ratio" unit="%" min="5" reversed="false" step="5" max="80"/>
 
-		<seekBar description="Dirty real time memory buffer, more you set, more memory will be used for write buffer for real time operations. Buffer is released on need to free RAM" name="Dirty ratio" action="generic /proc/sys/vm/dirty_ratio" unit="%" min="5" reversed="false" step="5" max="90"/>
-
-		<button description="Clean RAM Cache. This will release all cached and buffered RAM, please WAIT 3sec to get cleanup report" name="CLEAN RAM CACHE" action="push-actions/clean_ram_cache" label="CLEAN RAM CACHE NOW"/>
+		<seekBar description="被使用的实时内存缓冲区，这个值越高，更多的内存将被用于当前的操作，缓冲区会被释放如果需要使用更多的内存。" name="实时内存缓冲区比例" action="generic /proc/sys/vm/dirty_ratio" unit="%" min="5" reversed="false" step="5" max="90"/>
 
 	</settingsPane>
 
 </settingsTab>
 
-<settingsTab name="Cron Tab">
+<settingsTab name="定时任务">
 
-	<settingsPane description="你精确可以设定自己的最低背光亮度。" name="最低量度控制">
 
-		<checkbox description="开启或者关闭最低量度控制，可以覆盖背光本身的最低量度来保护视力。" name="最低量度覆盖开关" action="generic01 /sys/devices/f9967000.i2c/i2c-0/0-0038/lm3630_min_backlight_reducer" label="最低量度控制开关"/>
 
-		<seekBar description="你可以设置最低量度值，在黑暗的地方，如果你觉得太亮了，这个功能有助于降低到更低的亮度，而不是像某些软件通过增加屏幕滤镜来实现，完全基于硬件控制。" name="最低亮度值" action="generic /sys/devices/f9967000.i2c/i2c-0/0-0038/lm3630_min_backlight_set" unit="Lux" min="10" reversed="false" step="10" max="100"/>
+	<settingsPane description="你可以启动一些脚本，这些脚本会在指定时间后台运行。" name="定时">
 
-	</settingsPane>
-
-	<settingsPane description="Here you can activate some scripts, which will automatically run in the background, at a specified time." name="cron">
-
-		<spinner description="Main switch for Cron Tasker. If you set this to OFF, then all tasks below have no effect!" name="CRON TASK MAIN SWITCH" action="crontab">
-			<spinnerItem name="Cron ON" value="on"/>
-			<spinnerItem name="Cron OFF" value="off"/>
+		<spinner description="主定时任务开关设置，如果关闭，下面的设置都没有效果！" name="定时主开关" action="crontab">
+			<spinnerItem name="定时任务开" value="on"/>
+			<spinnerItem name="定时任务关" value="off"/>
 		</spinner>
 
-		<button description="Use this button to test if this Cron Task service is ONLINE and supported! If main switch is ON, and service is OFFLINE, then ROM Busybox is not supporting Cron. Update Busybox or ROM for this to work." name="Test Cron Task Service" action="push-actions/crontab_test" label="Test Cron Task Service"/>
+		<button description="定时计划测试程序，你可以测试定时服务是否开启。" name="服务检查" action="push-actions/crontab_test" label="点我检查"/>
 
-		<button description="Use this button to RESET the scripts and jobs from kernel, to refresh the configuration. This will clear all your custom changes!" name="CRON RESET" action="push-actions/crontab_reset" label="RESET CRON"/>
+		<button description="点这里会复位所有的脚本和计划，刷新配置。" name="重置计划" action="push-actions/crontab_reset" label="点我重置"/>
 
-		<checkbox description="Cron to clear file-cache every hour, but only if CPU is resting (IDLE) and more than 50% of your memory is used! This will free RAM from unused buffers and cache." name="Clean file-cache" action="generic_cortex /tmp/cron_drop_cache" label="RAM cache clean every Hour"/>
+		<checkbox description="在每晚3点且cpu休眠时，进行数据库优化。" name="数据库优化" action="generic_cortex /tmp/cron_db_optimizing" label="点我增加计划"/>
 
+		<checkbox description="在每晚4点且cpu休眠时，清空应用缓存。" name="缓存清理" action="generic_cortex /tmp/cron_clear_app_cache" label="点我增加计划"/>
 
-		<checkbox description="Cron to update AD-BLOCKER every week at SAT 6:00AM UTC time, from official site. The script will check, if you are connected with the internet, otherwise it will try to use WIFI! Script will turn wifi, wait for connection and update, then when it is finished it will turn WIFI off. If there is no connection, an error will be written in the log." name="Update AD-Block" action="generic_cortex /tmp/ad_block_update" label="Update AD-BLOCKER every week"/>
+		<checkbox description="在每晚4：50点且cpu休眠时，对应用Zipalign化（应用资源对齐）。" name="应用资源对齐" action="generic_cortex /tmp/cron_zipalign" label="点我增加计划"/>
 
-		<checkbox description="Cron to DB Optimize every day at 3:00 AM, only if CPU is resting (IDLE)!" name="DB Optimization" action="generic_cortex /tmp/cron_db_optimizing" label="DB Optimization task every day at 3:00 AM"/>
-
-		<checkbox description="Cron to clear app-cache every day at 4:00AM, only if CPU is resting (IDLE)!" name="Clean app-cache" action="generic_cortex /tmp/cron_clear_app_cache" label="Disk Clean task every day at 4:00AM"/>
-
-		<checkbox description="Cron to zipalign app is every day at 4:50AM, only if CPU is resting (IDLE)! This can help to reduce errors, bugs, applications FC, and improve applications load speed. WARNING! Bakcup all apps before use! This process will remove apps that are BROKEN and not compressed or compiled correctly, so you may find some apps missing! USE it AT YOUR OWN RISK and update the broken applications!" name="Zipalign Task" action="generic_cortex /tmp/cron_zipalign" label="Zipalign Task Every day at 4:50AM"/>
-
-		<button description="Use this button to check if Cron Task Jobs are done as requested. This will show the log for all finished jobs." name="Test Cron Task jobs" action="push-actions/crontab_log" label="Test Cron Task Jobs"/>
+		<button description="查看你添加了那些任务计划。" name="任务计划查看" action="push-actions/crontab_log" label="点我查看"/>
 
 	</settingsPane>
 
 </settingsTab>
 
-<settingsTab name="Other">
 
-	<settingsPane description="Here you can find some settings and options for your apps." name="Apps">
+<settingsTab name="其他">
 
-		<button description="Click here to start Zipaligning ONLY user apps. System may be unresponsive, it is OK, do not use phone for 2 minutes. WARNING! Backup all user applications before use! This process will remove applications that are BROKEN and not compressed or compiled correctly, so you may find some apps missing. USE it AT YOUR OWN RISK, and update the broken applications!." name="ZIPALIGN" action="push-actions/zipalign" label="ZIPALIGN ALL APPS"/>
+	<settingsPane description="应用与数据库优化" name="Apps">
 
-		<button description="Click here to start applications Database Optimization. Compacting, cleaning and indexing will take max 2min." name="DB OPTIMIZATION" action="push-actions/database_optimizing" label="DATABASE OPTIMIZATON"/>
+		<button description="应用对齐，点了按钮两分钟以内，千万不要重启机器，否则会导致应用程序的损坏或者丢失。" name="应用对齐" action="push-actions/zipalign" label="点我执行"/>
+
+		<button description="这将会花费两分钟左右优化程序数据库。" name="DB OPTIMIZATION" action="push-actions/database_optimizing" label="点我执行"/>
 
 	</settingsPane>
 
@@ -402,56 +412,41 @@
 
 	</settingsPane>
 
-	<settingsPane description="WIFI Settings" name="WIFI">
+	<settingsPane description="如果获取的ip地址不正确，点这里重启dhcp服务，并清空dhcp缓存" name="DHCP修复">
 
-		<button description="Clean WIFI DHCP IP Lease. Push the button to activate!" name="Clean WIFI Lease" action="push-actions/fix_wifi" label="Clean WIFI Lease"/>
-
-	</settingsPane>
-
-	<settingsPane description="Here you can find GPS and NTP settings and options." name="GPS - NTP">
-
-		<spinner description="GPS-Time-Zone for faster GPS lock! Use your region!" name="GPS Region" action="gpsregion">
-			<spinnerItem name="No GPS Zone changes (default)" value="No_GPS_Zone_changes"/>
-			<spinnerItem name="Set Asia" value="Asia"/>
-			<spinnerItem name="Set Europe" value="Europe"/>
-			<spinnerItem name="Set Oceania" value="Oceania"/>
-			<spinnerItem name="Set North America" value="North-America"/>
-			<spinnerItem name="Set South America" value="South-America"/>
-			<spinnerItem name="Set Africa" value="Africa"/>
-			<spinnerItem name="Restore original ROM gps.conf" value="Original_ROM_GPS_Restored"/>
-		</spinner>
-
-		<button description="Click to see your current GPS ZONE" name="GPS ZONE" action="push-actions/gpszonecheck" label="GPS ZONE CHECK"/>
+		<button description="清空dhcp缓存，获取正确的地址" name="清空dhcp缓存" action="push-actions/fix_wifi" label="点我清空"/>
 
 	</settingsPane>
 
-	<settingsPane description="Here you can Add, Update or Remove AD Blocker! You need ROOT to do the tweak! If you want to update the blocker, you can push the UPDATE AD NOW button, to get the new one installed! If you install a new ROM, and you want to use AD BLOCKER, then push UPDATE AD NOW and REBOOT. If you need to REMOVE AD-BLOCKER use the REMOVE button and REBOOT" name="AD Blocker">
 
-		<button description="ADD or UPDATE AD BLOCKER" name="AD-B UPDATE or ADD" action="push-actions/ad_update" label="UPDATE AD-B NOW"/>
+	<settingsPane description="启动脚本支持，这是开机时运行的脚本，在system/etc下。" name="INIT.D支持">
 
-		<button description="REMOVE AD Blocker" name="AD-B REMOVE" action="push-actions/ad_restore" label="REMOVE AD-B NOW"/>
-
-	</settingsPane>
-
-	<settingsPane description="INIT.D" name="INIT.D">
-
-		<checkbox description="Enable or Disable INIT.D scripts RUN on boot. if you put scripts to INIT.D then enable the switch. default SuperSu script will run on boot by kernel from init.d" name="INIT.D Scripts RUN control" action="generic_cortex /tmp/init_d" label="Enable INIT.D scripts RUN-control"/>
+		<checkbox description="打开或关闭INIT.D脚本的支持" name="INIT.D控制" action="generic_cortex /tmp/init_d" label="点我启用支持"/>
 
 	</settingsPane>
 
-	<settingsPane description="Android Additional Logs and logcat" name="Logcat Logger">
+	<settingsPane description="日至设置" name="日至开关">
 
-		<spinner description="Enable or Disable Android Additional Logs and LOGCAT. you can DISABLE always to save Power! or leave default, ON when screen ON, and OFF when screen OFF" name="Android Logcat Logger" action="logger">
-			<spinnerItem name="Always Enabled" value="0"/>
-			<spinnerItem name="OFF when screen is OFF" value="1"/>
-			<spinnerItem name="Always Disabled" value="2"/>
+		<spinner description="你可以设置安卓的logcat在什么时候运行，以节省电力" name="日至开关" action="logger">
+			<spinnerItem name="总是开启" value="0"/>
+			<spinnerItem name="屏幕关闭时停止记录" value="1"/>
+			<spinnerItem name="总是关闭" value="2"/>
 		</spinner>
 
 	</settingsPane>
 
 </settingsTab>
 
-<settingsTab name="Tweaks">
+
+<settingsTab name="微调">
+
+	<settingsPane description="你精确可以设定自己的最低背光亮度。" name="最低量度控制">
+
+		<checkbox description="开启或者关闭最低量度控制，可以覆盖背光本身的最低量度来保护视力。" name="最低量度覆盖开关" action="generic01 /sys/devices/f9967000.i2c/i2c-0/0-0038/lm3630_min_backlight_reducer" label="最低量度控制开关"/>
+
+		<seekBar description="你可以设置最低量度值，在黑暗的地方，如果你觉得太亮了，这个功能有助于降低到更低的亮度，而不是像某些软件通过增加屏幕滤镜来实现，完全基于硬件控制。" name="最低亮度值" action="generic /sys/devices/f9967000.i2c/i2c-0/0-0038/lm3630_min_backlight_set" unit="Lux" min="10" reversed="false" step="10" max="100"/>
+
+	</settingsPane>
 
 	<settingsPane description="TCP拥塞控制" name="TCP拥塞">
 
@@ -463,96 +458,72 @@
 
 	</settingsPane>
 
-	<settingsPane description="Fast charge control menu, here you can set the force FAST charge option when MTP is used as USB connection!" name="Fast Charge Control">
+	<settingsPane description="你可以在设置当MTP连接时快速充电。" name="快速充电">
 
-		<spinner description="Fast Charge ON or OFF, also you can force charge mA limit! for this select manual and set below the requested limit, if set here ON then default limit is 1200mA, if your charger can't give you that, don't expect to see 1200mA charge, no magic here." name="Force Fast Charge Switch" action="generic /sys/kernel/fast_charge/force_fast_charge">
-			<spinnerItem name="Fast Charge OFF" value="0"/>
-			<spinnerItem name="Fast Charge ON" value="1"/>
-			<spinnerItem name="Fast Charge Manual" value="2"/>
+		<spinner description="在充电器最高值内，你可以设置充电电流，设置打开会默认设置为1.2a，也可以设置为手动，然后设置下一个电流选项。" name="电流控制模式" action="generic /sys/kernel/fast_charge/force_fast_charge">
+			<spinnerItem name="关闭" value="0"/>
+			<spinnerItem name="打开" value="1"/>
+			<spinnerItem name="手动" value="2"/>
 		</spinner>
 
-		<spinner description="Fast Charge Manual mA limit! here you can set the max allowed mA when using charger. Take effect ONLY if Fast Charge Manual is set above!" name="Fast Charge mA Limits" action="generic /sys/kernel/fast_charge/fast_charge_level">
-			<spinnerItem name="MAX 500mA" value="500"/>
-			<spinnerItem name="MAX 900mA" value="900"/>
-			<spinnerItem name="MAX 1200mA" value="1200"/>
-			<spinnerItem name="MAX 1500mA" value="1500"/>
-			<spinnerItem name="MAX 1800mA" value="1800"/>
-			<spinnerItem name="MAX 2000mA" value="2000"/>
+		<spinner description="这里你可以设置充电电流大小，同时也会被thermal engine控制，如果主板温度高于52°，最大电流会被限制到1300mA。" name="充电电流控制" action="generic /sys/kernel/fast_charge/fast_charge_level">
+			<spinnerItem name="最大 500mA" value="500"/>
+			<spinnerItem name="最大 900mA" value="900"/>
+			<spinnerItem name="最大 1200mA" value="1200"/>
+			<spinnerItem name="最大 1500mA" value="1500"/>
+			<spinnerItem name="最大 1800mA" value="1800"/>
+			<spinnerItem name="最大 2000mA" value="2000"/>
 		</spinner>
 
-		<checkbox description="Enable one more Force Fast Charge HACK to mask any charger including USB as AC power. so we always get fast charge mode! no more SLOW CHARGE Icon! The side effect is that you get 2 connections sound and vibrate! one for USB connected and second for AC connected!" name="Fake AC Charger" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="Fake AC Charger Hack"/>
+		<checkbox description="启用对其他数据线的破解，高通充电芯片会识别usb或者充电器，同时也会识别充电线缆的质量，开启这个，可以屏蔽慢速充电。连接时，你会收到两次充电的通知。第二个通知系统现在是ac充电。" name="伪造AC" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="点我启用"/>
 
 		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="苹果充电支持"/>
 
-		<button description="Here you can RESET battery fuel counter, if you see that battery present counter is not showing correct state, you can ask kernel to recalibrate battery state." name="Reset Battery Counter" action="push-actions/reset_battery" label="Reset Battery Counter"/>
+		<button description="当电量显示错误，你可以点这个重置电池计数器。" name="重置电池" action="push-actions/reset_battery" label="点我重置"/>
 
 	</settingsPane>
 
-	<settingsPane description="Enable using Android phone as USB and Keyboard for your PC!, lets say you dont have keyboard and you really need one! connect your phone via USB get app named USB KEYBOARD, enable the tweak here, and have fun!" name="Android USB HID Device">
+	<settingsPane description="安卓USB HID。" name="HID设备">
 
-		<spinner description="Enable or Disable USB HID Device driver to control PC keyboard and mouse from phone!" name="USB HID Device" action="usb_keyboard">
-			<spinnerItem name="Enable USB HID" value="enable"/>
-			<spinnerItem name="Disable USB HID" value="disable"/>
+		<spinner description="打开后系统会认为你接上了USB键鼠设备，不会弹出虚拟键盘" name="USB HID 设备" action="usb_keyboard">
+			<spinnerItem name="启用" value="enable"/>
+			<spinnerItem name="关闭" value="disable"/>
 		</spinner>
 
 	</settingsPane>
 
-	<settingsPane description="Sweep2Sleep function control." name="Sweep2Sleep">
+	<settingsPane description="Sweep2Sleep特性支持。" name="Sweep2Sleep">
 
-		<checkbox description="Enable Sweep2Sleep function that allow to turn screen off sweeping from right to left or backwards on bottom of the screen! If you have removed the soft buttons bar, then you have to turn this function OFF!" name="Sweep2Sleep Control" action="generic01 /sys/sweep2sleep/sweep2sleep" label="Sweep2Sleep"/>
+		<checkbox description="启用后，你可以从左往右或者从右往左滑动导航栏关闭屏幕。" name="Sweep2Sleep 控制" action="generic01 /sys/sweep2sleep/sweep2sleep" label="点我启用"/>
 
 	</settingsPane>
 
-	<settingsPane description="This script will manipulate many kernel settings, based on chosen STweaks profile + settings and on screen state (ON or OFF) and we call it CortexBrain. To reset the kernel-settings, after you disable a tweak, you must reboot!" name="CortexBrain Tweaks">
+	<settingsPane description="这个脚本会处理很多内核的设置，要重置内核调节，修改任意设置，必须重新启动" name="脚本微调">
 
-		<spinner description="Enable or Disable the background-process from CortexBrain. If you disable it, you will lose the function that set different settings for screen state (ON or OFF)." name="Cortexbrain-Background-Process" action="cortexbrain_background_process">
-			<spinnerItem name="Enable" value="1"/>
-			<spinnerItem name="Disable" value="0"/>
+		<spinner description="启用脚本微调的后台进程，如果禁用，很多后台设置将会失效，比如屏幕打开或关闭时的logcat记录。" name="后台设置开关" action="cortexbrain_background_process">
+			<spinnerItem name="启动" value="1"/>
+			<spinnerItem name="关闭" value="0"/>
 		</spinner>
 
-		<button description="Click to see if the CortexBrain-Background-Process is running or not." name="Check Background-Process" action="push-actions/cortexbrain_background_process_check" label="CHECK SERVICE"/>
+		<button description="检查后台进程是否运行" name="检查后台" action="push-actions/cortexbrain_background_process_check" label="点我检查"/>
 
-		<checkbox description="Enable or Disable Memory-Tweaks (reboot needed)." name="Memory-Tweaks" action="generic_cortex /tmp/cortexbrain_memory" label="Memory-Tweaks"/>
+		<checkbox description="内存微调开关 (需要重启)." name="内存微调" action="generic_cortex /tmp/cortexbrain_memory" label="点我启用"/>
 
-		<checkbox description="Enable or Disable System-Tweak (reboot needed)." name="System-Tweaks" action="generic_cortex /tmp/cortexbrain_system" label="System-Tweaks"/>
+		<checkbox description="系统微调开关 (需要重启)." name="系统微调" action="generic_cortex /tmp/cortexbrain_system" label="点我启用"/>
 
-		<checkbox description="Enable or Disable Kernel-Tweaks (reboot needed)." name="Kernel-Tweaks" action="generic_cortex /tmp/cortexbrain_kernel_tweaks" label="Kernel-Tweaks"/>
+		<checkbox description="内核微调开关 (需要重启)." name="内核微调" action="generic_cortex /tmp/cortexbrain_kernel_tweaks" label="点我启用"/>
 
-		<checkbox description="Enable or Disable IO-Tweaks (reboot needed)." name="IO-Tweaks" action="generic_cortex /tmp/cortexbrain_io" label="IO-Tweaks"/>
+		<checkbox description="IO微调开关 (需要重启)." name="IO微调" action="generic_cortex /tmp/cortexbrain_io" label="点我启用"/>
 
 	</settingsPane>
 
 </settingsTab>
 
-<settingsTab name="PROFILES">
+<settingsTab name="内核功能">
 
-	<settingsPane description="You can check what profile is used right now." name="Online Profile">
+	<settingsPane description="你可以在开机时加载一些其他内核模块" name="内核模块">
 
-		<button description="This displays your currently used profile." name="Profile Check" action="push-actions/profile" label="Profile Check"/>
-
-	</settingsPane>
-
-	<settingsPane description="Here you can choose kernel profiles." name="STweaks Profiles">
-
-		<button description="default.profile" name="default.profile" action="push-actions/config_backup_restore 4" label="DEFAULT"/>
-
-	</settingsPane>
-
-	<settingsPane description="Here you can backup or restore your profile after installing new kernel. Some settings will work only after reboot! Restore will take up to 30 sec, just wait here!" name="STweaks Settings Backup or Restore">
-
-		<button description="Backup STweaks User Settings!" name="Settings Backup" action="push-actions/config_backup_restore 1" label="BACKUP NOW"/>
-
-		<button description="Restore STweaks User Settings!" name="Settings Restore" action="push-actions/config_backup_restore 2" label="RESTORE NOW"/>
-
-	</settingsPane>
-
-</settingsTab>
-
-<settingsTab name="KERNEL STUFF">
-
-	<settingsPane description="Here you can load (on boot) some kernel modules that will allow some extra functions." name="Kernel Modules">
-
-		<checkbox description="Enable or Disable CIFS Module. This will allow to use apps that can mount internal storage and publish over network. User can access data and system over network. No support, effect only after reboot!" name="CIFS Module" action="generic_cortex /tmp/cifs_module" label="CIFS Module"/>
+		<checkbox description="CIFS支持开关，你可以在挂载网络上的存储设备或者推送到网络上，用户可以访问数据和系统。重启生效。" name="CIFS模块" action="generic_cortex /tmp/cifs_module" label="点我启用"/>
 
 	</settingsPane>
 
