@@ -6,7 +6,7 @@
 
 	</settingsPane>
 
-	<settingsPane description="JZ-KERNEL for LG G2 ver-1.1   LINUX version 3.4.103"  name="版本信息">
+	<settingsPane description="JZ-KERNEL for LG G2 ver-1.0   LINUX version 3.4.103"  name="版本信息">
 
 	</settingsPane>
 	
@@ -18,7 +18,7 @@
 
 	</settingsPane>
 	
-	<settingsPane description="如果你也喜欢linux内核，可以给我提交commit，我也可以提供完整的内核编译脚本以及编译工具来帮助你编译内核。我的QQ:332574643" name="宣传推广">
+	<settingsPane description="如果你也喜欢linux内核，可以给我提交commit，我也可以提供完整的内核编译脚本以及编译工具（从下载源码到编译到打包一条龙）帮助你编译内核。我的QQ:332574643" name="宣传推广">
 
 	</settingsPane>
 	
