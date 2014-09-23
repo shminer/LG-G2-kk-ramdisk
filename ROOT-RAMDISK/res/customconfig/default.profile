@@ -1,6 +1,6 @@
 stweaks_boot_control=yes
 hotplug=msm_hotplug
-cpus_boosted=2
+cpus_boosted=3
 oc_controller=ultra
 eco_mode=all
 min_online_cpus=1
