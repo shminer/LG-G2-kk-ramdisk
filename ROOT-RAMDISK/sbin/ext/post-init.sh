@@ -159,9 +159,8 @@ fi;
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
 # incase that ADMIN feel that something wrong with global STweaks config and profiles, then ADMIN can add +1 to CLEAN_DORI_DIR
 # to clean all files on first boot from /data/.dori/ folder.
-RESET_MAGIC=20;
-CLEAN_DORI_DIR=1;
-
+RESET_MAGIC=21;
+CLEAN_DORI_DIR=2;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "$RESET_MAGIC" > /data/.dori/reset_profiles;
 fi;
@@ -307,6 +306,12 @@ $BB sh /res/uci.sh generic /sys/module/msm_thermal/parameters/limit_temp_degC "$
 # Correct Kernel config after full boot.
 $BB sh /res/uci.sh oom_config_screen_on "$oom_config_screen_on";
 $BB sh /res/uci.sh oom_config_screen_off "$oom_config_screen_off";
+
+# Reload SuperSU daemonsu to fix SuperUser bugs.
+if [ -e /system/xbin/daemonsu ]; then
+	pkill -f "daemonsu";
+	/system/xbin/daemonsu --auto-daemon &
+fi;
 
 # script finish here, so let me know when
 TIME_NOW=$(date)

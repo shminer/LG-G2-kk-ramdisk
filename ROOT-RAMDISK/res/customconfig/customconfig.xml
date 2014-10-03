@@ -26,7 +26,6 @@
 
 	</settingsPane>
 
-
 </settingsTab>
 
 <settingsTab name="配置管理">
@@ -156,6 +155,8 @@
 			<spinnerItem name="省电模式" value="0"/>
 			<spinnerItem name="性能模式" value="1"/>
 		</spinner>
+		
+		<checkbox description="启动或关闭高效功率队列，有助于减少功耗，仅仅会轻微的损失性能，打开这个，PE（高效功率）队列将被用于释放已被规划的操作来节省同级CPU的性能，并在cpu0上安排操作。" name="高效功率队列"  action="generic01 /sys/module/workqueue/parameters/power_efficient" label="Power-efficient Workqueues"/>
 
 		<checkbox description="设置处理器的最高和最低频率。和超频控制相比，这项为CPU策略的最高和最低频率，这个值将不会超过超频控制的最高频率" name="处理器策略频率设置" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU频率控制"/>
 
