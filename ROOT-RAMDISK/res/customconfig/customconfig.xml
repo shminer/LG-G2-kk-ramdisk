@@ -34,6 +34,7 @@
 		<spinner description="主设置开关，启动时加载所有设置。默认为启动时加载所有设置" name="启动时启用设置" action="generic_cortex /tmp/stweaks_boot_control">
 			<spinnerItem name="启动时加载所有设置" value="yes"/>
 			<spinnerItem name="不再启动时加载设置" value="no"/>
+
 		</spinner>
 
 		<button description="按下加载所有加载配置文件" name="加载所有" action="push-actions/reload_settings" label="加载所有"/>
@@ -75,6 +76,9 @@
 			<spinnerItem name="高通热插拔" value="msm_hotplug"/>
 			<spinnerItem name="Alucard 热插拔" value="alucard"/>
 			<spinnerItem name="Intelli 热插拔" value="intelli"/>
+			
+			<seekBar description="你可以调整cpu的增速时间，默认1000ms，仅对msm和INTELLIGENT热插拔有效。" name="cpu加速时间" action="cpus_boosted_time" unit="Msec" min="250" reversed="false" step="250" max="3000"/>
+		
 		</spinner>
 
 
@@ -121,8 +125,8 @@
 			<spinnerItem name="总是活动的" value="always_active"/>
 			<spinnerItem name="挂起模式" value="suspend_when_off"/>
 		</spinner>
-
-		<spinner description="你可以设置不同的处理器调度模式来控制处理器在不同负载的频率" name="处理器调度器设置" action="default_cpu_gov">
+		
+		<spinner description="你可以设置CPU0的调度器" name="默认cpu0调度器" action="default_cpu0_gov">
 			<spinnerItem name="darkness" value="darkness"/>
 			<spinnerItem name="intellidemand" value="intellidemand"/>
 			<spinnerItem name="intelliactive" value="intelliactive"/>
@@ -132,6 +136,35 @@
 			<spinnerItem name="Alucard" value="alucard"/>
 		</spinner>
 
+		<spinner description="你可以设置CPU1的调度器" name="默认cpu1调度器" action="default_cpu1_gov">
+			<spinnerItem name="darkness" value="darkness"/>
+			<spinnerItem name="intellidemand" value="intellidemand"/>
+			<spinnerItem name="intelliactive" value="intelliactive"/>
+			<spinnerItem name="ondemand" value="ondemand"/>
+			<spinnerItem name="ondemandplus" value="ondemandplus"/>
+			<spinnerItem name="interactive" value="interactive"/>
+			<spinnerItem name="Alucard" value="alucard"/>
+		</spinner>
+
+		<spinner description="你可以设置CPU2的调度器" name="默认cpu2调度器" action="default_cpu2_gov">
+			<spinnerItem name="darkness" value="darkness"/>
+			<spinnerItem name="intellidemand" value="intellidemand"/>
+			<spinnerItem name="intelliactive" value="intelliactive"/>
+			<spinnerItem name="ondemand" value="ondemand"/>
+			<spinnerItem name="ondemandplus" value="ondemandplus"/>
+			<spinnerItem name="interactive" value="interactive"/>
+			<spinnerItem name="Alucard" value="alucard"/>
+		</spinner>
+
+		<spinner description="你可以设置CPU3的调度器" name="默认cpu3调度器" action="default_cpu3_gov">
+			<spinnerItem name="darkness" value="darkness"/>
+			<spinnerItem name="intellidemand" value="intellidemand"/>
+			<spinnerItem name="intelliactive" value="intelliactive"/>
+			<spinnerItem name="ondemand" value="ondemand"/>
+			<spinnerItem name="ondemandplus" value="ondemandplus"/>
+			<spinnerItem name="interactive" value="interactive"/>
+			<spinnerItem name="Alucard" value="alucard"/>
+		</spinner>
 
 		<spinner description="当你触摸屏幕的时候，直接提升CPU频率的数值，可关闭。" name="触摸提速" action="cpu_boost_freq">
 
@@ -158,50 +191,168 @@
 		
 		<checkbox description="启动或关闭高效功率队列，有助于减少功耗，仅仅会轻微的损失性能，打开这个，PE（高效功率）队列将被用于释放已被规划的操作来节省同级CPU的性能，并在cpu0上安排操作。" name="高效功率队列"  action="generic01 /sys/module/workqueue/parameters/power_efficient" label="Power-efficient Workqueues"/>
 
-		<checkbox description="设置处理器的最高和最低频率。和超频控制相比，这项为CPU策略的最高和最低频率，这个值将不会超过超频控制的最高频率" name="处理器策略频率设置" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU频率控制"/>
+		<checkbox description="设置处理器的最高和最低频率。和超频控制相比，这项为CPU策略的最高和最低频率，这个值将不会超过超频控制的最高频率，如果不设置，下面的选项不会生效。" name="处理器策略频率设置" action="generic_cortex /tmp/cortexbrain_cpu" label="CPU频率控制"/>
 
-		<spinner description="处理器最高频率，依赖内核支持的最高值，默认为内核频率最高值" name="处理器最高频率" action="cpu_max_freq">
-
-			<spinnerItem name="2803200" value="2803200"/>
-			<spinnerItem name="2726400" value="2726400"/>
-			<spinnerItem name="2572800" value="2572800"/>
-			<spinnerItem name="2419200" value="2419200"/>
-			<spinnerItem name="2265600" value="2265600"/>
-			<spinnerItem name="1958400" value="1958400"/>
-			<spinnerItem name="1728000" value="1728000"/>
-			<spinnerItem name="1574400" value="1574400"/>
-			<spinnerItem name="1497600" value="1497600"/>
-			<spinnerItem name="1267200" value="1267200"/>
-			<spinnerItem name="1190400" value="1190400"/>
-			<spinnerItem name="1036800" value="1036800"/>
-			<spinnerItem name="960000" value="960000"/>
-			<spinnerItem name="883200" value="883200"/>
-			<spinnerItem name="729600" value="729600"/>
-			<spinnerItem name="652800" value="652800"/>
-			<spinnerItem name="422400" value="422400"/>
-			<spinnerItem name="300000" value="300000"/>
+<spinner description="CPU0最高频率" name="最高CPU0频率" action="cpu0_max_freq">
+			<spinnerItem name="2803200" value="2803200"/> 
+			<spinnerItem name="2726400" value="2726400"/> 
+			<spinnerItem name="2572800" value="2572800"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
 		</spinner>
 
-		<spinner description="处理器最低频率，依赖内核支持的最低值，默认300MHZ" name="处理器最低频率" action="cpu_min_freq">
-
-			<spinnerItem name="2496000" value="2496000"/>
-			<spinnerItem name="2419200" value="2419200"/>
-			<spinnerItem name="2265600" value="2265600"/>
-			<spinnerItem name="1958400" value="1958400"/>
-			<spinnerItem name="1728000" value="1728000"/>
-			<spinnerItem name="1574400" value="1574400"/>
-			<spinnerItem name="1497600" value="1497600"/>
-			<spinnerItem name="1267200" value="1267200"/>
-			<spinnerItem name="1190400" value="1190400"/>
-			<spinnerItem name="1036800" value="1036800"/>
-			<spinnerItem name="960000" value="960000"/>
-			<spinnerItem name="883200" value="883200"/>
-			<spinnerItem name="729600" value="729600"/>
-			<spinnerItem name="652800" value="652800"/>
-			<spinnerItem name="422400" value="422400"/>
-			<spinnerItem name="300000" value="300000"/>
+		<spinner description="CPU1最高频率" name="最高CPU1频率"  action="cpu1_max_freq">
+			<spinnerItem name="2803200" value="2803200"/> 
+			<spinnerItem name="2726400" value="2726400"/> 
+			<spinnerItem name="2572800" value="2572800"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
 		</spinner>
 
+		<spinner description="CPU2最高频率" name="最高CPU2频率" action="cpu2_max_freq">
+			<spinnerItem name="2803200" value="2803200"/> 
+			<spinnerItem name="2726400" value="2726400"/> 
+			<spinnerItem name="2572800" value="2572800"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
+		</spinner>
+
+		<spinner description= "CPU3最高频率" name="最高CPU3频率"  action="cpu3_max_freq">
+			<spinnerItem name="2803200" value="2803200"/> 
+			<spinnerItem name="2726400" value="2726400"/> 
+			<spinnerItem name="2572800" value="2572800"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
+		</spinner>
+
+		<spinner description="CPU0最低频率" name="最低CPU0频率"  action="cpu0_min_freq">
+			<spinnerItem name="2496000" value="2496000"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
+		</spinner>
+
+		<spinner description="CPU1最低频率" name="最低CPU1频率" action="cpu1_min_freq">
+			<spinnerItem name="2496000" value="2496000"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
+		</spinner>
+
+		<spinner description="CPU2最低频率" name="最低CPU2频率"action="cpu2_min_freq">
+			<spinnerItem name="2496000" value="2496000"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
+		</spinner>
+
+		<spinner description="CPU3最低频率" name="最低CPU3频率"action="cpu3_min_freq">
+			<spinnerItem name="2496000" value="2496000"/> 
+			<spinnerItem name="2419200" value="2419200"/> 
+			<spinnerItem name="2265600" value="2265600"/> 
+			<spinnerItem name="1958400" value="1958400"/> 
+			<spinnerItem name="1728000" value="1728000"/> 
+			<spinnerItem name="1574400" value="1574400"/> 
+			<spinnerItem name="1497600" value="1497600"/> 
+			<spinnerItem name="1267200" value="1267200"/> 
+			<spinnerItem name="1190400" value="1190400"/> 
+			<spinnerItem name="1036800" value="1036800"/> 
+			<spinnerItem name="960000" value="960000"/> 
+			<spinnerItem name="883200" value="883200"/> 
+			<spinnerItem name="729600" value="729600"/> 
+			<spinnerItem name="652800" value="652800"/> 
+			<spinnerItem name="422400" value="422400"/> 
+			<spinnerItem name="300000" value="300000"/> 
+		</spinner>
+		
 		<spinner description="屏幕关闭时的最高频率，选择后在关闭屏幕时不会超过这个频率"  name="关屏最高频率" action="suspend_max_freq">
 			<spinnerItem name="最大" value="max_freq"/>
 			<spinnerItem name="2265600" value="2265600"/>
@@ -284,12 +435,7 @@
 			<spinnerItem name="intelli+msm温控" value="intelli_temp"/>
 		</spinner>
 
-		<checkbox description="处理器温度控制，这里设置温度开关，如果温度过高会自动将频或者关闭核心，依赖于你设置的温度" name="处理器温度控制" action="generic01 /sys/module/msm_thermal/core_control/core_control_enabled" label="处理器温度控制"/>
-
-		<seekBar description="你可以设置处理器单个核心的温度限制，超过这个值的核心将会被关闭。在温度控制被打开时才会生效！" name="处理器核心温度限制" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-
-		<seekBar description="这里你可以设置CPU最高温度，和核心温度控制相比，这个值要小一些，超过这个值的时候处理器最高频率将会被限制" name="CPU频率限制（温度）" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="82"/>
-
+		<button description="打开Synapse温度和cpu状态控制" name="温控通道" action="push-actions/thermal_control" label="打开Synapse控制"/>
 		<button description="关闭系统thermal温控，将完全由intelli来接管温控，不限制gpu最高频率，不受thermal控制，但是会导致相机退出缓慢。" name="thermal-engine" action="push-actions/disable_thermal" label="关闭thermal"/>
 		<button description="打开系统thermal温控，各种频率将受到thermal控制，配置文件在system/etc下，相机退出正常，但是gpu会在高负载时被限制到320Mhz。" name="thermal-engine" action="push-actions/enable_thermal" label="启用thermal"/>
 

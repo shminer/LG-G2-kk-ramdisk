@@ -57,6 +57,7 @@ if [ ! -e /cpufreq ]; then
 	$BB ln -s /sys/kernel/alucard_hotplug/ /hotplugs/alucard;
 	$BB ln -s /sys/kernel/intelli_plug/ /hotplugs/intelli;
 	$BB ln -s /sys/module/msm_hotplug/ /hotplugs/msm_hotplug;
+	$BB ln -s /sys/devices/system/cpu/cpufreq/all_cpus/ /all_cpus;
 fi;
 
 # cleaning
@@ -127,6 +128,7 @@ $BB chmod 666 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 $BB chmod 666 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 $BB chmod 444 /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
 $BB chmod 444 /sys/devices/system/cpu/cpu0/cpufreq/stats/*
+$BB chmod 666 /sys/devices/system/cpu/cpufreq/all_cpus/*
 $BB chmod 666 /sys/devices/system/cpu/cpu1/online
 $BB chmod 666 /sys/devices/system/cpu/cpu2/online
 $BB chmod 666 /sys/devices/system/cpu/cpu3/online
@@ -142,8 +144,8 @@ echo "578000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgs
 echo "200000000" > /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq;
 
 # set min max boot freq to default.
-echo "300000" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
-echo "2265600" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "300000" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_all_cpus;
+echo "2265600" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_all_cpus;
 
 # Fix ROM dev wrong sets.
 setprop persist.adb.notify 0
@@ -159,7 +161,7 @@ fi;
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
 # incase that ADMIN feel that something wrong with global STweaks config and profiles, then ADMIN can add +1 to CLEAN_DORI_DIR
 # to clean all files on first boot from /data/.dori/ folder.
-RESET_MAGIC=21;
+RESET_MAGIC=22;
 CLEAN_DORI_DIR=2;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "$RESET_MAGIC" > /data/.dori/reset_profiles;
@@ -175,6 +177,10 @@ else
 fi;
 if [ "$(cat /data/reset_dori_dir)" -eq "$CLEAN_DORI_DIR" ]; then
 	if [ "$(cat /data/.dori/reset_profiles)" != "$RESET_MAGIC" ]; then
+		if [ ! -e /data/.dori_old ]; then
+			mkdir /data/.dori_old;
+		fi;
+		cp -a /data/.dori/*.profile /data/.dori_old/;
 		$BB rm -f /data/.dori/*.profile;
 		echo "$RESET_MAGIC" > /data/.dori/reset_profiles;
 	else
@@ -185,6 +191,10 @@ else
 	if [ -e /data/.dori/"$PROFILE".profile ]; then
 		cp /data/.dori/"$PROFILE".profile /sdcard/"$PROFILE".profile_backup;
 	fi;
+	if [ ! -e /data/.dori_old ]; then
+		mkdir /data/.dori_old;
+	fi;
+	cp -a /data/.dori/* /data/.dori_old/;
 	$BB rm -f /data/.dori/*
 	echo "$CLEAN_DORI_DIR" > /data/reset_dori_dir;
 	echo "$RESET_MAGIC" > /data/.dori/reset_profiles;
@@ -203,8 +213,8 @@ $BB chmod -R 0777 /data/.dori/;
 read_defaults;
 read_config;
 
-if [ "$cpu_max_freq" -gt "2265600" ]; then
-	echo "$cpu_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+if [ "$cpu0_max_freq" -gt "2265600" ]; then
+	echo "$cpu0_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_all_cpus;
 fi;
 
 (
@@ -259,16 +269,17 @@ if [ ! -d /mnt/ntfs ]; then
 fi;
 
 # set ondemand as default gov
-echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor;
+echo "ondemand" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_governor_all_cpus;
 ONDEMAND_TUNING;
+
+# Turn off CORE CONTROL, to boot on all cores!
+echo "0" > /sys/module/msm_thermal/core_control/core_control_enabled;
 
 if [ "$stweaks_boot_control" == "yes" ]; then
 	# apply STweaks settings
 	$BB pkill -f "com.gokhanmoral.stweaks.app";
+	$BB sh /sbin/uci;
 	$BB sh /res/uci.sh apply;
-
-	# Reduce heat limit during boot.
-	$BB sh /res/uci.sh generic /sys/module/msm_thermal/parameters/limit_temp_degC 75;
 
 	# Load Custom Modules
 	MODULES_LOAD;
@@ -295,13 +306,17 @@ fi;
 CRITICAL_PERM_FIX;
 
 sleep 35;
-echo "$cpu_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
-echo "$cpu_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu0;
+echo "$cpu1_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu1;
+echo "$cpu2_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu2;
+echo "$cpu3_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu3;
+
+echo "$cpu0_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu0;
+echo "$cpu1_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu1;
+echo "$cpu2_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu2;
+echo "$cpu3_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu3;
 
 echo "0" > /cputemp/freq_limit_debug;
-
-# restore USER cpu heat temp from STweaks.
-$BB sh /res/uci.sh generic /sys/module/msm_thermal/parameters/limit_temp_degC "$limit_temp_degC";
 
 # Correct Kernel config after full boot.
 $BB sh /res/uci.sh oom_config_screen_on "$oom_config_screen_on";
