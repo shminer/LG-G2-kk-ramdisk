@@ -94,17 +94,7 @@
 
 	</settingsPane>
 
-
 	<settingsPane description="在这里你可以设置CPU内核选项" name="CPU调谐">
-
-		<spinner description="限制超频频率的最高值（JZ内核中为了适应所有内核，我把它默认设置为2.8G），这个值代表除了系统CPU限制策略外，由faux123编写的另一种控制cpu最高频率的机制，相比系统的机制更有效，在这个值被设定后，其他CPU调节软件无法设置超过这个值的CPU频率，但是这个值也无法设置CPU最高频率，它只是一个限制的阈值." name="频率最高值限制" action="oc_controller">
-			<spinnerItem name="低频 2.0GHz" value="battery"/>
-			<spinnerItem name="LG默认 2.3GHz" value="stock"/>
-			<spinnerItem name="超频1档 2.4GHz" value="boost"/>
-			<spinnerItem name="超频2档 2.5GHz" value="high"/>
-			<spinnerItem name="超频3档 2.7GHz" value="mega"/>
-			<spinnerItem name="超频4档（JZ默认） 2.8GHz" value="ultra"/>
-		</spinner>
 
 		<spinner description="ECO省电模式，设置为仅双核心的时候，那么只有两个核心被开启，另外两个会强行关闭，设置为一个核心的时候，那么另外三个都会被强行关闭，根据CPU被关闭的核心数会损失同样的性能，但是会更省电。" name="省电模式" action="eco_mode">
 			<spinnerItem name="所有核心都启用（性能）" value="all"/>
@@ -118,7 +108,6 @@
 			<spinnerItem name="加速（两个核心）" value="2"/>
 			<spinnerItem name="再加速（三个核心）" value="3"/>
 			<spinnerItem name="最快(四个核心 耗电！)" value="4"/>
-
 		</spinner>
 
 		<spinner description="这个选项可以让热插拔驱动休眠，可以让待机更省电，但是会影响屏幕唤醒。" name="热插拔挂起模式" action="hotplug_suspend">
@@ -145,6 +134,7 @@
 			<spinnerItem name="interactive" value="interactive"/>
 			<spinnerItem name="Alucard" value="alucard"/>
 		</spinner>
+
 
 		<spinner description="你可以设置CPU2的调度器" name="默认cpu2调度器" action="default_cpu2_gov">
 			<spinnerItem name="darkness" value="darkness"/>
@@ -179,6 +169,15 @@
 			<spinnerItem name="1036800" value="1036800"/>
 			<spinnerItem name="960000" value="960000"/>
 			<spinnerItem name="关闭" value="0"/>
+		</spinner>
+		
+		<seekBar description="你可以设置触摸增速的时间（微妙），可以设置0.01秒和0.15秒区间，非常快！" name="CPU增速设置" action="generic /sys/module/alu_t_boost/parameters/input_boost_ms" unit="ms" min="10" reversed="false" step="10" max="100"/>
+
+		<seekBar description="你可以设置触摸时提速的CPU个数" name="触摸增速核心数" action="generic /sys/module/alu_t_boost/parameters/nr_boost_cpus" unit="cores" min="1" reversed="false" step="1" max="4"/>
+
+		<spinner description="你可以打开或关闭活动核心首次唤醒的触摸提速频率，核心唤醒时，会获取加速频率，然后会由cpu调速器来决定频率，视有多少核心被加速而定。" name="热插拔触摸增速" action="generic /sys/module/alu_t_boost/parameters/hotplug_boost">
+			<spinnerItem name="开启" value="1"/> 
+			<spinnerItem name="关闭" value="0"/> 
 		</spinner>
 
 
@@ -364,7 +363,6 @@
 			<spinnerItem name="1190400" value="1190400"/>
 			<spinnerItem name="1036800" value="1036800"/>
 		</spinner>
-
 	</settingsPane>
 
 
@@ -544,6 +542,8 @@
 
 
 <settingsTab name="其他">
+	
+	<button description="类似与SSD垃圾回收机制，叫做trim，可以提升nand写入的速度。" name="Trim 机制" action="push-actions/fstrim" label="点我执行"/>
 
 	<settingsPane description="应用与数据库优化" name="Apps">
 
@@ -558,6 +558,16 @@
 		<button description="如果相机启动黑屏，点这个来复位相机。" name="复位驱动" action="push-actions/camera_restart" label="立即复位"/>
 
 	</settingsPane>
+	
+	<spinner description="允许改变Selinux的控制机制" name="SeLinux 控制" action="selinux_control">
+		
+		<spinnerItem name="强制执行" value="on"/> 
+		<spinnerItem name="普通" value="off"/> 
+		
+	</spinner>
+
+	</settingsPane>
+
 
 	<settingsPane description="如果获取的ip地址不正确，点这里重启dhcp服务，并清空dhcp缓存" name="DHCP修复">
 
@@ -617,7 +627,7 @@
 			<spinnerItem name="最大 500mA" value="500"/>
 			<spinnerItem name="最大 900mA" value="900"/>
 			<spinnerItem name="最大 1200mA" value="1200"/>
-			<spinnerItem name="最大 1500mA" value="1500"/>
+			<spinnerItem name="最大 1600mA" value="1600"/>
 			<spinnerItem name="最大 1800mA" value="1800"/>
 			<spinnerItem name="最大 2000mA" value="2000"/>
 		</spinner>

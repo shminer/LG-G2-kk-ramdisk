@@ -3,14 +3,16 @@ cat << CTAG
     name:THERMAL,
 		elements:[
 			`if [ -d /sys/module/msm_thermal/parameters/ ]; then
-				CCE=$(cat /sys/module/msm_thermal/core_control/core_control_enabled);
-				$BB echo '{ SCheckBox:{
-					label:"Core Control",
+				$BB echo '{ SOptionList:{
+					title:"Core Control",
 					description:"When core control is enabled, CPU sibling cores will shut down at high temperature which impact performance, when core control is disabled, CPU sibling cores will operate at lower frequencies at high temperature and will give good balance between device temperature control and performance.",
-					default:'$CCE',
-					action:"generic /sys/module/msm_thermal/core_control/core_control_enabled"
+					default:0,
+					action:"generic /sys/module/msm_thermal/core_control/core_control",
+					values:{
+						0:"Disabled", 1:"Enabled"
+					}
 				}},'
-				LT=$(cat /sys/module/msm_thermal/parameters/limit_temp_degC);
+				FTT=$(cat /sys/module/msm_thermal/parameters/limit_temp_degC)
 				$BB echo '{ SSeekBar:{
 					title:"Frequency Throttle Temperature",
 					description:"Temperature to start throttling frequencies.",
@@ -18,10 +20,10 @@ cat << CTAG
 					step:1,
 					min:50,
 					max:78,
-					default:'$LT',
+					default:'$FTT',
 					action:"generic /sys/module/msm_thermal/parameters/limit_temp_degC"
 				}},'
-				TEMP=$(cat /sys/module/msm_thermal/parameters/core_limit_temp_degC);
+				CTP=$(cat /sys/module/msm_thermal/parameters/core_limit_temp_degC)
 				$BB echo '{ SSeekBar:{
 					title:"Core Throttle Temperature",
 					description:"Temperature to start shutting down cores",
@@ -29,17 +31,17 @@ cat << CTAG
 					step:1,
 					min:50,
 					max:80,
-					default:'$TEMP',
+					default:'$CTP',
 					action:"generic /sys/module/msm_thermal/parameters/core_limit_temp_degC"
 				}},'
-				CTHG=$(cat /sys/module/msm_thermal/parameters/core_temp_hysteresis_degC);
+				CTH=$(cat /sys/module/msm_thermal/parameters/core_temp_hysteresis_degC)
 				$BB echo '{ SSeekBar:{
 					title:"Core Temperature Hysteresis",
 					unit:"ºC",
 					step:1,
 					min:0,
 					max:20,
-					default:'$CTHG',
+					default:'$CTH',
 					action:"generic /sys/module/msm_thermal/parameters/core_temp_hysteresis_degC"
 				}},'
 				FS=$(cat /sys/module/msm_thermal/parameters/freq_step)
@@ -57,17 +59,17 @@ cat << CTAG
 					default:'$ILS',
 					action:"boolean /sys/module/msm_thermal/parameters/immediately_limit_stop"
 				}},'
-				PMS=$(cat /sys/module/msm_thermal/parameters/poll_ms);
+				POLL=$(cat /sys/module/msm_thermal/parameters/poll_ms)
 				$BB echo '{ SSeekBar:{
 					title:"Poll",
 					unit:" ms",
 					step:50,
 					min:200,
 					max:600,
-					default:'$PMS',
+					default:'$POLL',
 					action:"generic /sys/module/msm_thermal/parameters/poll_ms"
 				}},'
-				TH=$(cat /sys/module/msm_thermal/parameters/temp_hysteresis_degC);
+				TH=$(cat /sys/module/msm_thermal/parameters/temp_hysteresis_degC)
 				$BB echo '{ SSeekBar:{
 					title:"Temperature Hysteresis",
 					unit:"ºC",
@@ -77,28 +79,29 @@ cat << CTAG
 					default:'$TH',
 					action:"generic /sys/module/msm_thermal/parameters/temp_hysteresis_degC"
 				}},'
-				TLL=$(cat /sys/module/msm_thermal/parameters/thermal_limit_low);
+				TLLF=$(cat /sys/module/msm_thermal/parameters/thermal_limit_low)
 				$BB echo '{ SSeekBar:{
 					title:"Thermal Limit Lowest Frequency 7 = 1.19Ghz 6 = 1.03Ghz ETC",
 					step:1,
 					min:5,
 					max:10,
-					default:'$TLL',
+					default:'$TLLF',
 					action:"generic /sys/module/msm_thermal/parameters/thermal_limit_low"
 				}},'
 			fi`
 			`if [ -f "/sys/module/msm_thermal/parameters/freq_limit_debug" ]; then
-			TEMPDEBUG=$(cat /sys/module/msm_thermal/parameters/freq_limit_debug);
+				FLD=$(cat /sys/module/msm_thermal/parameters/freq_limit_debug)
 				$BB echo '{ SPane:{
 					title:"Frequency Limit Debug"
 				}},
 					{ SCheckBox:{
 						label:"Enable",
 						description:"This allows to debug the CPUs throttle when the temperature reaches maximum.",
-						default:'$TEMPDEBUG',
+						default:'$FLD',
 						action:"generic /sys/module/msm_thermal/parameters/freq_limit_debug"
 					}},'
 			fi`
 		]
 }
 CTAG
+

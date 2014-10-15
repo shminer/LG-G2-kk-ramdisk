@@ -34,6 +34,9 @@ DATA_DIR=/data/.dori;
 # INITIATE
 # ==============================================================
 
+# For CHARGER CHECK.
+echo "1" > /data/dori_cortex_sleep;
+
 # get values from profile
 PROFILE=$(cat $DATA_DIR/.active.profile);
 . "$DATA_DIR"/"$PROFILE".profile;
@@ -76,10 +79,7 @@ IO_TWEAKS()
 		return 0;
 	fi;
 }
-apply_cpu="$2";
-if [ "$apply_cpu" != "update" ]; then
-	IO_TWEAKS;
-fi;
+IO_TWEAKS;
 
 # ==============================================================
 # KERNEL-TWEAKS
@@ -103,10 +103,7 @@ KERNEL_TWEAKS()
 		echo "memory_tweaks disabled";
 	fi;
 }
-apply_cpu="$2";
-if [ "$apply_cpu" != "update" ]; then
-	KERNEL_TWEAKS;
-fi;
+KERNEL_TWEAKS;
 
 # ==============================================================
 # SYSTEM-TWEAKS
@@ -121,10 +118,7 @@ SYSTEM_TWEAKS()
 		echo "system_tweaks disabled";
 	fi;
 }
-apply_cpu="$2";
-if [ "$apply_cpu" != "update" ]; then
-	SYSTEM_TWEAKS;
-fi;
+SYSTEM_TWEAKS;
 
 # ==============================================================
 # MEMORY-TWEAKS
@@ -147,17 +141,14 @@ MEMORY_TWEAKS()
 		return 0;
 	fi;
 }
-apply_cpu="$2";
-if [ "$apply_cpu" != "update" ]; then
-	MEMORY_TWEAKS;
-fi;
+MEMORY_TWEAKS;
 
 # if crond used, then give it root perent - if started by STweaks, then it will be killed in time
 CROND_SAFETY()
 {
 	if [ "$crontab" == "on" ]; then
 		pkill -f "crond";
-		/res/crontab_service/service.sh;
+		$BB sh /res/crontab_service/service.sh;
 
 		log -p i -t "$FILE_NAME" "*** CROND_SAFETY ***";
 
@@ -207,21 +198,20 @@ CPU_CENTRAL_CONTROL()
 	if [ "$cortexbrain_cpu" == "on" ]; then
 
 		if [ "$state" == "awake" ]; then
-			echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu0;
+			echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 			echo "$cpu1_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu1;
 			echo "$cpu2_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu2;
 			echo "$cpu3_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu3;
 
-			echo "$cpu0_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu0;
-			echo "$cpu1_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu1;
-			echo "$cpu2_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu2;
-			echo "$cpu3_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu3;
+                        echo "$cpu0_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+                        echo "$cpu1_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu1;
+                        echo "$cpu2_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu2;
+                        echo "$cpu3_max_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu3;
 			/res/uci.sh power_mode $power_mode > /dev/null;
 		elif [ "$state" == "sleep" ]; then
-			echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu0;
-			echo "$cpu1_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu1;
-			echo "$cpu2_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu2;
-			echo "$cpu3_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu3;
+			if [ "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq)" -ge "729600" ]; then
+				echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+			fi;
 			if [ "$suspend_max_freq" -lt "2803200" ]; then
 				echo "$suspend_max_freq" > /sys/kernel/msm_cpufreq_limit/suspend_max_freq;
 			fi;
@@ -233,15 +223,16 @@ CPU_CENTRAL_CONTROL()
 		fi;
 		log -p i -t "$FILE_NAME" "*** CPU_CENTRAL_CONTROL max_freq:${cpu_max_freq} min_freq:${cpu_min_freq}***: done";
 	else
-		if [ "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq)" -ge "729600" ]; then
-			echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu0;
+		if [ "$state" == "awake" ]; then
+			echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
 			echo "$cpu1_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu1;
 			echo "$cpu2_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu2;
 			echo "$cpu3_min_freq" > /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu3;
-		fi;
-		if [ "$state" == "awake" ]; then
 			/res/uci.sh power_mode $power_mode > /dev/null;
 		elif [ "$state" == "sleep" ]; then
+			if [ "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq)" -ge "729600" ]; then
+				echo "$cpu0_min_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq;
+			fi;
 			if [ -e /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate ]; then
 				if [ "$(cat /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate)" -lt "50000" ]; then
 					echo "50000" > /sys/devices/system/cpu/cpufreq/$GOV_NAME/sampling_rate;
@@ -349,11 +340,17 @@ WORKQUEUE_CONTROL()
 # ==============================================================
 AWAKE_MODE()
 {
-	IO_SCHEDULER "awake";
 	CPU_CENTRAL_CONTROL "awake";
-	HOTPLUG_CONTROL;
-	WORKQUEUE_CONTROL "awake";
-	log -p i -t "$FILE_NAME" "*** AWAKE_MODE - WAKEUP ***: done";
+
+	if [ "$(cat /data/dori_cortex_sleep)" -eq "1" ]; then
+		IO_SCHEDULER "awake";
+		HOTPLUG_CONTROL;
+		WORKQUEUE_CONTROL "awake";
+		echo "0" > /data/dori_cortex_sleep;
+		log -p i -t "$FILE_NAME" "*** AWAKE_MODE - WAKEUP ***: done";
+	else
+		log -p i -t "$FILE_NAME" "*** AWAKE_MODE - WAS NOT SLEEPING ***: done";
+	fi;
 }
 
 # ==============================================================
@@ -365,12 +362,19 @@ SLEEP_MODE()
 	PROFILE=$(cat "$DATA_DIR"/.active.profile);
 	. "$DATA_DIR"/"$PROFILE".profile;
 
-	CROND_SAFETY;
-	IO_SCHEDULER "sleep";
-	CPU_CENTRAL_CONTROL "sleep";
-	WORKQUEUE_CONTROL "sleep";
+	CHARGER_STATE=$(cat /sys/class/power_supply/battery/charging_enabled);
 
-	log -p i -t "$FILE_NAME" "*** SLEEP mode ***";
+	if [ "$CHARGER_STATE" -eq "0" ]; then
+		CROND_SAFETY;
+		IO_SCHEDULER "sleep";
+		CPU_CENTRAL_CONTROL "sleep";
+		WORKQUEUE_CONTROL "sleep";
+		echo "1" > /data/dori_cortex_sleep;
+		log -p i -t "$FILE_NAME" "*** SLEEP mode ***";
+	else
+		echo "0" > /data/dori_cortex_sleep;
+		log -p i -t "$FILE_NAME" "*** NO SLEEP CHARGING ***";
+	fi;
 }
 
 # ==============================================================

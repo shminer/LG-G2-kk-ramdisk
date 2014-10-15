@@ -13,7 +13,7 @@ case "$1" in
 		$BB echo "`$BB cat /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor`"
 	;;
 	LiveDefaultCPUGovernor)
-		CPU0_GOV=$(cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_governor_cpu0);
+		CPU0_GOV=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor);
 		CPU1_GOV=$(cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_governor_cpu1);
 		CPU2_GOV=$(cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_governor_cpu2);
 		CPU3_GOV=$(cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_governor_cpu3);
@@ -38,8 +38,8 @@ case "$1" in
 		$BB echo "`$BB cat /proc/sys/net/ipv4/tcp_congestion_control`";
 	;;
 	LiveCPU_MAX_MIN_Freq)
-		CPU0_FREQMAX="$(expr `cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu0` / 1000)MHz"
-		CPU0_FREQMIN="$(expr `cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu0` / 1000)MHz"
+		CPU0_FREQMAX="$(expr `cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq` / 1000)MHz"
+		CPU0_FREQMIN="$(expr `cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq` / 1000)MHz"
 		CPU1_FREQMAX="$(expr `cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu1` / 1000)MHz"
 		CPU1_FREQMIN="$(expr `cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu1` / 1000)MHz"
 		CPU2_FREQMAX="$(expr `cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu2` / 1000)MHz"
@@ -47,6 +47,25 @@ case "$1" in
 		CPU3_FREQMAX="$(expr `cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_max_freq_cpu3` / 1000)MHz"
 		CPU3_FREQMIN="$(expr `cat /sys/devices/system/cpu/cpufreq/all_cpus/scaling_min_freq_cpu3` / 1000)MHz"
 		echo "Max CPU0 Freq: $CPU0_FREQMAX@nMin CPU0 Freq: $CPU0_FREQMIN@nMax CPU1 Freq: $CPU1_FREQMAX@nMin CPU1 Freq: $CPU1_FREQMIN@nMax CPU2 Freq: $CPU2_FREQMAX@nMin CPU2 Freq: $CPU2_FREQMIN@nMax CPU3 Freq: $CPU3_FREQMAX@nMin CPU3 Freq: $CPU3_FREQMIN"
+	;;
+	LiveCPU_CORES_ON_OFF)
+		CPU0_CORE_STATE=Active;
+		if [ "$(cat /sys/devices/system/cpu/cpu1/online)" == "1" ]; then
+			CPU1_CORE_STATE=Active;
+		else
+			CPU1_CORE_STATE=Sleeping;
+		fi;
+		if [ "$(cat /sys/devices/system/cpu/cpu2/online)" == "1" ]; then
+			CPU2_CORE_STATE=Active;
+		else
+			CPU2_CORE_STATE=Sleeping;
+		fi;
+		if [ "$(cat /sys/devices/system/cpu/cpu3/online)" == "1" ]; then
+			CPU3_CORE_STATE=Active;
+		else
+			CPU3_CORE_STATE=Sleeping;
+		fi;
+		echo "CPU0 IS: $CPU0_CORE_STATE@nCPU1 IS: $CPU1_CORE_STATE@nCPU2 IS: $CPU2_CORE_STATE@nCPU3 IS: $CPU3_CORE_STATE"
 	;;
 	LiveBatteryTemperature)
 		BAT_C=`$BB awk '{ print $1 / 10 }' /sys/class/power_supply/battery/temp`;
