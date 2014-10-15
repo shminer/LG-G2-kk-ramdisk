@@ -566,8 +566,6 @@
 		
 	</spinner>
 
-	</settingsPane>
-
 
 	<settingsPane description="如果获取的ip地址不正确，点这里重启dhcp服务，并清空dhcp缓存" name="DHCP修复">
 
