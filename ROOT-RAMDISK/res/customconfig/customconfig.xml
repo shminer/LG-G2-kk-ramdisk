@@ -6,7 +6,7 @@
 
 	</settingsPane>
 
-	<settingsPane description="JZ-KERNEL for LG G2 ver-1.4   LINUX version 3.4.104"  name="版本信息">
+	<settingsPane description="JZ-KERNEL for LG G2 ver-1.5   LINUX version 3.4.104"  name="版本信息">
 
 	</settingsPane>
 	
@@ -617,13 +617,13 @@
 
 	<settingsPane description="你可以在设置当MTP连接时快速充电。" name="快速充电">
 
-		<spinner description="在充电器最高值内，你可以设置充电电流，设置打开会默认设置为1.2a，也可以设置为手动，然后设置下一个电流选项。" name="电流控制模式" action="generic /sys/kernel/fast_charge/force_fast_charge">
+		<spinner description="在充电器最高值内，你可以设置充电电流，设置打开会默认设置为1.2a，也可以设置为手动，然后设置下一个电流选项。" name="电流控制模式" action="force_fast_charge">
 			<spinnerItem name="关闭" value="0"/>
 			<spinnerItem name="打开" value="1"/>
 			<spinnerItem name="手动" value="2"/>
 		</spinner>
 
-		<spinner description="这里你可以设置充电电流大小，同时也会被thermal engine控制，如果主板温度高于52°，最大电流会被限制到1300mA。" name="充电电流控制" action="generic /sys/kernel/fast_charge/fast_charge_level">
+		<spinner description="这里你可以设置充电电流大小，同时也会被thermal engine控制，如果主板温度高于52°，最大电流会被限制到1300mA。" name="充电电流控制" action="fast_charge_level">
 			<spinnerItem name="最大 500mA" value="500"/>
 			<spinnerItem name="最大 900mA" value="900"/>
 			<spinnerItem name="最大 1200mA" value="1200"/>
