@@ -80,18 +80,18 @@ CRITICAL_PERM_FIX;
 
 ONDEMAND_TUNING()
 {
-	echo "80" > /cpugov/ondemand/micro_freq_up_threshold;
+	echo "95" > /cpugov/ondemand/micro_freq_up_threshold;
 	echo "10" > /cpugov/ondemand/down_differential;
 	echo "3" > /cpugov/ondemand/down_differential_multi_core;
 	echo "1" > /cpugov/ondemand/sampling_down_factor;
-	echo "75" > /cpugov/ondemand/up_threshold;
-	echo "1574400" > /cpugov/ondemand/sync_freq;
+	echo "70" > /cpugov/ondemand/up_threshold;
+	echo "1728000" > /cpugov/ondemand/sync_freq;
 	echo "1574400" > /cpugov/ondemand/optimal_freq;
-	echo "1958400" > /cpugov/ondemand/optimal_max_freq;
-	echo "20" > /cpugov/ondemand/middle_grid_step;
-	echo "30" > /cpugov/ondemand/high_grid_step;
-	echo "60" > /cpugov/ondemand/middle_grid_load;
-	echo "80" > /cpugov/ondemand/high_grid_load;
+	echo "1728000" > /cpugov/ondemand/optimal_max_freq;
+	echo "14" > /cpugov/ondemand/middle_grid_step;
+	echo "20" > /cpugov/ondemand/high_grid_step;
+	echo "65" > /cpugov/ondemand/middle_grid_load;
+	echo "89" > /cpugov/ondemand/high_grid_load;
 }
 
 # oom and mem perm fix
@@ -136,8 +136,8 @@ fi;
 # just set numer $RESET_MAGIC + 1 and profiles will be reset one time on next boot with new kernel.
 # incase that ADMIN feel that something wrong with global STweaks config and profiles, then ADMIN can add +1 to CLEAN_DORI_DIR
 # to clean all files on first boot from /data/.dori/ folder.
-RESET_MAGIC=23;
-CLEAN_DORI_DIR=1;
+RESET_MAGIC=2;
+CLEAN_DORI_DIR=2;
 if [ ! -e /data/.dori/reset_profiles ]; then
 	echo "$RESET_MAGIC" > /data/.dori/reset_profiles;
 fi;
@@ -303,20 +303,27 @@ if [ "$CHARGER_STATE" -eq "1" ]; then
 	echo "1" > /sys/class/android_usb/android0/enable;
 fi;
 
-sleep 30;
+sleep 40;
 
-if [ "$(cat /sys/power/autosleep)" != "mem" ]; then
+if [ "$(cat /sys/power/autosleep)" == "off" ]; then
 	$BB sh /res/uci.sh cpu0_min_freq "$cpu0_min_freq";
 	$BB sh /res/uci.sh cpu1_min_freq "$cpu1_min_freq";
 	$BB sh /res/uci.sh cpu2_min_freq "$cpu2_min_freq";
 	$BB sh /res/uci.sh cpu3_min_freq "$cpu3_min_freq";
 
-	# Reload SuperSU daemonsu to fix SuperUser bugs.
-	if [ -e /system/xbin/daemonsu ]; then
-        	pkill -f "daemonsu";
-        	/system/xbin/daemonsu --auto-daemon &
-	fi;
+	$BB sh /res/uci.sh cpu1_max_freq "$cpu1_max_freq";
+	$BB sh /res/uci.sh cpu2_max_freq "$cpu2_max_freq";
+	$BB sh /res/uci.sh cpu3_max_freq "$cpu3_max_freq";
 fi;
+
+# Fix bug on boot with ROM Thrmal.
+while [ "$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq)" != "$cpu0_max_freq" ]; do
+	if [ "$(cat /sys/power/autosleep)" != "off" ]; then
+		brake;
+	fi;
+	echo "$cpu0_max_freq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq;
+	sleep 10;
+done;
 
 # script finish here, so let me know when
 TIME_NOW=$(date)

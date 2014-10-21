@@ -6,7 +6,7 @@
 
 	</settingsPane>
 
-	<settingsPane description="JZ-KERNEL for LG G2 ver-1.5   LINUX version 3.4.104"  name="版本信息">
+	<settingsPane description="JZ-KERNEL for LG G2 ver-1.6   LINUX version 3.4.104"  name="版本信息">
 
 	</settingsPane>
 	
@@ -173,13 +173,9 @@
 		
 		<seekBar description="你可以设置触摸增速的时间（微妙），可以设置0.01秒和0.15秒区间，非常快！" name="CPU增速设置" action="generic /sys/module/alu_t_boost/parameters/input_boost_ms" unit="ms" min="10" reversed="false" step="10" max="100"/>
 
-		<seekBar description="你可以设置触摸时提速的CPU个数" name="触摸增速核心数" action="generic /sys/module/alu_t_boost/parameters/nr_boost_cpus" unit="cores" min="1" reversed="false" step="1" max="4"/>
+		<seekBar description="你可以设置触摸提速的间隔时间，当触摸时会间隔多久再设置最低频率。" name="触摸增速间隔" action="generic /sys/module/alu_t_boost/parameters/min_input_interval" unit="ms" min="100" reversed="false" step="50" max="1500"/>
 
-		<spinner description="你可以打开或关闭活动核心首次唤醒的触摸提速频率，核心唤醒时，会获取加速频率，然后会由cpu调速器来决定频率，视有多少核心被加速而定。" name="热插拔触摸增速" action="generic /sys/module/alu_t_boost/parameters/hotplug_boost">
-			<spinnerItem name="开启" value="1"/> 
-			<spinnerItem name="关闭" value="0"/> 
-		</spinner>
-
+		<seekBar description="这里设置触摸提速时打开多少个cpu核心。" name="触摸核心提速数量" action="generic /sys/module/alu_t_boost/parameters/nr_boost_cpus" unit="cores" min="1" reversed="false" step="1" max="4"/>
 
 		<seekBar description="这里你可以设置cpu的调速采样率，采样率越高，响应越快，但是更耗电，仅在以下选项选择省电模式时启用。 默认为50000。" name="CPU 调速采样率" action="sample_rate" unit="rate" min="10000" reversed="false" step="5000" max="80000"/>
 
@@ -365,7 +361,6 @@
 		</spinner>
 	</settingsPane>
 
-
 </settingsTab>
 
 
@@ -393,7 +388,7 @@
 		</settingsPane>
 
 	<settingsPane description="这里你可以设置一些调度器和调度器参数" name="GPU调度管理">
-
+		
 		<spinner description="这里可以设置GPU的调度器推荐“msm-adreno-tz”，它已经被我优化并加入faux的新gpu调速器algorithm。" name="GPU调度器" action="generic /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor">
 			<spinnerItem name="msm-adreno-tz" value="msm-adreno-tz"/>
 			<spinnerItem name="conservative" value="conservative"/>
@@ -428,17 +423,51 @@
 
 	<settingsPane description="这里你可以设置设备的温度保护，现在intelli和系统thermal协同工作。来避免屏幕过热损坏屏幕！ " name="处理器温度保护">
 
-		<spinner description="处理器温度控制，以下为两个温控驱动，他会保证温度不会太高，也可以保护你的屏幕，第二个温控是由msm温控和intelli温控协同工作。" name="处理器温度控制" action="msm_thermal">
+		<spinner description="处理器温度控制，以下为两个温控驱动，他会保证温度不会太高，也可以保护你的屏幕，第二个温控是由msm温控和intelli温控协同工作。（关闭系统温控后相机关闭缓慢！）" name="处理器温度控制" action="msm_thermal">
+			
 			<spinnerItem name="默认温控" value="msm_temp"/>
 			<spinnerItem name="intelli+msm温控" value="intelli_temp"/>
+			<spinnerItem name="进intelli温控，关闭系统温控服务" value="intelli_temp_only"/> 
+			
+		</spinner>
+		
+		<button description="打开Synapse温度和cpu状态控制" name="温控通道" action="push-actions/thermal_control" label="打开Synapse控制"/>
+		
+		<seekBar description="CPU最高温度，超过这个温度时，温控驱动会给CPU降低频率防止手机过热。" name="CPU最高温度" action="generic /sys/module/msm_thermal/parameters/limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="78"/>
+
+		<seekBar description="这里你可以设置降温时频率的步数，步数越高降得幅度越大。" name="降温频率步进" action="generic /sys/module/msm_thermal/parameters/freq_step" unit="Step" min="1" reversed="false" step="1" max="4"/>
+
+		<seekBar description="这里你可以设置温度检测和控制间隔，间隔越少，监控次数越多，和采样率一个道理。" name="温度采样间隔" action="generic /sys/module/msm_thermal/parameters/poll_ms" unit="ms" min="200" reversed="false" step="50" max="500"/>
+
+		<seekBar description="你可以设置温度阶梯，驱动会以这个值为一个温度阶梯，每超过这个值一次就调整一个核心或者频率步进。用来帮助驱动计算温差以调整频率。" name="核心频率步进温度" action="generic /sys/module/msm_thermal/parameters/temp_hysteresis_degC" unit="C" min="2" reversed="false" step="1" max="20"/>
+		
+		<seekBar description="你可以设置温度限制的最低频率。5-10分别对应一个频率。" name="最低降温频率" action="generic /sys/module/msm_thermal/parameters/thermal_limit_low" unit="Freq" min="5" reversed="false" step="1" max="10"/>
+
+		<checkbox description="你可以启用或者关闭即刻温度限制，它允许在温度不增加的情况下设置到最大频率，并且增加3度的全局限制温度，谨慎使用。" name="即时温度限制" action="generic01 /sys/module/msm_thermal/parameters/immediately_limit_stop" label="Immediately Limit Stop"/>
+
+	</settingsPane>
+
+	<settingsPane description="你可以设置当温度超过限制时会关闭cpu核心，会降低性能，这个在线的核心会被设置到最高频率，其他核心会等到温度降下来以后再开启。" name="温控热插拔设置">
+
+		<spinner description="打开在超过温度限制后会关闭cpu核心#1#2#3，但是cpu0会设置为高频率。能降低整体温度，关闭后此功能失效。" name="温控热插拔" action="generic /sys/module/msm_thermal/core_control/core_control">
+			<spinnerItem name="启用" value="1"/> 
+			<spinnerItem name="关闭" value="0"/> 
+		</spinner>
+		
+		<spinner description="你可以设置超过温度阈值后最少的CPU在线核心数，这些核心不受到温度控制，在温控热插拔开启时才会生效。" name="最小温控在线核心" action="core_mask">
+			<spinnerItem name="一个核心" value="1"/> 
+			<spinnerItem name="二个核心" value="2"/> 
+			<spinnerItem name="三个核心" value="3"/> 
+			<spinnerItem name="所有核心" value="4"/> 
 		</spinner>
 
-		<button description="打开Synapse温度和cpu状态控制" name="温控通道" action="push-actions/thermal_control" label="打开Synapse控制"/>
-		<button description="关闭系统thermal温控，将完全由intelli来接管温控，不限制gpu最高频率，不受thermal控制，但是会导致相机退出缓慢。" name="thermal-engine" action="push-actions/disable_thermal" label="关闭thermal"/>
-		<button description="打开系统thermal温控，各种频率将受到thermal控制，配置文件在system/etc下，相机退出正常，但是gpu会在高负载时被限制到320Mhz。" name="thermal-engine" action="push-actions/enable_thermal" label="启用thermal"/>
+		<seekBar description="调节温控热插拔阈值，超过这个阈值就会关闭cpu核心，当intelli温控打开时生效。" name="Intelli 温控最高值" action="generic /sys/module/msm_thermal/parameters/core_limit_temp_degC" unit="C" min="50" reversed="false" step="1" max="80"/>
+
+		<seekBar description="你可以设置温度阶梯，驱动会以这个值为一个温度阶梯，每超过这个值一次就调整一个核心或者频率步进。" name="核心热插拔步进温度" action="generic /sys/module/msm_thermal/parameters/core_temp_hysteresis_degC" unit="C" min="2" reversed="false" step="1" max="20"/>
 
 	</settingsPane>
 	
+
 </settingsTab>
 
 <settingsTab name="IO部分">
@@ -543,8 +572,12 @@
 
 <settingsTab name="其他">
 	
+	<settingsPane description="闪存删除文件时不会删除数据，而是做一个标记，同硬盘相同，但是不同的是闪存下次写入时必须将原来数据抹去，而不像硬盘可以覆盖，Trim机制可以在空闲时自动抹除闪存无用数据。" name="闪存垃圾回收">
+		
 	<button description="类似与SSD垃圾回收机制，叫做trim，可以提升nand写入的速度。" name="Trim 机制" action="push-actions/fstrim" label="点我执行"/>
 
+	</settingsPane>
+	
 	<settingsPane description="应用与数据库优化" name="Apps">
 
 		<button description="应用对齐，点了按钮两分钟以内，千万不要重启机器，否则会导致应用程序的损坏或者丢失。" name="应用对齐" action="push-actions/zipalign" label="点我执行"/>
@@ -565,7 +598,6 @@
 		<spinnerItem name="普通" value="off"/> 
 		
 	</spinner>
-
 
 	<settingsPane description="如果获取的ip地址不正确，点这里重启dhcp服务，并清空dhcp缓存" name="DHCP修复">
 
