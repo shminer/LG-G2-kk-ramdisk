@@ -1,7 +1,7 @@
 stweaks_boot_control=yes
 hotplug=msm_hotplug
 cpus_boosted_time=1000
-cpus_boosted=3
+cpus_boosted=2
 eco_mode=all
 min_online_cpus=1
 hotplug_suspend=always_active
