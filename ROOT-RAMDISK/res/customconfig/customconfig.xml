@@ -662,8 +662,6 @@
 			<spinnerItem name="最大 2000mA" value="2000"/>
 		</spinner>
 
-		<checkbox description="启用对其他数据线的破解，高通充电芯片会识别usb或者充电器，同时也会识别充电线缆的质量，开启这个，可以屏蔽慢速充电。连接时，你会收到两次充电的通知。第二个通知系统现在是ac充电。" name="伪造AC" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="点我启用"/>
-
 		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="苹果充电支持"/>
 
 		<button description="当电量显示错误，你可以点这个重置电池计数器。" name="重置电池" action="push-actions/reset_battery" label="点我重置"/>
