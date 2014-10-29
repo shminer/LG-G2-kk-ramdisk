@@ -1,5 +1,5 @@
 stweaks_boot_control=yes
-hotplug=msm_hotplug
+hotplug=intelli
 cpus_boosted_time=1000
 cpus_boosted=2
 eco_mode=all
