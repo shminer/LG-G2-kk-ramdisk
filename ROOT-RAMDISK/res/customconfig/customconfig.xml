@@ -364,44 +364,62 @@
 </settingsTab>
 
 
-<settingsTab name="GPU设置">
+<settingsTab name="GPU 设置">
 
-	<settingsPane description="这里你可以设置GPU的性能等级" name="GPU性能等级管理">
+	<settingsPane description="这里你可以设置GPU的调速器，设置GPU的最高最低频率并且可以微调调速器参数。" name="GPU 调速器及频率设置">
 
-		<seekBar description="GPU的性能等级可以限制GPU最低的性能等级来限制GPU的最低频率，这样不需要调速器来选择频率以提高性能，最低频率越高，使用时越耗电，但性能越强，待机不影响。默认不限制lv4（200Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU最低性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/min_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
+		<spinner description="这里你可以设置GPU的调速器，MSM-Adreno是faux123修改过的tz调速器，非常简单，但是效率非常高，效果最好，Simple_Ondemand接近faux123的调速器，但是调速效果不如faux的tz，Conservative相对比较“懒”，但是比Simple_Ondemand好，Performance和CPU的相同，始终使得GPU频率最大。" name="GPU 调速器" action="gpu_governor">
+			<spinnerItem name="MSM-Adreno (default)" value="msm-adreno-tz"/> 
+			<spinnerItem name="Simple_Ondemand" value="simple_ondemand"/> 
+			<spinnerItem name="Conservative" value="conservative"/> 
+			<spinnerItem name="Performance" value="performance"/> 
+		</spinner>
 
-		<seekBar description="GPU的性能等级可以限制GPU最高的性能等级来限制GPU的最高频率（防止thermal写入最高频率使得调整失效），这样不需要thermal来选择频率以节约电能，最高频率越低，使用时越省电，但性能越差，待机不影响。默认不限制lv0（578Mhz）。注意！性能等级0为最高4为最低。数字越小性能等级越高！" name="GPU最高性能等级" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_pwrlevel" unit=".lv" min="0" reversed="false" step="1" max="4"/>
+		<button description="设置GPU调速器微调后点这个可以生效。" name="更新GPU调速器参数" action="push-actions/gpu_update" label="Update GPU Governor"/>
 
+		<spinner description="设置GPU最大频率，调速器更改的频率不会超过这个值。" name="GPU 最高频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq">
+			<spinnerItem name="650 Mhz" value="650000000"/> 
+			<spinnerItem name="533 Mhz" value="533333000"/> 
+			<spinnerItem name="450 Mhz" value="450000000"/> 
+			<spinnerItem name="389 Mhz" value="389000000"/> 
+			<spinnerItem name="320 Mhz" value="320000000"/> 
+			<spinnerItem name="200 Mhz" value="200000000"/> 
+			<spinnerItem name="100 Mhz" value="100000000"/> 
+		</spinner>
+
+		<spinner description="置GPU最小频率，调速器更改的频率不会小于这个值。" name="GPU 最小频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq">
+			<spinnerItem name="100 Mhz" value="100000000"/> 
+			<spinnerItem name="200 Mhz" value="200000000"/> 
+			<spinnerItem name="320 Mhz" value="320000000"/> 
+			<spinnerItem name="389 Mhz" value="389000000"/> 
+			<spinnerItem name="450 Mhz" value="450000000"/> 
+			<spinnerItem name="533 Mhz" value="533333000"/> 
+			<spinnerItem name="650 Mhz" value="650000000"/> 
+		</spinner>
 
 	</settingsPane>
 
-	<settingsPane description="这里你可以设置GPU的频率" name="GPU频率管理">
+	<settingsPane description="你可以设置TZ的调速器参数，仅仅设置为TZ时生效" name="Msm-Adreno-Tz控制">
 
-		<spinner description="这里来选择GPU最高频率大小" name="GPU频率" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/max_gpuclk">
-			<spinnerItem name="200Mhz" value="200000000"/>
-			<spinnerItem name="320Mhz" value="320000000"/>
-			<spinnerItem name="389Mhz" value="389000000"/>
-			<spinnerItem name="450Mhz" value="450000000"/>
-			<spinnerItem name="578Mhz" value="578000000"/>
+		<spinner description="这里你可以控制faux123调速器的参数开关，选择手动下面的设置才会生效。" name="Msm-Adreno-Tz微调" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_gpu_activate">
+			<spinnerItem name="自动模式" value="0"/> 
+			<spinnerItem name="手动模式" value="1"/> 
 		</spinner>
 
-		</settingsPane>
+		<seekBar description="Msm-Adreno-Tz Simple_Laziness , 调速器会跳过一些频率来设置GPU频率，值越高跨度越高越耗电，值越低跨度越小，越省电! (默认: 4)" name="Simple_Laziness 值" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_laziness" unit="step" min="1" reversed="false" step="1" max="10"/>
 
-	<settingsPane description="这里你可以设置一些调度器和调度器参数" name="GPU调度管理">
-		
-		<spinner description="这里可以设置GPU的调度器推荐“msm-adreno-tz”，它已经被我优化并加入faux的新gpu调速器algorithm。" name="GPU调度器" action="generic /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor">
-			<spinnerItem name="msm-adreno-tz" value="msm-adreno-tz"/>
-			<spinnerItem name="conservative" value="conservative"/>
-		</spinner>
+		<seekBar description="Msm-Adreno-Tz Simple_ramp_threshold , GPU调速器会通过这个值控制提升阈值，越高性能越低!越耗电 (默认: 5000)" name="Simple_ramp_threshold 值" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold" unit="ramp" min="1000" reversed="false" step="500" max="10000"/>
 
-		<spinner description="如果你使用“msm-adreno-tz”，这里可以设置algorithm的提升阈值。" name="algorithm参数设置" action="generic /sys/module/simple_gpu_algorithm/parameters/simple_ramp_threshold">
-			<spinnerItem name="3000" value="3000"/>
-			<spinnerItem name="5000" value="5000"/>
-			<spinnerItem name="6000" value="6000"/>
-			<spinnerItem name="8000" value="8000"/>
-		</spinner>
+	</settingsPane>
 
-		</settingsPane>
+	<settingsPane description="Simple_Ondemand调速器参数设置，只有设置了Simple_Ondemand调速器才生效，" name="Simple_Ondemand 控制">
+
+		<seekBar description="负载低于这个值，调速器会设置GPU频率到最低(默认 20)" name="降速阈值" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/gpufreq/simple_ondemand/downdifferential" unit="%" min="5" reversed="false" step="5" max="60"/>
+
+		<seekBar description="负载高于这个值，调速器会设置GPU频率到最高 (默认 60)" name="提速阈值" action="generic /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/gpufreq/simple_ondemand/upthreshold" unit="%" min="30" reversed="false" step="5" max="90"/>
+
+	</settingsPane>
+
 
 </settingsTab>
 
