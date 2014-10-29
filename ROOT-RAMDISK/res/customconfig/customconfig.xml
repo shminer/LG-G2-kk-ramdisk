@@ -430,6 +430,8 @@
 		<seekBar description="这个可以控制录像时的mic增益" name="录像mic增益" action="generic_mic_sound /sys/kernel/sound_control_3/lge_cam_mic_gain" unit="vol" min="-10" reversed="false" step="1" max="24"/>
 
 		<seekBar description="这里可以控制电话耳麦的增益" name="耳麦增益控制" action="generic_mic_sound /sys/kernel/sound_control_3/lge_mic_gain" unit="vol" min="-10" reversed="false" step="1" max="24"/>
+		
+		<seekBar description="这里你可以控制外放音量" name="外放增益" action="generic_speaker_sound /sys/kernel/sound_control_3/lge_speaker_gain" unit="vol" min="-10" reversed="false" step="1" max="24"/>
 
 	</settingsPane>
 
