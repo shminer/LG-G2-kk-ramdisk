@@ -347,7 +347,7 @@
 			<spinnerItem name="422400" value="422400"/> 
 			<spinnerItem name="300000" value="300000"/> 
 		</spinner>
-		
+
 		<spinner description="屏幕关闭时的最高频率，选择后在关闭屏幕时不会超过这个频率"  name="关屏最高频率" action="suspend_max_freq">
 			<spinnerItem name="最大" value="max_freq"/>
 			<spinnerItem name="2265600" value="2265600"/>
@@ -587,7 +587,6 @@
 
 </settingsTab>
 
-
 <settingsTab name="其他">
 	
 	<settingsPane description="闪存删除文件时不会删除数据，而是做一个标记，同硬盘相同，但是不同的是闪存下次写入时必须将原来数据抹去，而不像硬盘可以覆盖，Trim机制可以在空闲时自动抹除闪存无用数据。" name="闪存垃圾回收">
@@ -659,6 +658,7 @@
 			<spinnerItem name="westwood" value="westwood"/>
 			<spinnerItem name="cubic" value="cubic"/>
 			<spinnerItem name="reno" value="reno"/>
+			<spinnerItem name="Set HighSpeed (HSTCP)" value="highspeed"/> 
 	</spinner>
 
 	</settingsPane>
