@@ -676,9 +676,12 @@
 			<spinnerItem name="最大 900mA" value="900"/>
 			<spinnerItem name="最大 1200mA" value="1200"/>
 			<spinnerItem name="最大 1600mA" value="1600"/>
+			<spinnerItem name="最大 1800mA" value="1800"/>
 		</spinner>
 
 		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="苹果充电支持"/>
+		
+		<checkbox description="使用这个可以让所有usb口都被认为时ac充电，避免没有识别电阻被限制在480ma" name="虚拟充电器" action="generic01 /sys/kernel/fast_charge/fake_charge_ac" label="虚拟充电器开关"/>
 
 		<button description="当电量显示错误，你可以点这个重置电池计数器。" name="重置电池" action="push-actions/reset_battery" label="点我重置"/>
 
