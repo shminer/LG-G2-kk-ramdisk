@@ -644,7 +644,7 @@
 
 <settingsTab name="微调">
 
-	<settingsPane description="你精确可以设定自己的最低背光亮度。" name="最低量度控制">
+		<settingsPane description="你精确可以设定自己的最低背光亮度。" name="最低量度控制">
 
 		<checkbox description="开启或者关闭最低量度控制，可以覆盖背光本身的最低量度来保护视力。" name="最低量度覆盖开关" action="generic01 /sys/devices/f9967000.i2c/i2c-0/0-0038/lm3630_min_backlight_reducer" label="最低量度控制开关"/>
 
@@ -677,6 +677,8 @@
 			<spinnerItem name="最大 1200mA" value="1200"/>
 			<spinnerItem name="最大 1600mA" value="1600"/>
 			<spinnerItem name="最大 1800mA" value="1800"/>
+			<spinnerItem name="最大 2000mA" value="2000"/>
+			
 		</spinner>
 
 		<checkbox description="打开对苹果充电器的支持" name="苹果充电支持" action="generic01 /sys/module/dwc3_msm/parameters/prop_chg_detect" label="苹果充电支持"/>
